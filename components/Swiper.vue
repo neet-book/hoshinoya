@@ -17,13 +17,13 @@
         class="current-hotel"
       >
         <li
-          v-for="hotel in Array.concat(sliderList[sliderList.length - 1] , sliderList, sliderList[0])" :key="hotel.number"
+          v-for="hotel in sliderList" :key="hotel.number"
           :class="{ activited: hotel.number == activity }"
         >HOSHINOYA {{ hotel.nameEN }}</li>
       </ul>
       <div class="indicator">
         <div class="prev" @click="prevSlider">prev</div>
-        <ul :style="indicatStyle">
+        <ul ref="inicater">
           <li v-for="n in sliderList.length" :key="n">
             {{ n | numFilter }}
           </li>
@@ -64,21 +64,28 @@ export default class Swiper extends Vue {
   indicatStyle = {
     transform: 'translateY(0px)',
     opacity: 1,
-    transition: 'none'
+    // transition: 'none'
   }
   get currentHotel(): string {
     const currentSlid =  (this.sliderList as Slider [])[this.activity - 1]
     return currentSlid.nameEN
   }
 
+  get indicateList(): Slider[] {
+    const sliderList = this.sliderList as Slider[]
+    return Array.prototype.concat(sliderList[sliderList.length - 1], sliderList, sliderList[0])
+  }
+
   nextSlider(): void {
     const list = this.sliderList as Slider[]
+    // const indicator = this.$refs.indicator as HTMLElement
+    console.log(this.$refs)
     if (this.activity !== list.length) {
       this.activity += 1
+      // indicator.style.transform = `translateY(${this.activity * 13}px)`
     } else {
       this.activity = 1
       this.indicatStyle.opacity = 0
-      this.
       this.indicatStyle.transform = 'translateY(0px)'
 
     }
