@@ -15,13 +15,15 @@
     <div class="controler">
       <ul 
         class="current-hotel"
-
       >
-        <li v-for="hotel in sliderList" :key="hotel.number">HOSHINOYA {{ currentHotel }}</li>
+        <li
+          v-for="hotel in Array.concat(sliderList[sliderList.length - 1] , sliderList, sliderList[0])" :key="hotel.number"
+          :class="{ activited: hotel.number == activity }"
+        >HOSHINOYA {{ hotel.nameEN }}</li>
       </ul>
-      <div class="tips">
+      <div class="indicator">
         <div class="prev" @click="prevSlider">prev</div>
-        <ul>
+        <ul :style="indicatStyle">
           <li v-for="n in sliderList.length" :key="n">
             {{ n | numFilter }}
           </li>
@@ -59,7 +61,11 @@ export default class Swiper extends Vue {
   @Prop(Array) sliderList: Slider[] | undefined
   activity:number = 2
   timer: number | undefined
-
+  indicatStyle = {
+    transform: 'translateY(0px)',
+    opacity: 1,
+    transition: 'none'
+  }
   get currentHotel(): string {
     const currentSlid =  (this.sliderList as Slider [])[this.activity - 1]
     return currentSlid.nameEN
@@ -71,6 +77,10 @@ export default class Swiper extends Vue {
       this.activity += 1
     } else {
       this.activity = 1
+      this.indicatStyle.opacity = 0
+      this.
+      this.indicatStyle.transform = 'translateY(0px)'
+
     }
   }
 
@@ -116,17 +126,12 @@ export default class Swiper extends Vue {
   background-repeat: no-repeat;
   background-size: cover;
 
-  transition:  3s;
+  transition:  12s;
   transition-property: transform;
   transition-delay: 900ms;
 }
 
-.activited {
-  opacity: 1;
-}
-
 .activited > .slider-img > .img-body {
-  
   transform: scale(1.2);
 } 
 
@@ -142,32 +147,45 @@ export default class Swiper extends Vue {
   font-size: 10px;
   font-weight: 400;
   color: white;
-  text-shadow: 0px 0px 2px #000;
+  /* text-shadow: 0px 0px 2px #0008; */
 }
 
 .current-hotel {
   letter-spacing: 2px;
+  height: 10px;
   text-transform: capitalize;
   margin-bottom: 10px;
-  /* opacity: 0; */
-  transition: opacity 2000ms cubic-bezier(.445,.05,.55,.95);
+  position: relative;
+}
+
+.current-hotel > li {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.current-hotel > .activited {
+  transition: opacity 1500ms cubic-bezier(.445,.05,.55,.95);
 }
 
 .delimit {
   margin: 0 3px
 }
 
-.tips {
-  height: 10px;
+.indicator {
+  height: 13px;
   /* border: solid 1px; */
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
-.tips > ul {
+.indicator > ul {
   font-size: inherit;
   display: inline-block;
   vertical-align: top;
-  /* transform: translateY(-1em); */
+  transition: transform 500ms;
 }
 
 .prev, .next {
@@ -194,9 +212,15 @@ export default class Swiper extends Vue {
   right: 5px;
   text-align: right;
 }
+
 .next::before {
   content: ">";
   left: 5px;
   text-align: left;
 }
+
+.activited {
+  opacity: 1 !important;
+}
+
 </style>
