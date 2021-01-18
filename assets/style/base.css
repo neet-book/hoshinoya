@@ -1,0 +1,19 @@
+@font-face {
+    font-family: Helvetica-LT-55-Roman;
+    src: url(~assets/fonts/Helvetica-LT-55-Roman.ttf);
+}
+
+body {
+    font-family: "Helvetica Neue LT W01_55 Roman", hsn-zhcn-sans-demilight, hsn-zhtw-sans-demilight, sans-serif;
+}
+
+li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
