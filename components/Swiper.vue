@@ -77,9 +77,8 @@ export default class Swiper extends Vue {
       this.activity += 1
     } else {
       this.activity = 1
-      this.indicatStyle.opacity = 0
-      this.
-      this.indicatStyle.transform = 'translateY(0px)'
+      // this.indicatStyle.opacity = 0
+      // this.indicatStyle.transform = 'translateY(0px)'
 
     }
   }
