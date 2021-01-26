@@ -22,14 +22,20 @@
         >HOSHINOYA {{ hotel.nameEN }}</li>
       </ul>
       <div class="controler">
-        <div class="prev" @click="prevSlider">prev</div>
+        <div class="prev-btn" @click="toPrev">prev</div>
         <ul>
-          <li>{{ current | numFilter }}</li>
-          <li>{{ next | numFilter }}</li>
+          <li
+            class="ctl-num"
+            v-for="num in indicatorNums"
+            :key="num.n"
+            :class="num.calss"
+          >
+            {{ num.number | numFilter }}
+          </li>
         </ul>
         <span class="delimit">/</span>
         <span class="total">{{ sliderList.length }}</span>
-        <div class="next" @click="nextSlider">next</div>
+        <div class="next-btn" @click="toNext">next</div>
       </div>
     </div>
   </div>
@@ -37,6 +43,12 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
+
+interface indicNum {
+  n: number
+  number: number,
+  calss: string[]
+}
 
 interface Slider {
   name: string
@@ -65,25 +77,17 @@ interface Slider {
 })
 export default class Swiper extends Vue {
   @Prop(Array) sliderList: Slider[] | undefined
-  activity:number = 2
+  activity:number = 1
   timer: number | undefined
-  indicatStyle = {
-    transform: 'translateY(0px)',
-    opacity: 1,
-    transition: 'none'
-  }
+  indicatorNums: indicNum[] = [
+    { n: 1, number: 0, calss: ['ctl-num-pre'] },
+    { n: 2, number: 1, calss: ['ctl-num-current'] },
+    { n: 3, number: 2, calss: ['ctl-num-next'] },
+  ]
 
   get currentHotel(): string {
     const currentSlid =  (this.sliderList as Slider [])[this.activity - 1]
     return currentSlid.nameEN
-  }
-
-  get current(): number {
-    return this.activity
-  }
-
-  get next(): number {
-    return this.activity
   }
 
   changeSlider(): void {
@@ -98,23 +102,35 @@ export default class Swiper extends Vue {
     }
   }
 
-  nextSlider(): void {
+  changeIndicNum(): void {
+    const [pre, current, next] = this.indicatorNums
+    pre.calss = ['ctl-num-next']
+    next.number = this.activity
+    next.calss = ['ctl-num-current']
+    current.calss = ['ctl-num-pre']
+    this.indicatorNums = [current, next, pre]
+  }
+
+  toNext(): void {
+    console.log(this.activity)
     const list = this.sliderList as Slider[]
     if (this.activity !== list.length) {
       this.activity += 1
     } else {
       this.activity = 1
-      
     }
+    console.log(this.activity)
+    this.changeIndicNum()
   }
 
-  prevSlider(): void {
+  toPrev(): void {
     if (this.activity !== 1) {
       this.activity -= 1
     } else {
       const list = this.sliderList as Slider[]
       this.activity = list.length
     }
+    this.changeIndicNum()
   }
 }
 </script>
@@ -205,20 +221,44 @@ export default class Swiper extends Vue {
 }
 
 .controler > ul {
+  width: 13px;
+  height: 13px;
+  position: relative;
   font-size: inherit;
   display: inline-block;
   vertical-align: top;
   transition: transform 500ms;
 }
 
-.prev, .next {
+.ctl-num {
+  position: absolute;
+  transition: transform 500ms,
+    opacity 500ms;
+}
+
+.ctl-num-pre {
+  transform: translateY(-13px);
+}
+
+.ctl-num-current {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.ctl-num-next {
+  transition: none;
+  transform: translateY(13px);
+  opacity: 0;
+}
+
+.prev-btn, .next-btn {
   height: 10px;
   display: inline-block;
   position: relative;
   visibility: hidden;
 }
 
-.prev::before, .next::before {
+.prev-btn::before, .next-btn::before {
   visibility: visible;
   display: block;
   width: 30px;
@@ -230,13 +270,13 @@ export default class Swiper extends Vue {
   transform: translateY(-50%);
 }
 
-.prev::before {
+.prev-btn::before {
   content: "<";
   right: 5px;
   text-align: right;
 }
 
-.next::before {
+.next-btn::before {
   content: ">";
   left: 5px;
   text-align: left;
