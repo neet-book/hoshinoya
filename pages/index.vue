@@ -6,7 +6,7 @@
 
 <script>
 import { Component, Vue } from 'nuxt-property-decorator'
-import Swiper from  '~/components/Swiper.vue'
+import Swiper from  '~/components/home/Swiper.vue'
 @Component({
   components: {
     Swiper
@@ -17,36 +17,42 @@ export default class Index extends Vue {
     {
       name: '富士',
       nameEN: 'fuji',
+      logoname: 'logo-hotel-fuji',
       number: 1,
       source: '/image/top_hero1_fuji.jpg'
     },
     {
       name: '京都',
-      nameEN: 'kyouto',
+      nameEN: 'kyoto',
+      logoname: 'logo-hotel-kyoto',
       number: 2,
       source: '/image/top_hero2_kyoto.jpg'
     },
     {
       name: '轻泽',
       nameEN: 'karuizawa',
+      logoname: 'logo-hotel-karuizawa',
       number: 3,
       source: '/image/top_hero3_karuizawa.jpg'
     },
     {
       name: '东京',
       nameEN: 'tokyo',
+      logoname: 'logo-hotel-tokyo',
       number: 4,
       source: '/image/top_hero4_tokyo.jpg'
     },
     {
       name: '嫩巴黎',
       nameEN: 'bali',
+      logoname: 'logo-hotel-bali',
       number: 5,
       source: '/image/top_hero5_bali.jpg'
     },
     {
       name: '冲绳',
       nameEN: 'okinawa',
+      logoname: 'logo-hotel-okinawa',
       number: 6,
       source: '/image/top_hero6_okinawa.jpg'
     }

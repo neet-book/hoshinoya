@@ -38,11 +38,13 @@
         <div class="next-btn" @click="toNext">next</div>
       </div>
     </div>
+    <logo-anime class="hotel_logos" :current="activity" :logos="sliderList" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import LogoAnime from './LogoAnime.vue'
 
 interface indicNum {
   n: number
@@ -53,11 +55,22 @@ interface indicNum {
 interface Slider {
   name: string
   nameEN:string
+  logoname: string
   number: number
   source: string
 }
 
 @Component({
+  components: {
+    LogoAnime
+  },
+  mounted(): void {
+    // @ts-ignore
+    this.timer = setTimeout(() => {
+      // @ts-ignore
+      console.log(this.activity)
+    }, 5)
+  },
   filters: {
     numFilter(n: number): string {
       if (n < 10) {
@@ -66,13 +79,6 @@ interface Slider {
         return n.toString()
       }
     }
-  },
-  mounted(): void {
-    // @ts-ignore
-    this.timer = setTimeout(() => {
-      // @ts-ignore
-      console.log(this.activity)
-    }, 5)
   }
 })
 export default class Swiper extends Vue {
@@ -136,12 +142,18 @@ export default class Swiper extends Vue {
 </script>
 
 <style scoped>
-.swiper > ul, .swiper > ul > li {
-  height: inherit;
+.swiper,
+.swiper > ul,
+.slider-img，
+.current-hotel,
+.controler > ul,
+.prev-btn, .next-btn
+{
+  position: relative;
 }
 
-.swiper > ul {
-  position: relative;
+.swiper > ul, .swiper > ul > li {
+  height: inherit;
 }
 
 .slider {
@@ -156,7 +168,6 @@ export default class Swiper extends Vue {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  position: relative;
 }
 
 .img-body {
@@ -179,7 +190,7 @@ export default class Swiper extends Vue {
 .indicator {
   position: absolute;
   left: 50%;
-  bottom: 125px;
+  bottom: 100px;
   transform: translateX(-50%);
 
   width: 100%;
@@ -187,15 +198,13 @@ export default class Swiper extends Vue {
   font-size: 10px;
   font-weight: 400;
   color: white;
-  /* text-shadow: 0px 0px 2px #0008; */
 }
 
 .current-hotel {
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   height: 10px;
   text-transform: capitalize;
   margin-bottom: 10px;
-  position: relative;
 }
 
 .current-hotel > li {
@@ -223,7 +232,6 @@ export default class Swiper extends Vue {
 .controler > ul {
   width: 13px;
   height: 13px;
-  position: relative;
   font-size: inherit;
   display: inline-block;
   vertical-align: top;
@@ -254,7 +262,6 @@ export default class Swiper extends Vue {
 .prev-btn, .next-btn {
   height: 10px;
   display: inline-block;
-  position: relative;
   visibility: hidden;
 }
 
@@ -286,4 +293,12 @@ export default class Swiper extends Vue {
   opacity: 1 !important;
 }
 
+.hotel_logos {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 </style>
