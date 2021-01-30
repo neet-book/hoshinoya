@@ -23,16 +23,9 @@
       </ul>
       <div class="controler">
         <div class="prev" @click="prevSlider">prev</div>
-<<<<<<< HEAD
-        <ul ref="inicater">
-          <li v-for="n in sliderList.length" :key="n">
-            {{ n | numFilter }}
-          </li>
-=======
         <ul>
           <li>{{ current | numFilter }}</li>
           <li>{{ next | numFilter }}</li>
->>>>>>> c614ad3cfee9f7573e2abf847645b6258d058900
         </ul>
         <span class="delimit">/</span>
         <span class="total">{{ sliderList.length }}</span>
