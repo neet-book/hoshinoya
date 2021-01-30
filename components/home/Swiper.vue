@@ -22,30 +22,55 @@
         >HOSHINOYA {{ hotel.nameEN }}</li>
       </ul>
       <div class="controler">
-        <div class="prev" @click="prevSlider">prev</div>
+        <div class="prev-btn" @click="toPrev">prev</div>
         <ul>
-          <li>{{ current | numFilter }}</li>
-          <li>{{ next | numFilter }}</li>
+          <li
+            class="ctl-num"
+            v-for="num in indicatorNums"
+            :key="num.n"
+            :class="num.calss"
+          >
+            {{ num.number | numFilter }}
+          </li>
         </ul>
         <span class="delimit">/</span>
         <span class="total">{{ sliderList.length }}</span>
-        <div class="next" @click="nextSlider">next</div>
+        <div class="next-btn" @click="toNext">next</div>
       </div>
     </div>
+    <logo-anime class="hotel_logos" :current="activity" :logos="sliderList" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import LogoAnime from './LogoAnime.vue'
+
+interface indicNum {
+  n: number
+  number: number,
+  calss: string[]
+}
 
 interface Slider {
   name: string
   nameEN:string
+  logoname: string
   number: number
   source: string
 }
 
 @Component({
+  components: {
+    LogoAnime
+  },
+  mounted(): void {
+    // @ts-ignore
+    this.timer = setTimeout(() => {
+      // @ts-ignore
+      console.log(this.activity)
+    }, 5)
+  },
   filters: {
     numFilter(n: number): string {
       if (n < 10) {
@@ -54,55 +79,23 @@ interface Slider {
         return n.toString()
       }
     }
-  },
-  mounted(): void {
-    // @ts-ignore
-    this.timer = setTimeout(() => {
-      // @ts-ignore
-      console.log(this.activity)
-    }, 5)
   }
 })
 export default class Swiper extends Vue {
   @Prop(Array) sliderList: Slider[] | undefined
-  activity:number = 2
+  activity:number = 1
   timer: number | undefined
-  indicatStyle = {
-    transform: 'translateY(0px)',
-    opacity: 1,
-    // transition: 'none'
-  }
+  indicatorNums: indicNum[] = [
+    { n: 1, number: 0, calss: ['ctl-num-pre'] },
+    { n: 2, number: 1, calss: ['ctl-num-current'] },
+    { n: 3, number: 2, calss: ['ctl-num-next'] },
+  ]
 
   get currentHotel(): string {
     const currentSlid =  (this.sliderList as Slider [])[this.activity - 1]
     return currentSlid.nameEN
   }
 
-<<<<<<< HEAD
-  get indicateList(): Slider[] {
-    const sliderList = this.sliderList as Slider[]
-    return Array.prototype.concat(sliderList[sliderList.length - 1], sliderList, sliderList[0])
-  }
-
-  nextSlider(): void {
-    const list = this.sliderList as Slider[]
-    // const indicator = this.$refs.indicator as HTMLElement
-    console.log(this.$refs)
-    if (this.activity !== list.length) {
-      this.activity += 1
-      // indicator.style.transform = `translateY(${this.activity * 13}px)`
-    } else {
-      this.activity = 1
-      this.indicatStyle.opacity = 0
-      this.indicatStyle.transform = 'translateY(0px)'
-=======
-  get current(): number {
-    return this.activity
-  }
-
-  get next(): number {
-    return this.activity
-  }
 
   changeSlider(): void {
     const list = this.sliderList as Slider[]
@@ -115,36 +108,53 @@ export default class Swiper extends Vue {
       
     }
   }
->>>>>>> c614ad3cfee9f7573e2abf847645b6258d058900
 
-  nextSlider(): void {
+  changeIndicNum(): void {
+    const [pre, current, next] = this.indicatorNums
+    pre.calss = ['ctl-num-next']
+    next.number = this.activity
+    next.calss = ['ctl-num-current']
+    current.calss = ['ctl-num-pre']
+    this.indicatorNums = [current, next, pre]
+  }
+
+  toNext(): void {
+    console.log(this.activity)
     const list = this.sliderList as Slider[]
     if (this.activity !== list.length) {
       this.activity += 1
     } else {
       this.activity = 1
-      
     }
+    console.log(this.activity)
+    this.changeIndicNum()
   }
 
-  prevSlider(): void {
+  toPrev(): void {
     if (this.activity !== 1) {
       this.activity -= 1
     } else {
       const list = this.sliderList as Slider[]
       this.activity = list.length
     }
+    this.changeIndicNum()
   }
 }
 </script>
 
 <style scoped>
-.swiper > ul, .swiper > ul > li {
-  height: inherit;
+.swiper,
+.swiper > ul,
+.slider-img，
+.current-hotel,
+.controler > ul,
+.prev-btn, .next-btn
+{
+  position: relative;
 }
 
-.swiper > ul {
-  position: relative;
+.swiper > ul, .swiper > ul > li {
+  height: inherit;
 }
 
 .slider {
@@ -159,7 +169,6 @@ export default class Swiper extends Vue {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  position: relative;
 }
 
 .img-body {
@@ -182,7 +191,7 @@ export default class Swiper extends Vue {
 .indicator {
   position: absolute;
   left: 50%;
-  bottom: 125px;
+  bottom: 100px;
   transform: translateX(-50%);
 
   width: 100%;
@@ -190,15 +199,13 @@ export default class Swiper extends Vue {
   font-size: 10px;
   font-weight: 400;
   color: white;
-  /* text-shadow: 0px 0px 2px #0008; */
 }
 
 .current-hotel {
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   height: 10px;
   text-transform: capitalize;
   margin-bottom: 10px;
-  position: relative;
 }
 
 .current-hotel > li {
@@ -224,20 +231,42 @@ export default class Swiper extends Vue {
 }
 
 .controler > ul {
+  width: 13px;
+  height: 13px;
   font-size: inherit;
   display: inline-block;
   vertical-align: top;
   transition: transform 500ms;
 }
 
-.prev, .next {
+.ctl-num {
+  position: absolute;
+  transition: transform 500ms,
+    opacity 500ms;
+}
+
+.ctl-num-pre {
+  transform: translateY(-13px);
+}
+
+.ctl-num-current {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.ctl-num-next {
+  transition: none;
+  transform: translateY(13px);
+  opacity: 0;
+}
+
+.prev-btn, .next-btn {
   height: 10px;
   display: inline-block;
-  position: relative;
   visibility: hidden;
 }
 
-.prev::before, .next::before {
+.prev-btn::before, .next-btn::before {
   visibility: visible;
   display: block;
   width: 30px;
@@ -249,13 +278,13 @@ export default class Swiper extends Vue {
   transform: translateY(-50%);
 }
 
-.prev::before {
+.prev-btn::before {
   content: "<";
   right: 5px;
   text-align: right;
 }
 
-.next::before {
+.next-btn::before {
   content: ">";
   left: 5px;
   text-align: left;
@@ -265,4 +294,12 @@ export default class Swiper extends Vue {
   opacity: 1 !important;
 }
 
+.hotel_logos {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 </style>
