@@ -12,7 +12,7 @@
         </div>
       </li>
     </ul>
-    <div class="controler">
+    <div class="indicator">
       <ul 
         class="current-hotel"
       >
@@ -21,12 +21,18 @@
           :class="{ activited: hotel.number == activity }"
         >HOSHINOYA {{ hotel.nameEN }}</li>
       </ul>
-      <div class="indicator">
+      <div class="controler">
         <div class="prev" @click="prevSlider">prev</div>
+<<<<<<< HEAD
         <ul ref="inicater">
           <li v-for="n in sliderList.length" :key="n">
             {{ n | numFilter }}
           </li>
+=======
+        <ul>
+          <li>{{ current | numFilter }}</li>
+          <li>{{ next | numFilter }}</li>
+>>>>>>> c614ad3cfee9f7573e2abf847645b6258d058900
         </ul>
         <span class="delimit">/</span>
         <span class="total">{{ sliderList.length }}</span>
@@ -55,6 +61,13 @@ interface Slider {
         return n.toString()
       }
     }
+  },
+  mounted(): void {
+    // @ts-ignore
+    this.timer = setTimeout(() => {
+      // @ts-ignore
+      console.log(this.activity)
+    }, 5)
   }
 })
 export default class Swiper extends Vue {
@@ -66,11 +79,13 @@ export default class Swiper extends Vue {
     opacity: 1,
     // transition: 'none'
   }
+
   get currentHotel(): string {
     const currentSlid =  (this.sliderList as Slider [])[this.activity - 1]
     return currentSlid.nameEN
   }
 
+<<<<<<< HEAD
   get indicateList(): Slider[] {
     const sliderList = this.sliderList as Slider[]
     return Array.prototype.concat(sliderList[sliderList.length - 1], sliderList, sliderList[0])
@@ -87,7 +102,35 @@ export default class Swiper extends Vue {
       this.activity = 1
       this.indicatStyle.opacity = 0
       this.indicatStyle.transform = 'translateY(0px)'
+=======
+  get current(): number {
+    return this.activity
+  }
 
+  get next(): number {
+    return this.activity
+  }
+
+  changeSlider(): void {
+    const list = this.sliderList as Slider[]
+    const el = this.$refs.indicator
+    if (this.activity !== list.length) {
+      this.activity += 1
+      this.$refs 
+    } else {
+      this.activity = 1
+      
+    }
+  }
+>>>>>>> c614ad3cfee9f7573e2abf847645b6258d058900
+
+  nextSlider(): void {
+    const list = this.sliderList as Slider[]
+    if (this.activity !== list.length) {
+      this.activity += 1
+    } else {
+      this.activity = 1
+      
     }
   }
 
@@ -143,7 +186,7 @@ export default class Swiper extends Vue {
 } 
 
 /* 控制器 */
-.controler {
+.indicator {
   position: absolute;
   left: 50%;
   bottom: 125px;
@@ -182,13 +225,12 @@ export default class Swiper extends Vue {
   margin: 0 3px
 }
 
-.indicator {
+.controler {
   height: 13px;
-  /* border: solid 1px; */
   overflow: hidden;
 }
 
-.indicator > ul {
+.controler > ul {
   font-size: inherit;
   display: inline-block;
   vertical-align: top;
