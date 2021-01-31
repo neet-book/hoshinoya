@@ -1,5 +1,6 @@
 <template>
   <div class="swiper">
+    <!-- 图片 -->
     <ul>
       <li 
         class="slider"
@@ -12,6 +13,7 @@
         </div>
       </li>
     </ul>
+    <!-- 轮播图控制 -->
     <div class="indicator">
       <ul 
         class="current-hotel"
@@ -38,6 +40,7 @@
         <div class="next-btn" @click="toNext">next</div>
       </div>
     </div>
+    <!-- logo -->
     <logo-anime class="hotel_logos" :current="activity" :logos="sliderList" />
   </div>
 </template>
