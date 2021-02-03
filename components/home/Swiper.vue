@@ -84,6 +84,7 @@ export default class Swiper extends Vue {
   // 活动的slider
   activity:number = 0
   timer: any = 0
+  // 节流
   delay = 1300
   prevTimestamp: number = 0
   nextTimestamp: number = 0
