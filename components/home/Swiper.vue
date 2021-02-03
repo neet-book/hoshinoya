@@ -40,8 +40,6 @@
         <div class="next-btn" @click="toNext">next</div>
       </div>
     </div>
-    <!-- logo -->
-    <logo-anime class="hotel_logos" :current="activity" :logos="sliderList" />
   </div>
 </template>
 
@@ -69,10 +67,7 @@ interface Slider {
   },
   mounted(): void {
     // @ts-ignore
-    this.timer = setTimeout(() => {
-      // @ts-ignore
-      console.log(this.activity)
-    }, 5)
+    this.timer = this.changeSlider(1)
   },
   filters: {
     numFilter(n: number): string {
@@ -86,8 +81,13 @@ interface Slider {
 })
 export default class Swiper extends Vue {
   @Prop(Array) sliderList: Slider[] | undefined
-  activity:number = 1
-  timer: number | undefined
+  // 活动的slider
+  activity:number = 0
+  timer: any = 0
+  // 节流
+  delay = 1300
+  prevTimestamp: number = 0
+  nextTimestamp: number = 0
   indicatorNums: indicNum[] = [
     { n: 1, number: 0, calss: ['ctl-num-pre'] },
     { n: 2, number: 1, calss: ['ctl-num-current'] },
@@ -99,17 +99,20 @@ export default class Swiper extends Vue {
     return currentSlid.nameEN
   }
 
-
-  changeSlider(): void {
-    const list = this.sliderList as Slider[]
-    const el = this.$refs.indicator
-    if (this.activity !== list.length) {
-      this.activity += 1
-      this.$refs 
+  changeSlider(toN: number): void {
+    const len = (this.sliderList as Slider[]).length
+    const current = this.activity
+    if (current + toN < 0) {
+      this.activity = len - Math.abs(current + toN)
+    } else if (current + toN > len) {
+      this.activity = (current + toN) - len
     } else {
-      this.activity = 1
-      
+      this.activity += toN
     }
+
+    this.$emit('slider-change', this.activity)
+    this.changeIndicNum()
+    this.timer = setTimeout(() => this.changeSlider(1), 4000)
   }
 
   changeIndicNum(): void {
@@ -122,25 +125,19 @@ export default class Swiper extends Vue {
   }
 
   toNext(): void {
-    console.log(this.activity)
-    const list = this.sliderList as Slider[]
-    if (this.activity !== list.length) {
-      this.activity += 1
-    } else {
-      this.activity = 1
+    if (Date.now() - this.nextTimestamp >= this.delay) {
+      this.nextTimestamp = Date.now()
+      clearTimeout(this.timer)
+      this.changeSlider(1)
     }
-    console.log(this.activity)
-    this.changeIndicNum()
   }
 
   toPrev(): void {
-    if (this.activity !== 1) {
-      this.activity -= 1
-    } else {
-      const list = this.sliderList as Slider[]
-      this.activity = list.length
+    if (Date.now() - this.prevTimestamp >= this.delay) {
+      this.prevTimestamp = Date.now()
+      clearTimeout(this.timer)
+      this.changeSlider(-1)
     }
-    this.changeIndicNum()
   }
 }
 </script>
@@ -154,6 +151,10 @@ export default class Swiper extends Vue {
 .prev-btn, .next-btn
 {
   position: relative;
+}
+
+.swiper {
+  height: inherit;
 }
 
 .swiper > ul, .swiper > ul > li {
