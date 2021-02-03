@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <swiper :slider-list="sliderList" class="top-slider" />
+    <div class="top-head">
+      <swiper :slider-list="sliderList" class="top-slider" />
+    </div>
   </div>
 </template>
 
@@ -61,7 +63,7 @@ export default class Index extends Vue {
 </script>
 
 <style>
-.top-slider {
+.top-head {
   height: 94vh;
 }
 </style>
