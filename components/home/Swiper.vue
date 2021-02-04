@@ -109,10 +109,9 @@ export default class Swiper extends Vue {
     } else {
       this.activity += toN
     }
-    this.$emit('change-slider', this.activity)
+    this.$emit('slider-change', this.activity)
     this.changeIndicNum()
     this.timer = setTimeout(() => this.changeSlider(1), 4000)
-    console.log(this.timer)
   }
 
   changeIndicNum(): void {
