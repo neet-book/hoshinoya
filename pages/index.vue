@@ -1,21 +1,28 @@
 <template>
   <div class="container">
     <div class="top-head">
-      <swiper :slider-list="sliderList" class="top-slider" />
+      <swiper :slider-list="hotels" class="top-slider" @slider-change="currentSlider" />
+    </div>
+    <div class="top-head-logo">
+      <logo-anime :logos="hotels" :current="currentSlider" />
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import Swiper from  '~/components/home/Swiper.vue'
+import LogoAnime from '~/components/home/LogoAnime.vue'
+
 @Component({
   components: {
-    Swiper
+    Swiper,
+    LogoAnime
   }
 })
 export default class Index extends Vue {
-  sliderList = [
+  currentSlider: number = 0
+  hotels = [
     {
       name: '富士',
       nameEN: 'fuji',

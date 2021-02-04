@@ -102,17 +102,17 @@ export default class Swiper extends Vue {
   changeSlider(toN: number): void {
     const len = (this.sliderList as Slider[]).length
     const current = this.activity
-    if (current + toN < 0) {
+    if (current + toN <= 0) {
       this.activity = len - Math.abs(current + toN)
     } else if (current + toN > len) {
       this.activity = (current + toN) - len
     } else {
       this.activity += toN
     }
-
-    this.$emit('slider-change', this.activity)
+    this.$emit('change-slider', this.activity)
     this.changeIndicNum()
     this.timer = setTimeout(() => this.changeSlider(1), 4000)
+    console.log(this.timer)
   }
 
   changeIndicNum(): void {
@@ -153,6 +153,11 @@ export default class Swiper extends Vue {
   position: relative;
 }
 
+.slider-img, .img-body {
+  height: 100%;
+  width: 100%;
+}
+
 .swiper {
   height: inherit;
 }
@@ -160,7 +165,7 @@ export default class Swiper extends Vue {
 .swiper > ul, .swiper > ul > li {
   height: inherit;
 }
-
+/* 滑块透明效果 */
 .slider {
   width: 100%;
   position: absolute;
@@ -170,25 +175,22 @@ export default class Swiper extends Vue {
 }
 
 .slider-img {
-  height: 100%;
-  width: 100%;
   overflow: hidden;
 }
 
+/* 滑块缩放效果 */
 .img-body {
-  width: 100%;
-  height: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 
-  transition:  12s;
+  transition:  20s;
   transition-property: transform;
   transition-delay: 900ms;
 }
 
 .activited > .slider-img > .img-body {
-  transform: scale(1.2);
+  transform: scale(1.1);
 } 
 
 /* 控制器 */
