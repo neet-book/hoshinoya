@@ -4,7 +4,7 @@
       <li 
         v-for="logo in logos" :key="logo.number" 
         class="logo"
-        :class="{ hidden: logo.number !== hiddenLogo, visible: logo.number == current}">
+        :class="{ hidden: logo.number === hiddenLogo, visible: logo.number == current}">
         <svg>
           <use v-bind="{ 'xlink:href': '#' + logo.logoname }"></use>
         </svg>
@@ -25,11 +25,12 @@ interface Logo {
 export default class LogoAnime extends Vue {
   @Prop(Array) logos: Logo[] | undefined
   @Prop(Number) current: number | undefined
+  prevLogo:number = 1
 
   get hiddenLogo() {
-    if (this.current - 1 <= 0) {
-      return this.logos.length
-    }
+    const prevLogo = this.prevLogo
+    this.prevLogo = this.current
+    return prevLogo
   }
 }
 </script>
@@ -57,21 +58,21 @@ svg {
 }
 
 .logo svg {
-  clip-path: circle(30px at 92px 30px);
+  clip-path: circle(50% at 150% 50%);
 }
 
 .visible svg {
   /* opacity: 1; */
-  clip-path: circle(30px at 30px 30px);
+  clip-path: circle(50% at 50% 50%);
   transition: clip-path;
-  transition-duration: 240ms;
+  transition-duration: 350ms;
   transition-delay: 240ms;
   transition-timing-function: cubic-bezier(.55,.085,.68,.53) !important;
 }
 
 .hidden svg {
-  clip-path: circle(30px at -62px 30px);
-  transition:all 240ms cubic-bezier(.55,.085,.68,.53) !important;
+  clip-path: circle(50% at -150% 50%);
+  transition:clip-path 350ms cubic-bezier(.55,.085,.68,.53) !important;
  
 }
 
