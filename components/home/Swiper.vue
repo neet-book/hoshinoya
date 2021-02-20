@@ -86,6 +86,7 @@ export default class Swiper extends Vue {
   timer: any = 0
   // 节流
   delay = 1300
+  interval = 4000
   prevTimestamp: number = 0
   nextTimestamp: number = 0
   indicatorNums: indicNum[] = [
@@ -111,7 +112,7 @@ export default class Swiper extends Vue {
     }
     this.$emit('slider-change', this.activity)
     this.changeIndicNum()
-    this.timer = setTimeout(() => this.changeSlider(1), 4000)
+    this.timer = setTimeout(() => this.changeSlider(1), this.interval)
   }
 
   changeIndicNum(): void {

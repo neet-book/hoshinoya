@@ -25,11 +25,11 @@ interface Logo {
 export default class LogoAnime extends Vue {
   @Prop(Array) logos: Logo[] | undefined
   @Prop(Number) current: number | undefined
-  prevLogo:number = 1
+  prevLogo:number = 0
 
   get hiddenLogo() {
     const prevLogo = this.prevLogo
-    this.prevLogo = this.current
+    this.prevLogo = this.current as number
     return prevLogo
   }
 }
@@ -73,7 +73,6 @@ svg {
 .hidden svg {
   clip-path: circle(50% at -150% 50%);
   transition:clip-path 350ms cubic-bezier(.55,.085,.68,.53) !important;
- 
 }
 
 </style>
