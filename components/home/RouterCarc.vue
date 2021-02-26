@@ -16,11 +16,13 @@
         ></div>
         </div>
         <div class="router-info" :class="{ active: mouseIn }">
-          <div class="router-name">{{ content.name }}</div>
-          <svg class="router-logo">
-            <use v-bind="{ 'xlink:href': '#' + content.logo }"></use>
-          </svg>
-          <p class="router-disc">{{ content.discription }}</p>
+          <div class="router-info-container">
+            <div class="router-name">{{ content.name }}</div>
+            <svg class="router-logo">
+              <use v-bind="{ 'xlink:href': '#' + content.logo }"></use>
+            </svg>
+            <p class="router-disc">{{ content.discription }}</p>
+          </div>
         </div>
       </div>
     </nuxt-link>
@@ -54,12 +56,16 @@ export default class RouterCard extends Vue {
       const container = this.$refs.container as HTMLElement
       const containerWidth = container.clientWidth
       const containerHeigh = container.clientHeight
-
+      // 计算鼠标位移
       const displacementX = this.displacementX + (x - this.positionX)
       const displacementY = this.displacementY + (y - this.positionY)
+      // 背景随鼠标偏移程度
+      // leve = 10 表示鼠标在x或y轴反向移动距离占容器长或宽的 10% 则背景偏移0.1%的距离
+      const level = 50
+      // 计算偏移量
+      this.offsetX = Math.round((displacementX / containerWidth) * 100) / level
+      this.offsetY = Math.round((displacementY / containerHeigh) * 100) / level
 
-      this.offsetX = Math.round((displacementX / containerWidth) * 100) / 100
-      this.offsetY = Math.round((displacementY / containerHeigh) * 100) / 100
       this.positionX = x
       this.positionY = y
       this.displacementX = displacementX
@@ -80,7 +86,6 @@ export default class RouterCard extends Vue {
 </script>
 
 <style scoped>
-
 .router-card-container {
   width: 100%;
 }
@@ -92,23 +97,33 @@ export default class RouterCard extends Vue {
   overflow: hidden;
 }
 
+.router-info {
+  font-family: NotoSerifCJKsc-Regular;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  text-align: center; 
+  color: white;
+  font-size: 28px;
+}
+
+.router-info-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.router-disc {
+  font-size: 15px;
+}
+
 .router-logo {
   width: 15px;
   height: 15px;
   fill: white;
-}
-
-.router-info {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); 
-}
-
-.router-info.active  {
-  background-color: rgb(0 0 0 / 57%);
 }
 
 .router-bg {
@@ -128,14 +143,12 @@ export default class RouterCard extends Vue {
   transition: transform 3600ms cubic-bezier(.165,.84,.44,1)
 }
 
-
-.router-bg-img.active {
-  transform: scale(1.1);
+.router-info.active  {
   background-color: rgb(0 0 0 / 57%);
 }
 
-
-.router-info {
-  color: white;
+.router-bg-img.active {
+  transform: scale(1.1);
 }
+
 </style>
