@@ -1,26 +1,30 @@
 <template>
   <div class="container">
-    <div class="top-head">
-      <swiper :slider-list="hotels" class="top-slider" v-on:slider-change="currentSlider = $event" />
-      <!-- logo -->
-      <div class="top-head-logo-container">
-        <div class="top-head-logos">
-          <div class="top-logoanime">
-            <div class="logo-border"></div>
-            <logo-anime :logos="hotels" :current="currentSlider" />
+    <header>
+      <div class="top-head">
+        <swiper :slider-list="hotels" class="top-slider" v-on:slider-change="currentSlider = $event" />
+        <!-- logo -->
+        <div class="top-head-logo-container">
+          <div class="top-head-logos">
+            <div class="top-logoanime">
+              <div class="logo-border"></div>
+              <logo-anime :logos="hotels" :current="currentSlider" />
+            </div>
+            <!-- 文字logo -->
+            <svg class="top-head-logo-text"><use xlink:href="#logo-hoshinoya-text"></use></svg>
+            <!-- logo -->
+            <svg><use xlink:href="#logo-hoshinoya-mark"></use></svg>
           </div>
-          <!-- 文字logo -->
-          <svg class="top-head-logo-text"><use xlink:href="#logo-hoshinoya-text"></use></svg>
-          <!-- logo -->
-          <svg><use xlink:href="#logo-hoshinoya-mark"></use></svg>
+          <div class="top-head-pagetitle">虹夕诺雅</div>
         </div>
-        <div class="top-head-pagetitle">虹夕诺雅</div>
+        <div class="top-head-title">探索精髓之旅</div>
       </div>
-      <div class="top-head-title">探索精髓之旅</div>
-    </div>
-    <div class="hotel-router">
-
-    </div>
+    </header>
+    <main>
+      <div class="hotel-router">
+        <router-card class="router-card" :content="hotels[0]" />
+      </div>
+    </main>
   </div>
 </template>
 
@@ -28,11 +32,13 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import Swiper from  '~/components/home/Swiper.vue'
 import LogoAnime from '~/components/home/LogoAnime.vue'
+import RouterCard from '~/components/home/RouterCarc.vue'
 
 @Component({
   components: {
     Swiper,
-    LogoAnime
+    LogoAnime,
+    RouterCard
   }
 })
 export default class Index extends Vue {
@@ -41,42 +47,44 @@ export default class Index extends Vue {
     {
       name: '富士',
       nameEN: 'fuji',
-      logoname: 'logo-hotel-fuji',
+      logo: 'logo-hotel-fuji',
       number: 1,
-      source: '/image/top_hero1_fuji.jpg'
+      source: '/image/top_hero1_fuji.jpg',
+      sourceSmall: '/image/card-3-fuji.jpg',
+      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
     },
     {
       name: '京都',
       nameEN: 'kyoto',
-      logoname: 'logo-hotel-kyoto',
+      logo: 'logo-hotel-kyoto',
       number: 2,
       source: '/image/top_hero2_kyoto.jpg'
     },
     {
       name: '轻泽',
       nameEN: 'karuizawa',
-      logoname: 'logo-hotel-karuizawa',
+      logo: 'logo-hotel-karuizawa',
       number: 3,
       source: '/image/top_hero3_karuizawa.jpg'
     },
     {
       name: '东京',
       nameEN: 'tokyo',
-      logoname: 'logo-hotel-tokyo',
+      logo: 'logo-hotel-tokyo',
       number: 4,
       source: '/image/top_hero4_tokyo.jpg'
     },
     {
       name: '嫩巴黎',
       nameEN: 'bali',
-      logoname: 'logo-hotel-bali',
+      logo: 'logo-hotel-bali',
       number: 5,
       source: '/image/top_hero5_bali.jpg'
     },
     {
       name: '冲绳',
       nameEN: 'okinawa',
-      logoname: 'logo-hotel-okinawa',
+      logo: 'logo-hotel-okinawa',
       number: 6,
       source: '/image/top_hero6_okinawa.jpg'
     }
@@ -146,5 +154,9 @@ export default class Index extends Vue {
   position: absolute;
   bottom: 170px;
   transform: translateX(-50%)
+}
+
+.router-card {
+  width: 30%;
 }
 </style>

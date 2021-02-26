@@ -2,11 +2,11 @@
   <div class="logo-anime">
     <ul>
       <li 
-        v-for="logo in logos" :key="logo.number" 
+        v-for="logo in logos" :key="logo.name" 
         class="logo"
         :class="{ hidden: logo.number === hiddenLogo, visible: logo.number == current}">
         <svg>
-          <use v-bind="{ 'xlink:href': '#' + logo.logoname }"></use>
+          <use v-bind="{ 'xlink:href': '#' + logo.logo }"></use>
         </svg>
       </li>
     </ul>
@@ -18,7 +18,7 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 interface Logo {
   number: number
-  logoname: string
+  logo: string
 }
 
 @Component

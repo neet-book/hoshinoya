@@ -1,0 +1,10 @@
+@font-face {
+    font-family: Helvetica-LT-55-Roman;
+    src: url('~static/fonts/Helvetica-LT-55-Roman.ttf');
+    font-family: NotoSansCJKsc-DemiLight;
+    src: url('~static/fonts/NotoSansCJKsc-DemiLight.woff2');
+    font-family: NotoSansCJKsc-Regular;
+    src: url('~static/fonts/NotoSansCJKsc-Regular.woff2');
+    font-family: NotoSerifCJKsc-Regular;
+    src: url('~static/fonts/NotoSerifCJKsc-Regular.woff2');
+}

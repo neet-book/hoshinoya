@@ -24,6 +24,7 @@ module.exports = {
   */
   css: [
     '~/assets/style/base.css',
+    '~/assets/style/fonts.css',
     '~/assets/style/normalize.css'
   ],
   /*
