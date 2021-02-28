@@ -21,7 +21,13 @@
             <svg class="router-logo">
               <use v-bind="{ 'xlink:href': '#' + content.logo }"></use>
             </svg>
-            <p class="router-disc">{{ content.discription }}</p>
+            <div
+              class="router-disc"
+              v-for="(txt, index) of content.discription.split('\n')"
+              :key="index"
+            >
+              {{ txt }}
+            </div>
           </div>
         </div>
       </div>
@@ -98,12 +104,17 @@ export default class RouterCard extends Vue {
 }
 
 .router-info {
-  font-family: NotoSerifCJKsc-Regular;
+  /* font-family: NotoSansCJKsc-DemiLight; */
+  font-family: NotoSansCJKsc-Regular;
+  /* font-family: NotoSerifCJKsc-Regular; */
+  /* font-family: Helvetica-LT-55-Roman; */
   position: absolute;
   width: 100%;
   height: 100%;
   top:0;
   left: 0;
+  bottom: 0;
+  right: 0;
   text-align: center; 
   color: white;
   font-size: 28px;
@@ -118,6 +129,8 @@ export default class RouterCard extends Vue {
 
 .router-disc {
   font-size: 15px;
+  font-weight: lighter;
+  box-sizing:border-box;
 }
 
 .router-logo {
@@ -135,7 +148,7 @@ export default class RouterCard extends Vue {
 
 .router-bg-img {
   width: 100%;
-  padding-bottom: 60%;
+  padding-bottom: 65%;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
