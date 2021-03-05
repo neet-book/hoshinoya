@@ -31,6 +31,22 @@
         </ul>
       </div>
     </main>
+    <footer>
+      <div class="footer-nav">
+        <nuxt-link to='/about'>关于我们</nuxt-link>
+        <div to='/booking'><div class="calendar"></div>客房预订</div>
+      </div>
+      <div class="footer-links">
+        <ul>
+          <li><a href="#" class="footer-link-notice">个人信息保护方针</a></li>
+          <li><a href="#" class="footer-link-notice">推荐使用环境</a></li>
+          <li><a href="#" class="footer-link-notice">希望使用图像的宾客</a></li>
+          <li><a href="#" class="footer-link-language">日本语</a></li>
+          <li><a href="#" class="footer-link-language">English</a></li>
+          <li><a href="#" class="footer-link-language">繁體中文</a></li>
+        </ul>
+      </div>
+    </footer>
   </div>
 </template>
 
