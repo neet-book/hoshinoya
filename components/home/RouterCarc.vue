@@ -1,6 +1,6 @@
 <template>
   <div class="router-card">
-    <nuxt-link calss='router-link' :to="'/hotel' + content.nameEN">
+    <nuxt-link calss='router-link' :to="'/hotel' + content.nameEN" v-if="JSON.stringify(content) !== '{}'">
       <div class="router-card-container"
         ref="container"
         @mousemove="onMousemove"
@@ -23,7 +23,7 @@
             </svg>
             <div
               class="router-disc"
-              v-for="(txt, index) of content.discription.split('\n')"
+              v-for="(txt, index) of discList"
               :key="index"
             >
               {{ txt }}
@@ -48,6 +48,13 @@ export default class RouterCard extends Vue {
     mouseIn: boolean = false
     displacementX: number = 0
     displacementY: number = 0
+
+    get discList() {
+      if (this.content.discription) {
+        return this.content.discription.split('\n')
+      }
+      return []
+    }
 
     onMousemove(event: MouseEvent):void {
       if (this.mouseIn === false) this.mouseIn = true
@@ -92,10 +99,9 @@ export default class RouterCard extends Vue {
 </script>
 
 <style scoped>
-.router-card-container {
+.router-card {
   width: 100%;
 }
-
 .router-link, .router-card-container {
   display: block;
   width: 100%;
@@ -104,10 +110,7 @@ export default class RouterCard extends Vue {
 }
 
 .router-info {
-  /* font-family: NotoSansCJKsc-DemiLight; */
   font-family: NotoSansCJKsc-Regular;
-  /* font-family: NotoSerifCJKsc-Regular; */
-  /* font-family: Helvetica-LT-55-Roman; */
   position: absolute;
   width: 100%;
   height: 100%;
