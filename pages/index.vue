@@ -2,13 +2,13 @@
   <div class="container">
     <header>
       <div class="top-head">
-        <swiper :slider-list="hotels" class="top-slider" v-on:slider-change="currentSlider = $event" />
+        <swiper :slider-list="hotels" class="top-slider" v-on:slider-change="topSlider = $event" />
         <!-- logo -->
         <div class="top-head-logo-container">
           <div class="top-head-logos">
             <div class="top-logoanime">
               <div class="logo-border"></div>
-              <logo-anime :logos="hotels" :current="currentSlider" />
+              <logo-anime :logos="hotels" :current="topSlider" />
             </div>
             <!-- 文字logo -->
             <svg class="top-head-logo-text"><use xlink:href="#logo-hoshinoya-text"></use></svg>
@@ -22,7 +22,11 @@
     </header>
     <main>
       <div class="hotel-router">
-        <router-card class="router-card" :content="hotels[0]" />
+        <ul>
+          <li v-for="content of hotels" :key="content.name">
+            <router-card class="router-card" :content="content" />
+          </li>
+        </ul>
       </div>
     </main>
   </div>
@@ -42,7 +46,7 @@ import RouterCard from '~/components/home/RouterCarc.vue'
   }
 })
 export default class Index extends Vue {
-  currentSlider: number = 1
+  topSlider: number = 1
   hotels = [
     {
       name: '富士',
