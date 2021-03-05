@@ -2,13 +2,13 @@
   <div class="container">
     <header>
       <div class="top-head">
-        <swiper :slider-list="hotels" class="top-slider" v-on:slider-change="currentSlider = $event" />
+        <swiper :slider-list="hotels" class="top-slider" v-on:slider-change="topSlider = $event" />
         <!-- logo -->
         <div class="top-head-logo-container">
           <div class="top-head-logos">
             <div class="top-logoanime">
               <div class="logo-border"></div>
-              <logo-anime :logos="hotels" :current="currentSlider" />
+              <logo-anime :logos="hotels" :current="topSlider" />
             </div>
             <!-- 文字logo -->
             <svg class="top-head-logo-text"><use xlink:href="#logo-hoshinoya-text"></use></svg>
@@ -22,7 +22,13 @@
     </header>
     <main>
       <div class="hotel-router">
-        <router-card class="router-card" :content="hotels[0]" />
+        <ul>
+          <li v-for="(cards, n) of cardList" :key="n">
+            <template v-for="card of cards">
+              <router-card :content="card" :key="card.name" />
+            </template>
+          </li>
+        </ul>
       </div>
     </main>
   </div>
@@ -42,7 +48,7 @@ import RouterCard from '~/components/home/RouterCarc.vue'
   }
 })
 export default class Index extends Vue {
-  currentSlider: number = 1
+  topSlider: number = 1
   hotels = [
     {
       name: '富士',
@@ -58,37 +64,75 @@ export default class Index extends Vue {
       nameEN: 'kyoto',
       logo: 'logo-hotel-kyoto',
       number: 2,
-      source: '/image/top_hero2_kyoto.jpg'
+      source: '/image/top_hero2_kyoto.jpg',
+      sourceSmall: '/image/card-3-fuji.jpg',
+      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
     },
     {
       name: '轻泽',
       nameEN: 'karuizawa',
       logo: 'logo-hotel-karuizawa',
       number: 3,
-      source: '/image/top_hero3_karuizawa.jpg'
+      source: '/image/top_hero3_karuizawa.jpg',
+      sourceSmall: '/image/card-3-fuji.jpg',
+      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
     },
     {
       name: '东京',
       nameEN: 'tokyo',
       logo: 'logo-hotel-tokyo',
       number: 4,
-      source: '/image/top_hero4_tokyo.jpg'
+      source: '/image/top_hero4_tokyo.jpg',
+      sourceSmall: '/image/card-3-fuji.jpg',
+      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
     },
     {
       name: '嫩巴黎',
       nameEN: 'bali',
       logo: 'logo-hotel-bali',
       number: 5,
-      source: '/image/top_hero5_bali.jpg'
+      source: '/image/top_hero5_bali.jpg',
+      sourceSmall: '/image/card-3-fuji.jpg',
+      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
     },
     {
-      name: '冲绳',
+      name: 'ko',
       nameEN: 'okinawa',
       logo: 'logo-hotel-okinawa',
-      number: 6,
-      source: '/image/top_hero6_okinawa.jpg'
+      number: 7,
+      source: '/image/top_hero6_okinawa.jpg',
+      sourceSmall: '/image/card-3-fuji.jpg',
+      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
+    },
+    {
+      name: 'fe',
+      nameEN: 'okinawa',
+      logo: 'logo-hotel-okinawa',
+      number: 8,
+      source: '/image/top_hero6_okinawa.jpg',
+      sourceSmall: '/image/card-3-fuji.jpg',
+      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
     }
   ]
+
+  get cardList() {
+    const hotels = this.hotels.reverse()
+    const len = 3;
+    const cardList = []
+    for (let index = 0; hotels.length > index;) {
+      cardList.push(hotels.slice(index, index + len))
+      index += len
+    }
+    const lastList = cardList[cardList.length - 1]
+    if (lastList.length < len) {
+      for(;lastList.length < len;) {
+        // @ts-ignore
+        lastList.push({})
+      }
+    }
+
+    return cardList
+  }
 }
 </script>
 
@@ -156,7 +200,11 @@ export default class Index extends Vue {
   transform: translateX(-50%)
 }
 
-.router-card {
-  width: 30%;
+.hotel-router > ul > li {
+  display: flex;
+  /* flex-wrap: nowrap; */
+
 }
+
+
 </style>

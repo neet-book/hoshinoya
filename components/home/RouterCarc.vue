@@ -1,6 +1,6 @@
 <template>
   <div class="router-card">
-    <nuxt-link calss='router-link' :to="'/hotel' + content.nameEN">
+    <nuxt-link calss='router-link' :to="'/hotel' + content.nameEN" v-if="JSON.stringify(content) !== '{}'">
       <div class="router-card-container"
         ref="container"
         @mousemove="onMousemove"
@@ -21,7 +21,13 @@
             <svg class="router-logo">
               <use v-bind="{ 'xlink:href': '#' + content.logo }"></use>
             </svg>
-            <p class="router-disc">{{ content.discription }}</p>
+            <div
+              class="router-disc"
+              v-for="(txt, index) of discList"
+              :key="index"
+            >
+              {{ txt }}
+            </div>
           </div>
         </div>
       </div>
@@ -42,6 +48,13 @@ export default class RouterCard extends Vue {
     mouseIn: boolean = false
     displacementX: number = 0
     displacementY: number = 0
+
+    get discList() {
+      if (this.content.discription) {
+        return this.content.discription.split('\n')
+      }
+      return []
+    }
 
     onMousemove(event: MouseEvent):void {
       if (this.mouseIn === false) this.mouseIn = true
@@ -86,10 +99,9 @@ export default class RouterCard extends Vue {
 </script>
 
 <style scoped>
-.router-card-container {
+.router-card {
   width: 100%;
 }
-
 .router-link, .router-card-container {
   display: block;
   width: 100%;
@@ -98,12 +110,14 @@ export default class RouterCard extends Vue {
 }
 
 .router-info {
-  font-family: NotoSerifCJKsc-Regular;
+  font-family: NotoSansCJKsc-Regular;
   position: absolute;
   width: 100%;
   height: 100%;
   top:0;
   left: 0;
+  bottom: 0;
+  right: 0;
   text-align: center; 
   color: white;
   font-size: 28px;
@@ -118,6 +132,8 @@ export default class RouterCard extends Vue {
 
 .router-disc {
   font-size: 15px;
+  font-weight: lighter;
+  box-sizing:border-box;
 }
 
 .router-logo {
@@ -135,7 +151,7 @@ export default class RouterCard extends Vue {
 
 .router-bg-img {
   width: 100%;
-  padding-bottom: 60%;
+  padding-bottom: 65%;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
