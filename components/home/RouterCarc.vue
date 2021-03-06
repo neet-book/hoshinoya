@@ -110,7 +110,7 @@ export default class RouterCard extends Vue {
 }
 
 .router-info {
-  font-family: NotoSansCJKsc-Regular;
+  font-family: NotoSansCJKsc-DemiLight;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -124,20 +124,25 @@ export default class RouterCard extends Vue {
 }
 
 .router-info-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  height: 100%;
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  justify-content: center;
+  /* transform: translate(-50%, -50%); */
 }
 
 .router-disc {
   font-size: 15px;
+  line-height: 1.2em;
+  letter-spacing: 0.1em;
   font-weight: lighter;
   box-sizing:border-box;
 }
 
 .router-logo {
-  width: 15px;
+  margin: 15px 0;
+  width: 100%;
   height: 15px;
   fill: white;
 }
