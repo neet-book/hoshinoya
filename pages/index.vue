@@ -216,11 +216,16 @@ export default class Index extends Vue {
   transform: translateX(-50%)
 }
 
-.hotel-router > ul > li {
-  display: flex;
-  /* flex-wrap: nowrap; */
-
+.hotel-router {
+  background-color: #121212;
 }
 
+.hotel-router > ul > li {
+  display: flex;
+}
+
+footer {
+  background-color: #000;
+}
 
 </style>
