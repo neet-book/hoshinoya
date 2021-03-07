@@ -33,8 +33,11 @@
     </main>
     <footer>
       <div class="footer-nav">
-        <nuxt-link to='/about'>关于我们</nuxt-link>
-        <div to='/booking'><div class="calendar"></div>客房预订</div>
+        <div class="footer-nav-container">
+          <nuxt-link to='/about'>关于我们</nuxt-link>
+          <div class="calendar"></div>
+          <div to='/booking'>客房预订</div>
+        </div>
       </div>
       <div class="footer-links">
         <ul>
@@ -225,7 +228,29 @@ export default class Index extends Vue {
 }
 
 footer {
+  padding: 50px 0;
   background-color: #000;
+}
+
+.footer-nav-container {
+  display: flex;
+  color: white;
+  font-size: 18px
+}
+
+.calendar {
+  width: 13px;
+  height: 13px;
+  background-image: url("~assets/svg/calendar.svg");
+}
+
+.footer-links > ul {
+  display: flex;
+}
+
+.footer-links > ul > li > a {
+  color: white;
+  text-decoration: none;
 }
 
 </style>
