@@ -10,3 +10,8 @@
     font-family: Helvetica-LT-55-Roman;
     src: url('~static/fonts/Helvetica-LT-55-Roman.ttf')
 }
+
+@font-face {
+    font-family: BauerBodoni;
+    src: url('~static/fonts/Bauer Bodoni Pro_1.woff2');
+}
