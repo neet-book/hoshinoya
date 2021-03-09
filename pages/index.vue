@@ -175,7 +175,7 @@ export default class Index extends Vue {
 }
 
 .top-head-logos {
-  width: 70px;
+  width: 60px;
 }
 
 .top-head-logo-text {
@@ -183,23 +183,27 @@ export default class Index extends Vue {
 }
 
 .top-logoanime {
-  height: 70px;
+  height: 60px;
 }
 
 .logo-border, .top-head-logos > svg {
   width: 100%;
-  height: 70px;
+  height: 60px;
 }
 
 .logo-border {
   box-sizing: border-box;
   position: absolute;
-  border: solid 8px white;
+  border: solid 6px white;
   border-radius: 50%;
 }
 
 .top-head-logos > svg{
   fill: #fff;
+}
+
+.top-head-pagetitle, .top-head-title {
+  font-family: hsn-zhcn-sans-regular, serif;
 }
 
 .top-head-pagetitle {
@@ -211,11 +215,11 @@ export default class Index extends Vue {
 }
 
 .top-head-title {
-  letter-spacing: 5px;
+  letter-spacing: 0.1em;
   left: 50%;
   color: #fff;
   position: absolute;
-  bottom: 170px;
+  bottom: 150px;
   transform: translateX(-50%)
 }
 

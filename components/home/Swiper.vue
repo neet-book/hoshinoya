@@ -197,12 +197,12 @@ export default class Swiper extends Vue {
 .indicator {
   position: absolute;
   left: 50%;
-  bottom: 100px;
+  bottom: 50px;
   transform: translateX(-50%);
 
   width: 100%;
   text-align: center;
-  font-size: 10px;
+  font-size: 5px;
   font-weight: 400;
   color: white;
 }
@@ -211,7 +211,7 @@ export default class Swiper extends Vue {
   letter-spacing: 1px;
   height: 10px;
   text-transform: capitalize;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .current-hotel > li {
@@ -221,6 +221,8 @@ export default class Swiper extends Vue {
   top: 0;
   opacity: 0;
   transition: opacity 500ms;
+
+  font-family: "Helvetica Neue LT W01_55 Roman";
 }
 
 .current-hotel > .activited {
