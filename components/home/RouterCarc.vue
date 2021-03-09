@@ -19,7 +19,7 @@
           <div class="router-info-container">
             <div class="router-name">{{ content.name }}</div>
             <svg class="router-logo">
-              <use v-bind="{ 'xlink:href': '#' + content.logo }"></use>
+              <use v-bind="{ 'xlink:href': '#' + content.logo + '-small'}"></use>
             </svg>
             <div
               class="router-disc"
@@ -101,6 +101,7 @@ export default class RouterCard extends Vue {
 <style scoped>
 .router-card {
   width: 100%;
+  font-family: hsn-zhcn-serif-light, serif;
 }
 .router-link, .router-card-container {
   display: block;
@@ -110,7 +111,6 @@ export default class RouterCard extends Vue {
 }
 
 .router-info {
-  font-family: NotoSansCJKsc-DemiLight;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -121,6 +121,7 @@ export default class RouterCard extends Vue {
   text-align: center; 
   color: white;
   font-size: 28px;
+  
 }
 
 .router-info-container {
@@ -129,22 +130,29 @@ export default class RouterCard extends Vue {
   align-content: center;
   flex-direction: column;
   justify-content: center;
-  /* transform: translate(-50%, -50%); */
+}
+
+.router-name {
+  text-shadow: rgb(0, 0, 0) 0px 0px 80px;
 }
 
 .router-disc {
   font-size: 15px;
-  line-height: 1.2em;
+  line-height: 1.5em;
   letter-spacing: 0.1em;
-  font-weight: lighter;
+  font-weight: 400;
   box-sizing:border-box;
+  text-shadow: rgb(0, 0, 0) 0px 0px 80px;
 }
 
 .router-logo {
+  /* border: solid 1px white;
+  border-radius: ; */
   margin: 15px 0;
   width: 100%;
-  height: 15px;
+  height: 16px;
   fill: white;
+  stroke: white;
 }
 
 .router-bg {

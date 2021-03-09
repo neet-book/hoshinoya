@@ -25,7 +25,7 @@ interface Logo {
 export default class LogoAnime extends Vue {
   @Prop(Array) logos: Logo[] | undefined
   @Prop(Number) current: number | undefined
-  prevLogo:number = 0
+  prevLogo:number = 1
 
   get hiddenLogo() {
     const prevLogo = this.prevLogo
