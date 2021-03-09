@@ -121,6 +121,7 @@ export default class RouterCard extends Vue {
   text-align: center; 
   color: white;
   font-size: 28px;
+  
 }
 
 .router-info-container {
@@ -129,7 +130,10 @@ export default class RouterCard extends Vue {
   align-content: center;
   flex-direction: column;
   justify-content: center;
-  /* transform: translate(-50%, -50%); */
+}
+
+.router-name {
+  text-shadow: rgb(0, 0, 0) 0px 0px 80px;
 }
 
 .router-disc {
@@ -138,6 +142,7 @@ export default class RouterCard extends Vue {
   letter-spacing: 0.1em;
   font-weight: 400;
   box-sizing:border-box;
+  text-shadow: rgb(0, 0, 0) 0px 0px 80px;
 }
 
 .router-logo {
