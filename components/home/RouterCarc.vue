@@ -1,6 +1,6 @@
 <template>
   <div class="router-card">
-    <nuxt-link calss='router-link' :to="'/hotel' + content.nameEN" v-if="JSON.stringify(content) !== '{}'">
+    <nuxt-link calss='router-link' :to="'/hotel/' + content.nameEN" v-if="JSON.stringify(content) !== '{}'">
       <div class="router-card-container"
         ref="container"
         @mousemove="onMousemove"
