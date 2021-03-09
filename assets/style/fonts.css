@@ -1,12 +1,45 @@
+
 @font-face {
-    font-family: Helvetica-LT-55-Roman;
-    src: url('~static/fonts/Helvetica-LT-55-Roman.ttf');
-    font-family: NotoSansCJKsc-DemiLight;
+    font-family: "hsn-zhcn-sans-demilight";
     src: url('~static/fonts/NotoSansCJKsc-DemiLight.woff2');
-    font-family: NotoSansCJKsc-Regular;
-    src: url('~static/fonts/NotoSansCJKsc-Regular.woff2');
-    font-family: NotoSerifCJKsc-Regular;
+}
+
+@font-face {
+    font-family: "hsn-zhcn-serif-regular";
+    src: url("~static/fonts/NotoSansCJKsc-Regular.woff2");
+}
+
+@font-face {
+    font-family: "hsn-zhcn-sans-regular";
     src: url('~static/fonts/NotoSerifCJKsc-Regular.woff2');
-    font-family: Helvetica-LT-55-Roman;
-    src: url('~static/fonts/Helvetica-LT-55-Roman.ttf')
+}
+
+@font-face {
+    font-family: "hsn-zhcn-serif-light";
+    src: url('~static/fonts/NotoSerifCJKsc-Light.woff2');
+}
+
+@font-face {
+    font-family: "hsn-zhcn-serif-medium";
+    src: url("~static/fonts/NotoSerifCJKsc-Medium.woff2");
+}
+
+@font-face {
+    font-family: "hsn-zhcn-serif-semibold";
+    src: url("~static/fonts/NotoSerifCJKsc-SemiBold.woff2");
+}
+
+@font-face {
+    font-family: "Bauer Bodoni Pro_1 W01 Roman";
+    src: url("~static/fonts/Bauer Bodoni Pro_1 W01 Roman.woff2");
+}
+
+@font-face {
+    font-family: "Bauer Bodoni Pro_1 W01 Italic";
+    src: url("~static/fonts/Bauer Bodoni Pro_1 W01 Italic.woff2");
+}
+
+@font-face {
+    font-family: "Helvetica Neue LT W01_55 Roman";
+    src: url("Helvetica Neue LT W01_55 Roman.woff2");
 }
