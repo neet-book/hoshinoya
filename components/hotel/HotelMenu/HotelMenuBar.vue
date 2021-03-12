@@ -1,36 +1,40 @@
 <template>
-  <div class="booking-menu">
-    <div class="menu-bar" @click="onClick">
-      <div class="menu-bar-icon">
-        <div class="menu-bar-icon-menu" :class="{ active: !active }">
-          <div class="icon-line"></div>
-          <div class="icon-line"></div>
-          <div class="icon-line"></div>
-        </div>
-        <div class="menu-bar-icon-close" :class="{ active: active }">
-        </div>
+  <div class="menu-bar" @click="onClick" :class="{ visible }">
+    <div class="menu-bar-icon">
+      <div class="menu-bar-icon-menu" :class="{ active: !active }">
+        <div class="icon-line"></div>
+        <div class="icon-line"></div>
+        <div class="icon-line"></div>
       </div>
-      <div class="nemu-bar-name" :class="{ show: showName }">HOSHINOYA {{ hotel | nameFilter }}</div>
+      <div class="menu-bar-icon-close" :class="{ active: active }">
+      </div>
     </div>
+    <div class="nemu-bar-name" :class="{ show: showName }">HOSHINOYA {{ hotel | nameFilter }}</div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Context } from '~/node_modules/@nuxt/types';
 @Component({
   filters: {
     nameFilter(name: string): string {
       return name.toUpperCase()
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      (this as any).visible = true
+    }, 200);
   }
 })
 export default class HotelBookingMenu extends Vue {
   @Prop(String) hotel: string | undefined
   @Prop(Boolean) showName: boolean | undefined
   active: boolean = false
-
+  visible: boolean = false
   onClick(): void {
     this.active = !this.active
-    this.$emit('menuo-open', this.active)
+    this.$emit('menu-open', this.active)
   }
 }
 </script>
@@ -39,14 +43,23 @@ export default class HotelBookingMenu extends Vue {
 <style scoped>
 .menu-bar {
   position: absolute;
-  height: 100%;
+  height: 0%;
   width: 110px;
   cursor: pointer;
-  transition: background-color 200ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  will-change: height;
+  background-color: #e6e6e6;
+  overflow: hidden;
+}
+
+.menu-bar.visible {
+  height: 100%;
+  background-color: #0000;
+  transition: 2000ms cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .menu-bar:hover {
   background-color: #e6e6e6;
+  transition: background-color 200ms cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .menu-bar::before {
@@ -103,7 +116,7 @@ export default class HotelBookingMenu extends Vue {
 
 .menu-bar-icon-menu.active {
   transform: scale(1, 1);
-  transition: transform 100ms cubic-bezier(.165,.84,.44,1);
+  transition: transform 400ms cubic-bezier(.165,.84,.44,1);
 }
 
 .icon-line {
