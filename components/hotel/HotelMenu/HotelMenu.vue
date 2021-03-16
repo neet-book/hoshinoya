@@ -1,13 +1,24 @@
 <template>
-  <div class="hotem-menu">
-    <hotel-menu-bar :hotel="hotel" />
-    <hotel-menu-area :hotel="hotel" />
+  <div class="hotel-menu">
+    <hotel-menu-bar :hotel-name="hotel.nameEn" class="menu-bar" @menu-click="inOpen = $event" />
+    <hotel-menu-area
+      :hotel-name="hotel.name" 
+      :logo="hotel.logo"
+      :rate-list="rateList"
+      :open="isOpen"
+      class="menu-area" />
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import HotelMenuBar from './HotelMenuBar.vue'
 import HotelMenuArea from './HotelMenuArea.vue'
+
+interface Hotel {
+  name: string
+  nameEn: string
+  logo: string
+}
 
 @Component({
   components: {
@@ -16,9 +27,20 @@ import HotelMenuArea from './HotelMenuArea.vue'
   }
 })
 export default class HotelMenu extends Vue {
-  @Prop(String) hotel: string | undefined
+  @Prop({ type: Object, required: true }) hotel: Hotel | undefined
+  @Prop({ type: Array, required: true }) rateList: any[] | undefined
+  isOpen : boolean = false
 }
 </script>
 
 <style scoped>
+.hotel-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+
 </style>

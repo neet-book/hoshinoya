@@ -14,11 +14,11 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { Context } from '~/node_modules/@nuxt/types';
+
 @Component({
   filters: {
     nameFilter(name: string): string {
-      return name.toUpperCase()
+      return name?.toUpperCase()
     }
   },
   mounted() {
