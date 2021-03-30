@@ -20,6 +20,7 @@
   "devDependencies": {
     "@nuxt/types": "^2.14.12",
     "@nuxt/typescript-build": "^2.0.3",
+    "axios": "^0.21.1",
     "nodemon": "^1.18.9",
     "nuxt-property-decorator": "^2.8.8"
   }

@@ -4,7 +4,7 @@
       <li 
         v-for="logo in logos" :key="logo.name" 
         class="logo"
-        :class="{ hidden: logo.number === hiddenLogo, visible: logo.number == current}">
+        :class="{ hidden: logo.number === hiddenLogo, visible: logo.number === current}">
         <svg>
           <use v-bind="{ 'xlink:href': '#' + logo.logo }"></use>
         </svg>
@@ -21,11 +21,16 @@ interface Logo {
   logo: string
 }
 
-@Component
+@Component({
+  mounted(): void {
+    // @ts-ignore
+    // this.prevLogo = this?.logos.length
+  }
+})
 export default class LogoAnime extends Vue {
   @Prop(Array) logos: Logo[] | undefined
-  @Prop(Number) current: number | undefined
-  prevLogo:number = 1
+  @Prop({ type: Number, default: 1 }) current: number | undefined
+  prevLogo: number | undefined
 
   get hiddenLogo() {
     const prevLogo = this.prevLogo
@@ -60,6 +65,11 @@ svg {
 .logo svg {
   clip-path: circle(50% at 150% 50%);
 }
+/* hidden 必须在 visible 前面 否则页面加载完成不会限时第一个logo */
+.hidden svg {
+  clip-path: circle(50% at -150% 50%);
+  transition:clip-path 350ms cubic-bezier(.55,.085,.68,.53) !important;
+}
 
 .visible svg {
   /* opacity: 1; */
@@ -68,11 +78,6 @@ svg {
   transition-duration: 350ms;
   transition-delay: 240ms;
   transition-timing-function: cubic-bezier(.55,.085,.68,.53) !important;
-}
-
-.hidden svg {
-  clip-path: circle(50% at -150% 50%);
-  transition:clip-path 350ms cubic-bezier(.55,.085,.68,.53) !important;
 }
 
 </style>

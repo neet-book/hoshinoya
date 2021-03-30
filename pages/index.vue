@@ -56,7 +56,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import Swiper from  '~/components/home/Swiper.vue'
 import LogoAnime from '~/components/home/LogoAnime.vue'
-import RouterCard from '~/components/home/RouterCarc.vue'
+import RouterCard from '~/components/home/RouterCard.vue'
 
 @Component({
   components: {
@@ -117,7 +117,7 @@ export default class Index extends Vue {
       name: 'ko',
       nameEN: 'okinawa',
       logo: 'logo-hotel-okinawa',
-      number: 7,
+      number: 6,
       source: '/image/top_hero6_okinawa.jpg',
       sourceSmall: '/image/card-3-fuji.jpg',
       discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
@@ -126,7 +126,7 @@ export default class Index extends Vue {
       name: 'fe',
       nameEN: 'okinawa',
       logo: 'logo-hotel-okinawa',
-      number: 8,
+      number: 7,
       source: '/image/top_hero6_okinawa.jpg',
       sourceSmall: '/image/card-3-fuji.jpg',
       discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'

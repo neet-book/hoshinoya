@@ -82,7 +82,7 @@ interface Slider {
 export default class Swiper extends Vue {
   @Prop(Array) sliderList: Slider[] | undefined
   // 活动的slider
-  activity:number = 0
+  activity:number = 1
   timer: any = 0
   // 节流
   delay = 1300
