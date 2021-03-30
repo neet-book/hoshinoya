@@ -54,7 +54,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import Swiper from  '~/components/home/Swiper.vue'
 import LogoAnime from '~/components/home/LogoAnime.vue'
-import RouterCard from '~/components/home/RouterCarc.vue'
+import RouterCard from '~/components/home/RouterCard.vue'
 
 @Component({
   components: {
