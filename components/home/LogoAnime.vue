@@ -21,12 +21,7 @@ interface Logo {
   logo: string
 }
 
-@Component({
-  mounted(): void {
-    // @ts-ignore
-    // this.prevLogo = this?.logos.length
-  }
-})
+@Component
 export default class LogoAnime extends Vue {
   @Prop(Array) logos: Logo[] | undefined
   @Prop({ type: Number, default: 1 }) current: number | undefined
@@ -65,6 +60,7 @@ svg {
 .logo svg {
   clip-path: circle(50% at 150% 50%);
 }
+
 /* hidden 必须在 visible 前面 否则页面加载完成不会限时第一个logo */
 .hidden svg {
   clip-path: circle(50% at -150% 50%);

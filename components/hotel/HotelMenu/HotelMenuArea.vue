@@ -196,16 +196,20 @@ export default class HotelMenuArea extends Vue {
 }
 
 .booking-button {
-  box-sizing: border-box;
   border-radius: 5px;
   width: 100%;
+  height: 110px;
+
+  cursor: pointer;
+
   vertical-align: baseline;
   font-size: 18px;
   letter-spacing: 1.2px;
-  height: 110px;
+  
   border-width: 1px;
   border-style: solid;
   border-color: #fff0;
+
   background-color: rgb(230, 230, 230);
   transition: border-color 200ms cubic-bezier(0.165, 0.84, 0.44, 1) 0s, 
     background-color 200ms cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
