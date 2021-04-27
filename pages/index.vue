@@ -276,7 +276,7 @@ footer {
   width: 13px;
   height: 100%;
   margin-right: 5px;
-  background-image: url("~assets/svg/calendar.svg");
+  background-image: url("~assets/svg/calendar-white.svg");
   background-position: center center;
   background-repeat: no-repeat;
 }

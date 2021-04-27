@@ -56,21 +56,30 @@
       <div class="room-booking">
         <div class="booking-button">
           <div class="booking-button-cont">
-            <div class="catalen"></div>客房预定
+            <div class="calendar"></div>客房预定
           </div>
         </div>
         <div class="hotel-hotline">
-          预约<span>+81-50-3786-1144</span> <span>( 10:00 - 18:00 / JPN TIME )</span>
+          预约<span class="phone-number">+81-50-3786-1144</span> <span class="time">( 10:00 - 18:00 / JPN TIME )</span>
         </div>
       </div>
-      
-      <div class="base-rate-list"></div>
+      <!-- 价格列表 -->
+      <div class="base-rate-list">
+        <hotel-rate-list />
+      </div>
+      <!-- 底部链接 -->
+      <div class="footer-link">
+        <div><nuxt-link to="/about">关于我们</nuxt-link> <nuxt-link to="/reservations">我的订单</nuxt-link></div>
+        <div><nuxt-link to="#">日本语</nuxt-link> <nuxt-link to="#">English</nuxt-link> <nuxt-link to="#">繁體中文</nuxt-link></div>
+      </div>
     </div>
-    <div class="menu-area-bar"><span>MENU</span></div>
+    
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import HotelRateList from '../HotelRateList.vue'
+
 interface RateInfo {
   hotel_id: number
   name: string
@@ -82,7 +91,9 @@ interface RateInfo {
 }
 
 
-@Component
+@Component({
+  components: { HotelRateList }
+})
 export default class HotelMenuArea extends Vue {
   @Prop(String) hotelName: string | undefined
   @Prop(Boolean) open: boolean | undefined
@@ -104,7 +115,7 @@ export default class HotelMenuArea extends Vue {
 <style scoped>
 .hotel-menu-area {
   position: absolute;
-  left: 110px;
+  left: 0;
   right: 0;
   top: 0;
   bottom: 0;
@@ -118,33 +129,12 @@ export default class HotelMenuArea extends Vue {
   margin: 0 auto;
 }
 
-.menu-area-bar {
-  width: 110px;
-  height: 100%;
-  position: relative;
-  font-family: BauerBodoni;
-  writing-mode: vertical-rl;
-  font-size: 11px;
-  vertical-align: middle;
-  letter-spacing: 1.8px;
-  word-break: break-all;
-  text-align: center;
-}
-
-.menu-area-bar > span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1em;
-}
 
 .menu-title {
   margin: 114px auto 0;
   padding-bottom: 50px;
   display: flex;
   justify-content: space-between;
-
 }
 
 .title-hotel-name {
@@ -157,6 +147,10 @@ export default class HotelMenuArea extends Vue {
 .title-logo > svg {
   width: 36px;
   height: 36px;
+}
+
+.link-list {
+  padding-bottom: 50px;
 }
 
 .link-list > ul > li {
@@ -195,11 +189,12 @@ export default class HotelMenuArea extends Vue {
   opacity: 0.5;
 }
 
+/* 预定按钮 */
 .booking-button {
+  box-sizing: border-box;
   border-radius: 5px;
   width: 100%;
   height: 110px;
-
   cursor: pointer;
 
   vertical-align: baseline;
@@ -227,4 +222,56 @@ export default class HotelMenuArea extends Vue {
   line-height: 108px;
 }
 
+.calendar {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-right: 5px;
+  background-image: url("~assets/svg/calendar-black.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.hotel-hotline {
+  font-size: 13px;
+  padding-top: 20px;
+}
+.hotel-hotline > .phone-number {
+  font-size: 19px;
+  margin: 0 10px
+}
+
+.hotel-hotline > .time {
+  font-size: 12px;
+  color: rgb(102, 102, 102);
+  letter-spacing: .4px;
+}
+
+.base-rate-list {
+  margin-top: 110px;
+}
+
+/* 分隔符 */
+.sparate
+{
+  content: "";
+  position: absolute; 
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 5px;
+  background-image: url('~assets/svg/slash-white.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.4;
+  background-position: center center;
+}
+
+
+@media screen and (max-width: 1280px) {
+  .menu-content-container {
+    width: 680px;
+    min-width: 680px;
+  }
+}
 </style>
