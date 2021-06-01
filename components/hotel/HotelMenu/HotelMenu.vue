@@ -1,14 +1,15 @@
 <template>
   <div class="hotel-menu">
-    <hotel-menu-bar :hotel-name="hotel.nameEn" class="menu-bar" @menu-click="inOpen = $event" />
+    <hotel-menu-bar :hotel-name="hotel.nameEn" class="menu-bar" @menu-click="isOpen = $event" />
     <hotel-menu-area
+      v-show="isOpen"
       :hotel-name="hotel.name"
       :logo="hotel.logo"
       :rate-list="rateList"
       :page="page"
       :open="isOpen"
       class="menu-area" />
-      <div class="menu-area-bar"><span>MENU</span></div>
+    <div class="menu-area-bar"><span>MENU</span></div>
   </div>
 </template>
 <script lang="ts">

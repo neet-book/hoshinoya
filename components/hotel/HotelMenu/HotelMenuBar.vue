@@ -34,7 +34,8 @@ export default class HotelBookingMenu extends Vue {
   visible: boolean = false
   onClick(): void {
     this.active = !this.active
-    this.$emit('menu-open', this.active)
+    console.log(this.active)
+    this.$emit('menu-click', this.active)
   }
 }
 </script>
@@ -49,12 +50,13 @@ export default class HotelBookingMenu extends Vue {
   will-change: height;
   background-color: #e6e6e6;
   overflow: hidden;
+  z-index: 999;
 }
 
 .menu-bar.visible {
   height: 100%;
   background-color: #0000;
-  transition: 2000ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: background-color 2000ms cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .menu-bar:hover {
@@ -129,6 +131,9 @@ export default class HotelBookingMenu extends Vue {
   width: 100%;
   height: 100%;
   background: url('~assets/svg/close.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
   transform: scale(0, 0); 
   transition: transform 100ms cubic-bezier(.165,.84,.44,1);
 }
@@ -138,5 +143,19 @@ export default class HotelBookingMenu extends Vue {
   transition: transform 400ms cubic-bezier(.165,.84,.44,1) 100ms
 }
 
+@media screen and (max-width: 950px) {
+  .menu-bar {
+    width: 60px;
+  }
 
+  .menu-bar-icon {
+    top: 26px;
+    width: 25px;
+    height: 25px;
+  }
+
+  .menu-bar::before {
+    height: 22px;
+  }
+}
 </style>

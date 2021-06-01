@@ -1,13 +1,13 @@
 <template>
   <div class="hotel-rate">
-    <div class="rate-left">
+    <div class="rate-left" v-if="rateInfo !== undefined">
         <div class="hotel-name">
           <svg class="hotel-logo"><use v-bind="{ 'xlink:href': `#logo-hotel-${ rateInfo.nameEn }-small-black` }"></use></svg>
           {{ rateInfo.name }}
         </div>
         <div>一晚一间<br>{{ rateInfo.price }}</div>
     </div>
-    <div class="hotel-picure">
+    <div class="hotel-picure" v-if="rateInfo !== undefined">
       <div class="img-body" :style="{ backgroundImage: `url(${rateInfo.picture})` }"></div>
     </div>
   </div>
@@ -26,7 +26,7 @@ interface RateInfo {
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 @Component
 export default class HotelRate extends Vue {
-  @Prop({ type: Object, required: true }) rateInfo: RateInfo | undefined
+  @Prop() rateInfo: RateInfo | undefined
 }
 </script>
 
@@ -76,5 +76,11 @@ export default class HotelRate extends Vue {
   font-size: 13px;
   line-height: 21px;
   color: #666;
+}
+
+@media screen and (max-width: 950px) {
+  .hotel-rate {
+    width: 100%;
+  }
 }
 </style>

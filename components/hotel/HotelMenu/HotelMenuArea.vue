@@ -1,5 +1,5 @@
 <template>
-  <div class="hotel-menu-area">
+  <div class="hotel-menu-area" :class="{ areaOpen: open }">
     <div class="menu-content-container">
       <!-- 标题 -->
       <div class="menu-title">

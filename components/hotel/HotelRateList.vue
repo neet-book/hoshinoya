@@ -1,7 +1,7 @@
 <template>
   <div class="hotel-rate-list">
     <ul>
-      <li v-for="rateInfo of rateInfoList" :key="rateInfo.hotel_id">
+      <li v-for="rateInfo of rateInfoList" :key="rateInfo ? rateInfo.hotel_id : null" class="card-li">
         <rate-card :rate-info="rateInfo" />
       </li>
     </ul>
@@ -18,75 +18,82 @@ import RateCard from  './RateCard.vue'
   }
 })
 export default class HotelRateList extends Vue {
-  rateInfoList= [
-    {
-    hotel_id: 1,
-    name: '富士',
-    nameEn: 'fuji',
-    copy: '',
-    price: 'Y67,000~',
-    unit: 'JPY',
-    picture:'/image/card-3-fuji.jpg'
-  },
-  {
-    hotel_id: 2,
-    name: '富士',
-    nameEn: 'fuji',
-    copy: '',
-    price: 'Y67,000~',
-    unit: 'JPY',
-    picture:'/image/card-3-fuji.jpg'
-  },
-  {
-    hotel_id: 3,
-    name: '富士',
-    nameEn: 'fuji',
-    copy: '',
-    price: 'Y67,000~',
-    unit: 'JPY',
-    picture:'/image/card-3-fuji.jpg'
-  },
-  {
-    hotel_id: 1,
-    name: '富士',
-    nameEn: 'fuji',
-    copy: '',
-    price: 'Y67,000~',
-    unit: 'JPY',
-    picture:'/image/card-3-fuji.jpg'
-  },{
-    hotel_id: 1,
-    name: '富士',
-    nameEn: 'fuji',
-    copy: '',
-    price: 'Y67,000~',
-    unit: 'JPY',
-    picture:'/image/card-3-fuji.jpg'
-  },{
-    hotel_id: 1,
-    name: '富士',
-    nameEn: 'fuji',
-    copy: '',
-    price: 'Y67,000~',
-    unit: 'JPY',
-    picture:'/image/card-3-fuji.jpg'
-  },{
-    hotel_id: 1,
-    name: '富士',
-    nameEn: 'fuji',
-    copy: '',
-    price: 'Y67,000~',
-    unit: 'JPY',
-    picture:'/image/card-3-fuji.jpg'
-  },{
-    hotel_id: 1,
-    name: '富士',
-    nameEn: 'fuji',
-    copy: '',
-    price: 'Y67,000~',
-    unit: 'JPY',
-    picture:'/image/card-3-fuji.jpg'
+  get rateInfoList() {
+    if (this.rateInfos && this.rateInfos.length % 3 === 2) {
+      this.rateInfos.push(undefined)
+    }
+
+    return this.rateInfos
   }
+  rateInfos: any[] = [
+    {
+      hotel_id: 1,
+      name: '富士',
+      nameEn: 'fuji',
+      copy: '',
+      price: 'Y67,000~',
+      unit: 'JPY',
+      picture:'/image/card-3-fuji.jpg'
+    },
+    {
+      hotel_id: 2,
+      name: '富士',
+      nameEn: 'fuji',
+      copy: '',
+      price: 'Y67,000~',
+      unit: 'JPY',
+      picture:'/image/card-3-fuji.jpg'
+    },
+    {
+      hotel_id: 3,
+      name: '富士',
+      nameEn: 'fuji',
+      copy: '',
+      price: 'Y67,000~',
+      unit: 'JPY',
+      picture:'/image/card-3-fuji.jpg'
+    },
+    {
+      hotel_id: 1,
+      name: '富士',
+      nameEn: 'fuji',
+      copy: '',
+      price: 'Y67,000~',
+      unit: 'JPY',
+      picture:'/image/card-3-fuji.jpg'
+    },{
+      hotel_id: 1,
+      name: '富士',
+      nameEn: 'fuji',
+      copy: '',
+      price: 'Y67,000~',
+      unit: 'JPY',
+      picture:'/image/card-3-fuji.jpg'
+    },{
+      hotel_id: 1,
+      name: '富士',
+      nameEn: 'fuji',
+      copy: '',
+      price: 'Y67,000~',
+      unit: 'JPY',
+      picture:'/image/card-3-fuji.jpg'
+    },{
+      hotel_id: 1,
+      name: '富士',
+      nameEn: 'fuji',
+      copy: '',
+      price: 'Y67,000~',
+      unit: 'JPY',
+      picture:'/image/card-3-fuji.jpg'
+    },{
+      hotel_id: 1,
+      name: '富士',
+      nameEn: 'fuji',
+      copy: '',
+      price: 'Y67,000~',
+      unit: 'JPY',
+      picture:'/image/card-3-fuji.jpg'
+    }
   ]
 
 //   get rateList() {
@@ -112,6 +119,13 @@ export default class HotelRateList extends Vue {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 950px) {
+  .hotel-rate-list > ul {
+    display: block;
+  }
+
 }
 
 </style>
