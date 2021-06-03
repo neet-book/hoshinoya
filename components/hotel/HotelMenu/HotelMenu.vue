@@ -1,15 +1,23 @@
 <template>
   <div class="hotel-menu">
-    <hotel-menu-bar :hotel-name="hotel.nameEn" class="menu-bar" @menu-click="isOpen = $event" />
-    <hotel-menu-area
-      v-show="isOpen"
-      :hotel-name="hotel.name"
-      :logo="hotel.logo"
-      :rate-list="rateList"
-      :page="page"
-      :open="isOpen"
-      class="menu-area" />
-    <div class="menu-area-bar"><span>MENU</span></div>
+    <hotel-menu-bar class="menu-bar" :hotel-name="hotel.nameEn"  @menu-click="isOpen = $event" />
+    <div class="menu-content-container" :class="{ 'content-open': isOpen }">
+      <hotel-menu-area
+        class="menu-area"
+        :hotel-name="hotel.name"
+        :logo="hotel.logo"
+        :rate-list="rateList"
+        :page="page"
+        :class="{ 
+          'area-visible': isOpen,
+          'area-hidden': !isOpen
+        }" 
+      />
+      <div
+        class="menu-text-bar"
+        :class="{ 'menu-text-bar-hidden': !isOpen }"
+      ><span>MENU</span></div>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -40,23 +48,50 @@ export default class HotelMenu extends Vue {
 
 <style scoped>
 .hotel-menu {
-  min-width: 920px;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
-  right: 0;
-  overflow: scroll;
+  width: 100vw;
 }
 
-.menu-bar {
-  position: fixed;
+.menu-content-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  background: white;
+  position: absolute;
+  left: -100%;
+  transition: left 400ms cubic-bezier(.165,.84,.44,1);
+  transition-delay: 100ms;
+}
+
+.area-visible {
+  opacity: 100;
+  transition: opacity 800ms cubic-bezier(.455,.03,.515,.955) 200ms;
+}
+
+.area-hidden {
+  opacity: 0;
+  transition: opacity 300ms cubic-bezier(.25,.46,.45,.94);
+  /* transition: opacity 100ms cubic-bezier(.455,.03,.515,.955) 200ms; */
+}
+
+.content-open {
   left: 0;
 }
 
-.menu-area-bar {
+.menu-bar {
+  position: absolute; 
+  left: 0;
+}
+
+
+
+.menu-text-bar {
   width: 110px;
-  height: 100%;
+  height: 100vh;
+  top: 0;
   right: 0;
   position: fixed;
   font-family: BauerBodoni;
@@ -66,14 +101,27 @@ export default class HotelMenu extends Vue {
   letter-spacing: 1.8px;
   word-break: break-all;
   text-align: center;
+
+  transition: opacity 400ms cubic-bezier(.165,.84,.44,1) 200ms;
 }
 
-.menu-area-bar > span {
-  position: fixed;
+.menu-text-bar > span {
+  position: absolute;
   top: 50%;
   right: 55px;
   transform: translate(-50%, -50%);
   width: 1em;
+}
+
+.menu-text-bar-hidden{
+  opacity: 0;
+}
+
+@media screen and (max-width: 950px) {
+  .menu-text-bar,
+  .menu-text-bar > span {
+    opacity: 0;
+  }
 }
 
 </style>

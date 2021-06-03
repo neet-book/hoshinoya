@@ -43,8 +43,8 @@ export default class HotelBookingMenu extends Vue {
 
 <style scoped>
 .menu-bar {
-  position: absolute;
-  height: 0%;
+  position: relative;
+  height: 100%;
   width: 110px;
   cursor: pointer;
   will-change: height;

@@ -1,5 +1,5 @@
 <template>
-  <div class="hotel-menu-area" :class="{ areaOpen: open }">
+  <div class="hotel-menu-area">
     <div class="menu-content-container">
       <!-- 标题 -->
       <div class="menu-title">
@@ -96,7 +96,6 @@ interface RateInfo {
 })
 export default class HotelMenuArea extends Vue {
   @Prop(String) hotelName: string | undefined
-  @Prop(Boolean) open: boolean | undefined
   @Prop(String) logo: string | undefined
   @Prop(Array) rateList: RateInfo[] | undefined
   @Prop(String) page: string | undefined
@@ -114,17 +113,17 @@ export default class HotelMenuArea extends Vue {
 
 <style scoped>
 .hotel-menu-area {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  display: flex; 
+  padding: 0 110px;
+  position: relative;
+  /* width: 100%; */
+  height: 100%;
+  overflow: auto;
 }
 
 .menu-content-container {
+  box-sizing: border-box;
+  padding: 0 10px 0 10px;
   width: 100%;
-  height: 100%;
   max-width: 840px;
   margin: 0 auto;
 }
@@ -269,9 +268,12 @@ export default class HotelMenuArea extends Vue {
 
 
 @media screen and (max-width: 1280px) {
-  .menu-content-container {
+.hotel-menu-area {
+  padding: 0 0 0 60px;
+}
+  /* .menu-content-container {
     width: 680px;
     min-width: 680px;
-  }
+  } */
 }
 </style>
