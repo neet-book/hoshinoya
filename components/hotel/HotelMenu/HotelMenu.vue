@@ -115,7 +115,9 @@ export default class HotelMenu extends Vue {
 
 .menu-text-bar-hidden{
   opacity: 0;
+  transition: opacity 200ms cubic-bezier(.165,.84,.44,1);
 }
+
 
 @media screen and (max-width: 950px) {
   .menu-text-bar,
