@@ -43,6 +43,9 @@ export default class HotelRate extends Vue {
 
 
 <style scoped>
+.hotel-rate {
+  cursor: pointer;
+}
 
 .hotel-rate > a {
   display: flex;
@@ -100,7 +103,7 @@ export default class HotelRate extends Vue {
 }
 
 @media screen and (max-width: 950px) {
-  .hotel-rate {
+  .hotel-rate > a {
     width: 100%;
   }
 }

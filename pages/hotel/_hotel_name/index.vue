@@ -3,8 +3,21 @@
     <hotel-menu :hotel="hotelInfo"  page='index' :rate-list="pageData.hotelRateList" />
     <header>
         <div class="hotel-header-container">
-            <div class="hotel-header-logo"></div>
-            <div class="hotel-header-title"></div>
+            <div class="hotel-header-logos">
+              <svg viewBox="0 0 114 114">
+                <use v-bind="{ 'xlink:href': '#' + hotelInfo.logo }"></use>
+              </svg>
+              <svg viewBox="0 0 114 114">
+                <use xlink:href="#logo-hoshinoya-text"></use>
+              </svg>
+              <svg viewBox="0 0 114 114">
+                <use xlink:href="#logo-hoshinoya-mark"></use>
+              </svg>
+            </div>
+            <div class="hotel-header-title">
+              虹夕诺雅<br />
+              <span class="header-title-name">{{ pageData.name }}</span>
+            </div>
             <div class="hotel-header-disc"></div>
         </div>
     </header>
@@ -99,5 +112,13 @@ export default class Hotel extends Vue {
 </script>
 
 <style scoped>
+.hotel-header-logos {
+  width: 48px;
+  margin: 0 auto;
+}
 
+.hotel-header-logos > svg {
+  /* fill: white; */
+  margin-top: 4px;
+}
 </style>

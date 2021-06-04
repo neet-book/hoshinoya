@@ -5,6 +5,7 @@
       <hotel-menu-area
         class="menu-area"
         :hotel-name="hotel.name"
+        :hotel-name-en="hotel.nameEn"
         :logo="hotel.logo"
         :rate-list="rateList"
         :page="page"
@@ -74,7 +75,6 @@ export default class HotelMenu extends Vue {
 .area-hidden {
   opacity: 0;
   transition: opacity 300ms cubic-bezier(.25,.46,.45,.94);
-  /* transition: opacity 100ms cubic-bezier(.455,.03,.515,.955) 200ms; */
 }
 
 .content-open {

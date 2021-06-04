@@ -2,15 +2,14 @@
   <div class="hotel-rate-list">
     <ul>
       <li v-for="rateInfo of rateInfoList" :key="rateInfo ? rateInfo.hotel_id : null" class="card-li">
-        <rate-card v-if="rateInfo !== null" :rate-info="rateInfo"  :disabled="false" />
+        <rate-card v-if="rateInfo !== null" :rate-info="rateInfo"  :disabled="rateInfo.nameEn === currentHotel" />
         <div v-else class="rate-info-placeholder"></div>
       </li>
     </ul>
-    
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import RateCard from  './RateCard.vue'
 
 @Component({
@@ -18,7 +17,9 @@ import RateCard from  './RateCard.vue'
     RateCard
   }
 })
+
 export default class HotelRateList extends Vue {
+  @Prop(String) currentHotel: string | undefined
   get rateInfoList() {
     let n: number = this.rateInfos ? this.rateInfos.length % 3 : 0
     if (n > 0) {
@@ -127,9 +128,21 @@ export default class HotelRateList extends Vue {
   justify-content: space-between;
 }
 
+.rate-info-placeholder {
+  width: 250px;
+  height: 80px;
+  padding: 25px 0;
+}
+
 @media screen and (max-width: 950px) {
   .hotel-rate-list > ul {
     display: block;
+  }
+
+  .rate-info-placeholder {
+    width: 0;
+    height: 0;
+    padding-left: 0;
   }
 
 }

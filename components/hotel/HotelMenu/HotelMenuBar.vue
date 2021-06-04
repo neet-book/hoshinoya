@@ -34,7 +34,6 @@ export default class HotelBookingMenu extends Vue {
   visible: boolean = false
   onClick(): void {
     this.active = !this.active
-    console.log(this.active)
     this.$emit('menu-click', this.active)
   }
 }

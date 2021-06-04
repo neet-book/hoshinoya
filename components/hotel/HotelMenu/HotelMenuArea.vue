@@ -65,12 +65,12 @@
       </div>
       <!-- 价格列表 -->
       <div class="base-rate-list">
-        <hotel-rate-list />
+        <hotel-rate-list :current-hotel="hotelNameEn" />
       </div>
       <!-- 底部链接 -->
       <div class="footer-link">
-        <div><nuxt-link to="/about">关于我们</nuxt-link> <nuxt-link to="/reservations">我的订单</nuxt-link></div>
-        <ul class="languages"><li>日本語</li><li>English</li><li>繁體中文</li></ul>
+        <div class="footer-links"><nuxt-link to="/about">关于我们</nuxt-link><div class="sparate"></div><nuxt-link to="/reservations">我的订单</nuxt-link></div>
+        <ul class="languages"><li>日本語</li><li class="sparate"></li><li>English</li><li class="sparate"></li><li>繁體中文</li></ul>
       </div>
     </div>
     
@@ -96,6 +96,7 @@ interface RateInfo {
 })
 export default class HotelMenuArea extends Vue {
   @Prop(String) hotelName: string | undefined
+  @Prop(String) hotelNameEn: string | undefined
   @Prop(String) logo: string | undefined
   @Prop(Array) rateList: RateInfo[] | undefined
   @Prop(String) page: string | undefined
@@ -125,12 +126,12 @@ export default class HotelMenuArea extends Vue {
   padding: 0 10px 0 10px;
   width: 100%;
   max-width: 840px;
-  margin: 0 auto;
+  margin: 114px auto;
 }
 
 
 .menu-title {
-  margin: 114px auto 0;
+  margin: 0px auto 0;
   padding-bottom: 50px;
   display: flex;
   justify-content: space-between;
@@ -248,34 +249,63 @@ export default class HotelMenuArea extends Vue {
 
 .base-rate-list {
   margin-top: 110px;
+  margin-bottom: 50px;
 }
 
 /* 底部链接 */
-.languages {
+/* .footer-links {
   
+} */
+
+.footer-links > a {
+  color: black;
+  font-size: 15px;
+  text-decoration: none;
+  vertical-align:top;
+}
+
+.languages {
+  margin-top: 82px;
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.languages > li {
+  cursor: pointer;
+  font-size: 13px;
+  color: black;
+  transition: color 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.languages > li:hover,
+.links > a:hover
+{
+  color: #bfbfbf;
 }
 
 /* 分隔符 */
 .sparate
 {
-  content: "";
-  position: absolute; 
-  top: 0;
-  right: 0;
-  height: 100%;
+  height: 14px;
   width: 5px;
-  background-image: url('~assets/svg/slash-white.svg');
+  margin: 0 15px;
+  background-image: url('~assets/svg/slash-black.svg');
   background-repeat: no-repeat;
   background-size: contain;
   opacity: 0.4;
   background-position: center center;
 }
 
-
-@media screen and (max-width: 1280px) {
-.hotel-menu-area {
-  padding: 0 0 0 60px;
+.footer-links > .sparate {
+  height: 18px;
+  display: inline-block;
+  vertical-align:top;
 }
 
+@media screen and (max-width: 1280px) {
+  .hotel-menu-area {
+    padding: 0 0 0 60px;
+  }
 }
 </style>
