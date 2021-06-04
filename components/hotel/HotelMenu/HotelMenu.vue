@@ -86,8 +86,6 @@ export default class HotelMenu extends Vue {
   left: 0;
 }
 
-
-
 .menu-text-bar {
   width: 110px;
   height: 100vh;

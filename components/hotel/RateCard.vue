@@ -1,15 +1,17 @@
 <template>
   <div class="hotel-rate">
-    <div class="rate-left" v-if="rateInfo !== undefined">
+    <a  @click="onClick">
+      <div class="rate-left" :class="{ 'is-disabled': disabled }">
         <div class="hotel-name">
-          <svg class="hotel-logo"><use v-bind="{ 'xlink:href': `#logo-hotel-${ rateInfo.nameEn }-small-black` }"></use></svg>
+          <svg class="hotel-logo" :class="{ 'is-disabled': disabled }"><use v-bind="{ 'xlink:href': `#logo-hotel-${ rateInfo.nameEn }-small-black` }"></use></svg>
           {{ rateInfo.name }}
         </div>
-        <div>一晚一间<br>{{ rateInfo.price }}</div>
-    </div>
-    <div class="hotel-picure" v-if="rateInfo !== undefined">
-      <div class="img-body" :style="{ backgroundImage: `url(${rateInfo.picture})` }"></div>
-    </div>
+        <div :class="{ 'is-disabled': disabled }">一晚一间<br>{{ rateInfo.price }}</div>
+      </div>
+      <div class="hotel-picure">
+        <div class="img-body" :style="{ backgroundImage: `url(${rateInfo.picture})` }"></div>
+      </div>
+    </a>
   </div>
 </template>
 <script lang="ts">
@@ -27,18 +29,31 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 @Component
 export default class HotelRate extends Vue {
   @Prop() rateInfo: RateInfo | undefined
+  @Prop({ type: Boolean, default: () => false }) disabled: boolean | undefined
+
+  onClick(event: Event) {
+    if (this.disabled) {
+      event.preventDefault()
+      return false
+    }
+    this.$router.push('/hotel/' + this.rateInfo?.nameEn)
+  }
 }
 </script>
 
 
 <style scoped>
-.hotel-rate {
+
+.hotel-rate > a {
   display: flex;
   width: 250px;
   height: 80px;
   padding: 25px 0;
   border-bottom: solid 1px #6662;
   justify-content: space-between;
+
+  text-decoration: none;
+  color: black;
 }
 
 .rate-left {
@@ -76,6 +91,12 @@ export default class HotelRate extends Vue {
   font-size: 13px;
   line-height: 21px;
   color: #666;
+}
+
+.is-disabled {
+  color: rgb(191, 191, 191) !important;
+  fill: rgb(191, 191, 191);
+  stroke: rgb(191, 191, 191);
 }
 
 @media screen and (max-width: 950px) {

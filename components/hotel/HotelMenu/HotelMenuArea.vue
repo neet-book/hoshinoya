@@ -70,7 +70,7 @@
       <!-- 底部链接 -->
       <div class="footer-link">
         <div><nuxt-link to="/about">关于我们</nuxt-link> <nuxt-link to="/reservations">我的订单</nuxt-link></div>
-        <div><nuxt-link to="#">日本语</nuxt-link> <nuxt-link to="#">English</nuxt-link> <nuxt-link to="#">繁體中文</nuxt-link></div>
+        <ul class="languages"><li>日本語</li><li>English</li><li>繁體中文</li></ul>
       </div>
     </div>
     
@@ -250,6 +250,11 @@ export default class HotelMenuArea extends Vue {
   margin-top: 110px;
 }
 
+/* 底部链接 */
+.languages {
+  
+}
+
 /* 分隔符 */
 .sparate
 {
@@ -271,9 +276,6 @@ export default class HotelMenuArea extends Vue {
 .hotel-menu-area {
   padding: 0 0 0 60px;
 }
-  /* .menu-content-container {
-    width: 680px;
-    min-width: 680px;
-  } */
+
 }
 </style>
