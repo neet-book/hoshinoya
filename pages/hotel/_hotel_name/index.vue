@@ -3,22 +3,25 @@
     <hotel-menu :hotel="hotelInfo"  page='index' :rate-list="pageData.hotelRateList" />
     <header>
         <div class="hotel-header-container">
-            <div class="hotel-header-logos">
-              <svg viewBox="0 0 114 114">
-                <use v-bind="{ 'xlink:href': '#' + hotelInfo.logo }"></use>
-              </svg>
-              <svg viewBox="0 0 114 114">
-                <use xlink:href="#logo-hoshinoya-text"></use>
-              </svg>
-              <svg viewBox="0 0 114 114">
-                <use xlink:href="#logo-hoshinoya-mark"></use>
-              </svg>
+            <div class="hotel-hotel-fonts">
+              <div class="hotel-header-logos">
+                <svg viewBox="0 0 114 114">
+                  <use v-bind="{ 'xlink:href': '#' + hotelInfo.logo }"></use>
+                </svg>
+                <svg viewBox="0 0 114 114">
+                  <use xlink:href="#logo-hoshinoya-text"></use>
+                </svg>
+                <svg viewBox="0 0 114 114">
+                  <use xlink:href="#logo-hoshinoya-mark"></use>
+                </svg>
+              </div>
+              <div class="hotel-header-title">
+                虹夕诺雅<br />
+                <span class="header-title-name">{{ pageData.name }}</span>
+              </div>
+              <div class="hotel-header-disc"></div>
             </div>
-            <div class="hotel-header-title">
-              虹夕诺雅<br />
-              <span class="header-title-name">{{ pageData.name }}</span>
-            </div>
-            <div class="hotel-header-disc"></div>
+            <div class="hotel-header-bg" :style="`background-image: url(/image/${pageData.nameEn}/hotel_header_background.jpg);`"></div>
         </div>
     </header>
   </div>
@@ -45,9 +48,9 @@ export default class Hotel extends Vue {
   }
 
   pageData = {
-    name: '冲绳',
-    nameEn: 'okinawa',
-    logo: 'logo-hotel-okinawa',
+    name: '轻井泽',
+    nameEn: 'karuizawa',
+    logo: 'logo-hotel-karuizawa',
     hotelRateList: [
       {
         'name': '轻井泽',
@@ -112,13 +115,35 @@ export default class Hotel extends Vue {
 </script>
 
 <style scoped>
+.hotel {
+  font-family: hsn-zhcn-serif-semibold, hsn-zhtw-serif-semibold, serif;
+}
+
+.hotel-header-container {
+  height: 1000px;
+  position: relative;
+}
+
 .hotel-header-logos {
   width: 48px;
   margin: 0 auto;
 }
 
 .hotel-header-logos > svg {
-  /* fill: white; */
+  fill: white;
   margin-top: 4px;
+}
+
+.hotel-header-bg {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 </style>

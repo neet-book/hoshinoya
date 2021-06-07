@@ -49,19 +49,24 @@ export default class HotelMenu extends Vue {
 
 <style scoped>
 .hotel-menu {
+  font-family: "Helvetica Neue LT W01_55 Roman", hsn-zhcn-sans-demilight, hsn-zhtw-sans-demilight, sans-serif;
+
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   width: 100vw;
+  z-index: 100;
 }
 
 .menu-content-container {
   width: 100%;
   height: 100%;
+  display: inline-block;
   overflow-y: hidden;
   background: white;
   position: absolute;
+  top: 0;
   left: -100%;
   transition: left 400ms cubic-bezier(.165,.84,.44,1);
   transition-delay: 100ms;
@@ -79,6 +84,7 @@ export default class HotelMenu extends Vue {
 
 .content-open {
   left: 0;
+  
 }
 
 .menu-bar {
