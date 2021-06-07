@@ -1,8 +1,10 @@
 <template>
   <div class="hotel">
     <hotel-menu :hotel="hotelInfo"  page='index' :rate-list="pageData.hotelRateList" />
-    <header>
+    <div class="hotel-page-container">
+      <header>
         <div class="hotel-header-container">
+          <div class="hotel-header-fonts">
             <div class="hotel-header-logos">
               <svg viewBox="0 0 114 114">
                 <use v-bind="{ 'xlink:href': '#' + hotelInfo.logo }"></use>
@@ -16,11 +18,17 @@
             </div>
             <div class="hotel-header-title">
               虹夕诺雅<br />
-              <span class="header-title-name">{{ pageData.name }}</span>
+              <span>{{ pageData.name }}</span>
             </div>
             <div class="hotel-header-disc"></div>
+          </div>
+          <div class="hotel-header-bg" :style="`background-image: url(/image/${pageData.nameEn}/hotel_page_top_background.jpg)`"></div>
         </div>
-    </header>
+      </header>
+      <main>
+        <div class="first-content" style="height: 100px;"></div>
+      </main>
+    </div>
   </div>
 </template>
 
@@ -48,6 +56,7 @@ export default class Hotel extends Vue {
     name: '冲绳',
     nameEn: 'okinawa',
     logo: 'logo-hotel-okinawa',
+    pageHeadBG: '',
     hotelRateList: [
       {
         'name': '轻井泽',
@@ -112,13 +121,50 @@ export default class Hotel extends Vue {
 </script>
 
 <style scoped>
+.hotel {
+  font-family: hsn-zhcn-serif-semibold, hsn-zhtw-serif-semibold, serif;
+}
+
+
+.hotel-header-container {
+  height: 1000px;
+  position: relative;
+  color: white;
+  border-bottom: 1px solid;
+  overflow: hidden;
+}
+
+.hotel-header-fonts {
+  margin-top: 132px;
+  text-align: center;
+}
+
 .hotel-header-logos {
   width: 48px;
   margin: 0 auto;
 }
 
 .hotel-header-logos > svg {
-  /* fill: white; */
+  fill: white;
   margin-top: 4px;
+}
+
+.hotel-header-title {
+  font-size: 21px;
+  line-height: 21px;
+  letter-spacing: 1.2px;
+  font-weight: 400;
+}
+
+.hotel-header-bg {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 </style>

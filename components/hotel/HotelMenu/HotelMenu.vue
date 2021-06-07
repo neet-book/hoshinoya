@@ -49,18 +49,17 @@ export default class HotelMenu extends Vue {
 
 <style scoped>
 .hotel-menu {
+  z-index: 2;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
-  width: 100vw;
 }
 
 .menu-content-container {
-  width: 100%;
+  width: 100vw;
   height: 100%;
   overflow-y: hidden;
-  background: white;
   position: absolute;
   left: -100%;
   transition: left 400ms cubic-bezier(.165,.84,.44,1);
@@ -79,11 +78,13 @@ export default class HotelMenu extends Vue {
 
 .content-open {
   left: 0;
+  background: white;
 }
 
 .menu-bar {
   position: absolute; 
   left: 0;
+  z-index: 100;
 }
 
 .menu-text-bar {
