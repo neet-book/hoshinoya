@@ -17,10 +17,17 @@
               </svg>
             </div>
             <div class="hotel-header-title">
-              虹夕诺雅<br />
-              <span>{{ pageData.name }}</span>
+              <p>虹夕诺雅</p>
+              <p>{{ pageData.name }}</p>
+              <h2 :class="{ 'text-visible': vi}">{{ pageData.copy }}</h2>
             </div>
-            <div class="hotel-header-disc"></div>
+            <div class="hotel-header-disc">
+              <template v-for="(text, i) of pageData.discription.split('\n')">
+                <template v-for="(char, n) of text">
+                  <span :style="'transiton-delay:' + i + n + 1 + 'ms' " :key="i + '-' + n">{{char}}</span>
+                </template><br :key="i + '--' + n">
+              </template>
+            </div>
           </div>
           <div class="hotel-header-bg" :style="`background-image: url(/image/${pageData.nameEn}/hotel_page_top_background.jpg)`"></div>
         </div>
@@ -40,10 +47,14 @@ import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
 @Component({
   components: {
     HotelMenu
+  },
+  mounted() {
+    // @ts-ignore
+    this.visible() 
   }
 })
 export default class Hotel extends Vue {
-
+  vi: boolean = false
   get hotelInfo() {
     return {
       name: this.pageData.name,
@@ -51,11 +62,20 @@ export default class Hotel extends Vue {
       logo: this.pageData.logo
     }
   }
+  
+  visible() {
+    setTimeout(() => {
+      this.vi = true
+    }, 1);
+  }
+  
 
   pageData = {
     name: '冲绳',
     nameEn: 'okinawa',
     logo: 'logo-hotel-okinawa',
+    copy: '在山谷的村落里聆听森林之声',
+    discription: '轻井泽的森林是诉说者。\n在路的尽头，他们向旅人低声私语。\n在柔和的阳光中，随风飘动的叶子摩擦的声音。\n不知从哪里传来的鸟鸣。草丛中潜伏的虫声。\n没有停歇的，细微的河水声传到耳边。\n万籁俱寂的村落，随着太阳升起，\n被森林丰富的声音包着。',
     pageHeadBG: '',
     hotelRateList: [
       {
@@ -150,10 +170,41 @@ export default class Hotel extends Vue {
 }
 
 .hotel-header-title {
+  margin-top: 12px;
+  transition: opacity 1200ms cubic-bezier(.445,.05,.55,.95);
+}
+.hotel-header-title > p{
+  padding: 0;
+  margin: 0;
+}
+/* page name */
+.hotel-header-title p:nth-child(1) {
   font-size: 21px;
   line-height: 21px;
   letter-spacing: 1.2px;
-  font-weight: 400;
+  font-weight: 400; 
+  padding-top: 10px;
+}
+/* title */
+.hotel-header-title > h2 {
+  opacity: 0;
+  margin-top: 10px;
+  font-family: inherit;
+  font-size: 38px; 
+  line-height: 32px;
+  letter-spacing: 2px;
+  text-shadow: rgba(4, 0, 0, 0.6) 0px 0px 80px;
+  transition: opacity 1200ms cubic-bezier(.445,.05,.55,.95);
+}
+
+.text-visible {
+  opacity: 1 !important;
+}
+.hotel-header-disc {
+  font-size: 18px;
+  letter-spacing: 1.8px;
+  line-height: 32px;
+  text-shadow: 0 0 80px rgb(4 0 0 / 60%);
 }
 
 .hotel-header-bg {

@@ -123,7 +123,8 @@ export default class HotelBookingMenu extends Vue {
 .icon-line {
   width: 100%;
   height: 1px;
-  background: black;
+  background: white;
+  border-bottom: 1px solid white;
 }
 
 .menu-bar-icon-close {
