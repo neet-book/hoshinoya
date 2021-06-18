@@ -19,13 +19,29 @@
             <div class="hotel-header-title">
               <p>虹夕诺雅</p>
               <p>{{ pageData.name }}</p>
-              <h2 :class="{ 'text-visible': vi}">{{ pageData.copy }}</h2>
+              <h2> 
+                <template v-for="(row, row_index) of pageData.copy.split('\n')">
+                  <span 
+                    v-for="(char, char_index) of row"
+                    :class="{'text-visible': vi}"
+                    :style="`transition-delay: ${ delayTime(row_index, char_index, row.length, pageData.copy) }ms`" 
+                    :key="`lien-${row_index}-${char_index}`"
+                  >{{ char }}
+                  </span>
+                  <br :key="`-${row_index}`"> 
+                </template>
+              </h2>
             </div>
-            <div class="hotel-header-disc">
-              <template v-for="(text, i) of pageData.discription.split('\n')">
-                <template v-for="(char, n) of text">
-                  <span :style="'transiton-delay:' + i + n + 1 + 'ms' " :key="i + '-' + n">{{char}}</span>
-                </template><br :key="i + '--' + n">
+            <div class="hotel-header-disc" >
+              <template v-for="(row, row_index) of pageData.discription.split('\n')">
+                <template v-for="(char, char_index) of row">
+                  <span
+                    :class="{ 'text-visible': vi}"
+                    :style="`transition-delay: ${delayTime(row_index, char_index, row.length, pageData.discription, 10)}ms`" 
+                    :key="row_index + '-' + char_index"
+                  >{{char}}</span>
+                </template>
+                <br :key="row_index">
               </template>
             </div>
           </div>
@@ -33,7 +49,9 @@
         </div>
       </header>
       <main>
-        <div class="first-content" style="height: 100px;"></div>
+        <div class="first-content" style="height: 100px;">
+          <buttn @click="vi = !vi" style="padding-left: 20px;">change</buttn>
+        </div>
       </main>
     </div>
   </div>
@@ -49,8 +67,11 @@ import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
     HotelMenu
   },
   mounted() {
-    // @ts-ignore
-    this.visible() 
+    const that: any = this
+    setTimeout(() => {
+      console.log('timeout')
+      that.vi = true
+    }, 200);
   }
 })
 export default class Hotel extends Vue {
@@ -62,19 +83,29 @@ export default class Hotel extends Vue {
       logo: this.pageData.logo
     }
   }
+
   
-  visible() {
-    setTimeout(() => {
-      this.vi = true
-    }, 1);
+  delayTime(rowIndex: number, charIndex: number, charCount: number, text: string, level=100): number {
+    const rowCount = text.split('\n').length
+    // 最后一行
+    if (rowIndex + 1 === rowCount) {
+      return level * (charCount - charIndex) + level
+    }
+
+    // 第一行
+    if (rowIndex === 0) {
+      if (charIndex === 0) return 0
+      return 10 * charIndex + level
+    }
+
+    return level
   }
-  
 
   pageData = {
     name: '冲绳',
     nameEn: 'okinawa',
     logo: 'logo-hotel-okinawa',
-    copy: '在山谷的村落里聆听森林之声',
+    copy: '在山谷的\n村落里聆听\n森林之声',
     discription: '轻井泽的森林是诉说者。\n在路的尽头，他们向旅人低声私语。\n在柔和的阳光中，随风飘动的叶子摩擦的声音。\n不知从哪里传来的鸟鸣。草丛中潜伏的虫声。\n没有停歇的，细微的河水声传到耳边。\n万籁俱寂的村落，随着太阳升起，\n被森林丰富的声音包着。',
     pageHeadBG: '',
     hotelRateList: [
@@ -171,7 +202,6 @@ export default class Hotel extends Vue {
 
 .hotel-header-title {
   margin-top: 12px;
-  transition: opacity 1200ms cubic-bezier(.445,.05,.55,.95);
 }
 .hotel-header-title > p{
   padding: 0;
@@ -187,19 +217,15 @@ export default class Hotel extends Vue {
 }
 /* title */
 .hotel-header-title > h2 {
-  opacity: 0;
   margin-top: 10px;
   font-family: inherit;
   font-size: 38px; 
   line-height: 32px;
   letter-spacing: 2px;
   text-shadow: rgba(4, 0, 0, 0.6) 0px 0px 80px;
-  transition: opacity 1200ms cubic-bezier(.445,.05,.55,.95);
 }
 
-.text-visible {
-  opacity: 1 !important;
-}
+
 .hotel-header-disc {
   font-size: 18px;
   letter-spacing: 1.8px;
@@ -218,4 +244,17 @@ export default class Hotel extends Vue {
   left: 0;
   z-index: -1;
 }
+
+.hotel-header-title > h2 > span,
+.hotel-header-disc > span {
+  transition: all 500ms cubic-bezier(.445,.05,.55,.95);
+  /* transition: opacity 500ms cubic-bezier(.445,.05,.55,.95); */
+  opacity: 0;
+}
+
+
+.text-visible {
+  opacity: 1 !important;
+}
+
 </style>
