@@ -9,3 +9,8 @@ const RateInfoSchema = new Schema ({
     copy: String
 })
 
+
+
+module.exports = {
+    RateInfoSchema
+}

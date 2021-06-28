@@ -9,8 +9,10 @@
   </div>
 </template>
 <script lang="ts">
+
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import RateCard from  './RateCard.vue'
+import { HotelRateInfo } from '~/components/hotel/hotel'
 
 @Component({
   components: {
@@ -23,14 +25,16 @@ export default class HotelRateList extends Vue {
   get rateInfoList() {
     let n: number = this.rateInfos ? this.rateInfos.length % 3 : 0
     if (n > 0) {
+      // 填充列表直至能被3整除
       n = 3 - n
+      const rateInfos: any = this.rateInfos
       for (let i = 0; i < n; i++) {
-        this.rateInfos.push(null)
+        rateInfos.push(null)
       }
     }
     return this.rateInfos
   }
-  rateInfos: any[] = [
+  rateInfos: HotelRateInfo[]= [
     // {
     //   hotel_id: 1,
     //   name: '富士',
@@ -84,22 +88,20 @@ export default class HotelRateList extends Vue {
     //   picture:'/image/card-3-fuji.jpg'
     // },
     {
-      hotel_id: 1,
-      name: '富士',
-      nameEn: 'fuji',
+      hotelId: 1,
+      hotelName: '富士',
+      hotelNameEn: 'fuji',
       copy: '',
       price: 'Y67,000~',
       unit: 'JPY',
-      picture:'/image/card-3-fuji.jpg'
     },
     {
-      hotel_id: 1,
-      name: '富士',
-      nameEn: 'fuji',
+      hotelId: 1,
+      hotelName: '富士',
+      hotelNameEn: 'fuji',
       copy: '',
       price: 'Y67,000~',
       unit: 'JPY',
-      picture:'/image/card-3-fuji.jpg'
     }
   ]
 
@@ -146,5 +148,4 @@ export default class HotelRateList extends Vue {
   }
 
 }
-
 </style>
