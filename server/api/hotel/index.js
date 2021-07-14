@@ -5,12 +5,19 @@ const router = new Router()
 const HotelRateInfo = require('../dbs/models/HotelRateInfo')
 
 router.get('/hotel_rate_info', async (ctx) => {
-    console.log('hotel_rate_infooooo')
     const rateInfos = await HotelRateInfo.find()
-    ctx.body = {
-        code: 1,
-        msg: 'ok',
-        data: rateInfos
+    if (rateInfos) {
+        ctx.body = {
+            code: 1,
+            msg: 'ok',
+            data: rateInfos
+        }
+    } else {
+        ctx.body = {
+            code: 0,
+            msg: 'No data',
+            data: null
+        }
     }
 })
 
