@@ -1,7 +1,12 @@
 const Koa = require('koa')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
-const { appLoger, accessLogger } = require('./log/logger')
+const { databaseLogger, accessLogger } = require('./api/logging')
+const mongoose = require('mongoose')
+const { dbs } = require('./config')
+
+const hotelRouter = require('./api/hotel')
+
 const app = new Koa()
 
 
@@ -18,6 +23,19 @@ async function start () {
     port = process.env.PORT || 3000
   } = nuxt.options.server
 
+  mongoose.connect(dbs.uri, {
+    user: dbs.username,
+    pass: dbs.password,
+    bufferCommands: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }).then(() => {
+    databaseLogger.info(`[${dbs.dbName}] connect successed`)
+  }).catch(err => {
+    databaseLogger.error(`[${dbs.dbName}] ${err}`)
+  })
+  
+
   await nuxt.ready()
 
   // Build in development
@@ -28,6 +46,10 @@ async function start () {
     await nuxt.ready()
   }
 
+
+  app.use(hotelRouter.routes()).use(hotelRouter.allowedMethods())
+  app.use(accessLogger())
+
   app.use((ctx) => {
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling
@@ -35,7 +57,6 @@ async function start () {
     nuxt.render(ctx.req, ctx.res)
   })
 
-  app.use(accessLogger())
   
   app.listen(port, host)
   consola.ready({
