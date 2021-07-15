@@ -67,6 +67,7 @@ export default class RouterCard extends Vue {
         return
       }
       const container = this.$refs.container as HTMLElement
+      if (container === undefined) return
       const containerWidth = container.clientWidth
       const containerHeigh = container.clientHeight
       // 计算鼠标位移

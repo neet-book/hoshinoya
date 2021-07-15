@@ -65,7 +65,7 @@
       </div>
       <!-- 价格列表 -->
       <div class="base-rate-list">
-        <hotel-rate-list :current-hotel="hotelNameEn" />
+        <hotel-rate-list :current-hotel="hotelNameEn" :rate-infos="$store.state.rateInfoList"/>
       </div>
       <!-- 底部链接 -->
       <div class="footer-link">
@@ -80,25 +80,15 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import HotelRateList from '../HotelRateList.vue'
 
-interface RateInfo {
-  hotel_id: number
-  name: string
-  name_en: string
-  copy: string
-  price: number | string
-  unit?: string
-  type?: string
-}
-
 
 @Component({
   components: { HotelRateList }
 })
+
 export default class HotelMenuArea extends Vue {
   @Prop(String) hotelName: string | undefined
   @Prop(String) hotelNameEn: string | undefined
   @Prop(String) logo: string | undefined
-  @Prop(Array) rateList: RateInfo[] | undefined
   @Prop(String) page: string | undefined
 
   get nameEn(): string {

@@ -1,11 +1,10 @@
 <template>
   <div class="hotel">
-    <hotel-menu :hotel="hotelInfo"  page='index' :rate-list="pageData.hotelRateList" />
+    <hotel-menu :hotel="hotelInfo"  page='index' /> 
     <div class="hotel-page-container">
-      {{testStore}}
       <main>
         <div class="first-content" style="height: 400px;">
-          <buttn @click="vi = !vi" style="padding-left: 20px;">change</buttn>
+          <button @click="vi = !vi" style="padding-left: 20px;">change</button>
         </div>
       </main>
     </div>
@@ -15,16 +14,19 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
-
+import { getHotelRateInfo } from '~/utils/network'
 
 @Component({
   components: {
     HotelMenu
   },
+   async fetch({ store, params}) {
+    const data = await getHotelRateInfo()
+    store.commit('updateRateInfo', data)
+  },
   mounted() {
     const that: any = this
     setTimeout(() => {
-      console.log('timeout')
       that.vi = true
     }, 200);
     this.$store.commit('updateName', 'okinawa')
@@ -34,11 +36,6 @@ import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
 export default class Hotel extends Vue {
   vi: boolean = false
 
-  get testStore(){
-    console.log(this.$store.state)
-    return this.$store.state.hotelName
-  }
-
   get hotelInfo() {
     return {
       name: this.pageData.name,
@@ -46,7 +43,6 @@ export default class Hotel extends Vue {
       logo: this.pageData.logo
     }
   }
-
   
   delayTime(rowIndex: number, charIndex: number, charCount: number, text: string, level=100): number {
     const rowCount = text.split('\n').length

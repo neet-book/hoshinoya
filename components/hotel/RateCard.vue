@@ -3,8 +3,9 @@
     <a  @click="onClick">
       <div class="rate-left" :class="{ 'is-disabled': disabled }">
         <div class="hotel-name">
-          <svg class="hotel-logo" :class="{ 'is-disabled': disabled }"><use v-bind="{ 'xlink:href': `#logo-hotel-${ rateInfo.nameEn }-small-black` }"></use></svg>
-          {{ rateInfo.name }}
+          <svg class="hotel-logo" :class="{ 'is-disabled': disabled }">
+          <use v-bind="{ 'xlink:href': `#logo-hotel-${ rateInfo.hotelNameEn }-small` }"></use></svg>
+          {{ rateInfo.hotelName }}
         </div>
         <div :class="{ 'is-disabled': disabled }">一晚一间<br>{{ rateInfo.price }}</div>
       </div>
@@ -15,28 +16,20 @@
   </div>
 </template>
 <script lang="ts">
-interface RateInfo {
-  hotel_id: number
-  name: string
-  nameEn: string
-  copy: string
-  price: number | string
-  unit?: string
-  type?: string
-}
-
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { RateInfo } from './HotelRateList.vue'
+
 @Component
 export default class HotelRate extends Vue {
   @Prop() rateInfo: RateInfo | undefined
   @Prop({ type: Boolean, default: () => false }) disabled: boolean | undefined
-
+  
   onClick(event: Event) {
     if (this.disabled) {
       event.preventDefault()
       return false
     }
-    this.$router.push('/hotel/' + this.rateInfo?.nameEn)
+    this.$router.push('/hotel/' + this.rateInfo?.hotelNameEn)
   }
 }
 </script>

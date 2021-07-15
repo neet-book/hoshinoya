@@ -30,8 +30,10 @@ async function start () {
     useNewUrlParser: true,
     useUnifiedTopology: true
   }).then(() => {
+    console.log('数据库链接成功')
     databaseLogger.info(`[${dbs.dbName}] connect successed`)
   }).catch(err => {
+    console.log('数据库链接失败')
     databaseLogger.error(`[${dbs.dbName}] ${err}`)
   })
   

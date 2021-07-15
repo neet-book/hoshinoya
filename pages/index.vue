@@ -63,7 +63,7 @@ import RouterCard from '~/components/home/RouterCard.vue'
     Swiper,
     LogoAnime,
     RouterCard
-  }
+  },
 })
 export default class Index extends Vue {
   topSlider: number = 1

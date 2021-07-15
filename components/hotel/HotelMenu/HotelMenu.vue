@@ -2,12 +2,12 @@
   <div class="hotel-menu">
     <hotel-menu-bar class="menu-bar" :hotel-name="hotel.nameEn"  @menu-click="isOpen = $event" />
     <div class="menu-content-container" :class="{ 'content-open': isOpen }">
+      <!-- 菜单内容区域 -->
       <hotel-menu-area
         class="menu-area"
         :hotel-name="hotel.name"
         :hotel-name-en="hotel.nameEn"
         :logo="hotel.logo"
-        :rate-list="rateList"
         :page="page"
         :class="{ 
           'area-visible': isOpen,
@@ -40,7 +40,6 @@ interface Hotel {
 })
 export default class HotelMenu extends Vue {
   @Prop({ type: Object, required: true }) hotel: Hotel | undefined
-  @Prop({ type: Array, required: true }) rateList: any[] | undefined
   // 当前位于哪个介绍页面
   @Prop({ type: String, required: true }) page: string | undefined
   isOpen : boolean = false

@@ -1,7 +1,7 @@
 <template>
   <div class="hotel-rate-list">
     <ul>
-      <li v-for="rateInfo of rateInfoList" :key="rateInfo ? rateInfo.hotel_id : null" class="card-li">
+      <li v-for="rateInfo of rateInfoList" :key="rateInfo ? rateInfo.hotelID : null" class="card-li">
         <rate-card v-if="rateInfo !== null" :rate-info="rateInfo"  :disabled="rateInfo.nameEn === currentHotel" />
         <div v-else class="rate-info-placeholder"></div>
       </li>
@@ -9,10 +9,18 @@
   </div>
 </template>
 <script lang="ts">
-
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import RateCard from  './RateCard.vue'
-import { HotelRateInfo } from '~/components/hotel/hotel'
+
+export interface RateInfo {
+  hotelId: number
+  hotelName: string
+  hotelNameEn: string
+  copy: string
+  price: number | string
+  unit?: string
+  type?: string
+}
 
 @Component({
   components: {
@@ -22,6 +30,7 @@ import { HotelRateInfo } from '~/components/hotel/hotel'
 
 export default class HotelRateList extends Vue {
   @Prop(String) currentHotel: string | undefined
+  @Prop(Array) rateInfos: RateInfo[] | undefined
   get rateInfoList() {
     let n: number = this.rateInfos ? this.rateInfos.length % 3 : 0
     if (n > 0) {
@@ -34,91 +43,6 @@ export default class HotelRateList extends Vue {
     }
     return this.rateInfos
   }
-  rateInfos: HotelRateInfo[]= [
-    // {
-    //   hotel_id: 1,
-    //   name: '富士',
-    //   nameEn: 'fuji',
-    //   copy: '',
-    //   price: 'Y67,000~',
-    //   unit: 'JPY',
-    //   picture:'/image/card-3-fuji.jpg'
-    // },
-    // {
-    //   hotel_id: 2,
-    //   name: '富士',
-    //   nameEn: 'fuji',
-    //   copy: '',
-    //   price: 'Y67,000~',
-    //   unit: 'JPY',
-    //   picture:'/image/card-3-fuji.jpg'
-    // },
-    // {
-    //   hotel_id: 3,
-    //   name: '富士',
-    //   nameEn: 'fuji',
-    //   copy: '',
-    //   price: 'Y67,000~',
-    //   unit: 'JPY',
-    //   picture:'/image/card-3-fuji.jpg'
-    // },
-    // {
-    //   hotel_id: 1,
-    //   name: '富士',
-    //   nameEn: 'fuji',
-    //   copy: '',
-    //   price: 'Y67,000~',
-    //   unit: 'JPY',
-    //   picture:'/image/card-3-fuji.jpg'
-    // },{
-    //   hotel_id: 1,
-    //   name: '富士',
-    //   nameEn: 'fuji',
-    //   copy: '',
-    //   price: 'Y67,000~',
-    //   unit: 'JPY',
-    //   picture:'/image/card-3-fuji.jpg'
-    // },{
-    //   hotel_id: 1,
-    //   name: '富士',
-    //   nameEn: 'fuji',
-    //   copy: '',
-    //   price: 'Y67,000~',
-    //   unit: 'JPY',
-    //   picture:'/image/card-3-fuji.jpg'
-    // },
-    {
-      hotelId: 1,
-      hotelName: '富士',
-      hotelNameEn: 'fuji',
-      copy: '',
-      price: 'Y67,000~',
-      unit: 'JPY',
-    },
-    {
-      hotelId: 1,
-      hotelName: '富士',
-      hotelNameEn: 'fuji',
-      copy: '',
-      price: 'Y67,000~',
-      unit: 'JPY',
-    }
-  ]
-
-//   get rateList() {
-//     const rateList: any[] = []
-//     const RateInfoList = this.rateInfoList
-//     for (let index = 0; index < this.rateInfoList.length;) {
-//       rateList.push(RateInfoList.slice(index, index + 3))
-//       index += 3
-//     }
-//     const lastItem = rateList[rateList.length - 1]
-//     if (lastItem.length <3) {
-//       const start = lastItem.length
-//       lastItem.fill(undefined, start)
-//     }
-//     return rateList
-//   }
 }
 </script>
 
