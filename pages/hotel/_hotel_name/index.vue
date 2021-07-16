@@ -4,7 +4,6 @@
     <div class="hotel-page-container">
       <main>
         <div class="first-content" style="height: 400px;">
-          <button @click="vi = !vi" style="padding-left: 20px;">change</button>
         </div>
       </main>
     </div>
