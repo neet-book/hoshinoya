@@ -1,9 +1,56 @@
 <template>
   <div class="hotel">
-    <hotel-menu :hotel="hotelInfo"  page='index' /> 
+    <hotel-menu :hotel="hotelInfo"  page='index' :rate-list="pageData.hotelRateList" />
     <div class="hotel-page-container">
+      <header>
+        <div class="hotel-header-container">
+          <div class="hotel-header-fonts">
+            <div class="hotel-header-logos">
+              <svg viewBox="0 0 114 114">
+                <use v-bind="{ 'xlink:href': '#' + hotelInfo.logo }"></use>
+              </svg>
+              <svg viewBox="0 0 114 114">
+                <use xlink:href="#logo-hoshinoya-text"></use>
+              </svg>
+              <svg viewBox="0 0 114 114">
+                <use xlink:href="#logo-hoshinoya-mark"></use>
+              </svg>
+            </div>
+            <div class="hotel-header-title">
+              <p>虹夕诺雅</p>
+              <p>{{ pageData.name }}</p>
+              <h2> 
+                <template v-for="(row, row_index) of pageData.copy.split('\n')">
+                  <span 
+                    v-for="(char, char_index) of row"
+                    :class="{'text-visible': vi}"
+                    :style="`transition-delay: ${ delayTime(row_index, char_index, row.length, pageData.copy) }ms`" 
+                    :key="`lien-${row_index}-${char_index}`"
+                  >{{ char }}
+                  </span>
+                  <br :key="`-${row_index}`"> 
+                </template>
+              </h2>
+            </div>
+            <div class="hotel-header-disc" >
+              <template v-for="(row, row_index) of pageData.discription.split('\n')">
+                <template v-for="(char, char_index) of row">
+                  <span
+                    :class="{ 'text-visible': vi}"
+                    :style="`transition-delay: ${delayTime(row_index, char_index, row.length, pageData.discription, 10)}ms`" 
+                    :key="row_index + '-' + char_index"
+                  >{{char}}</span>
+                </template>
+                <br :key="row_index">
+              </template>
+            </div>
+          </div>
+          <div class="hotel-header-bg" :style="`background-image: url(/image/${pageData.nameEn}/hotel_page_top_background.jpg)`"></div>
+        </div>
+      </header>
       <main>
-        <div class="first-content" style="height: 400px;">
+        <div class="first-content" style="height: 100px;">
+          <buttn @click="vi = !vi" style="padding-left: 20px;">change</buttn>
         </div>
       </main>
     </div>
@@ -13,28 +60,22 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
-import { getHotelRateInfo } from '~/utils/network'
+
 
 @Component({
   components: {
     HotelMenu
   },
-   async fetch({ store, params}) {
-    const data = await getHotelRateInfo()
-    store.commit('updateRateInfo', data)
-  },
   mounted() {
     const that: any = this
     setTimeout(() => {
+      console.log('timeout')
       that.vi = true
     }, 200);
-    this.$store.commit('updateName', 'okinawa')
   }
 })
-
 export default class Hotel extends Vue {
   vi: boolean = false
-
   get hotelInfo() {
     return {
       name: this.pageData.name,
@@ -42,6 +83,7 @@ export default class Hotel extends Vue {
       logo: this.pageData.logo
     }
   }
+
   
   delayTime(rowIndex: number, charIndex: number, charCount: number, text: string, level=100): number {
     const rowCount = text.split('\n').length
@@ -135,15 +177,84 @@ export default class Hotel extends Vue {
 }
 
 
-.hotel-page-container {
-  height: 100vh;
-  width: 100vw;
-  overflow: scroll;
+.hotel-header-container {
+  height: 1000px;
+  position: relative;
+  color: white;
+  border-bottom: 1px solid;
+  overflow: hidden;
+}
+
+.hotel-header-fonts {
+  margin-top: 132px;
+  text-align: center;
+}
+
+.hotel-header-logos {
+  width: 48px;
+  margin: 0 auto;
+}
+
+.hotel-header-logos > svg {
+  fill: white;
+  margin-top: 4px;
+}
+
+.hotel-header-title {
+  margin-top: 12px;
+}
+.hotel-header-title > p{
+  padding: 0;
+  margin: 0;
+}
+/* page name */
+.hotel-header-title p:nth-child(1) {
+  font-size: 21px;
+  line-height: 21px;
+  letter-spacing: 1.2px;
+  font-weight: 400; 
+  padding-top: 10px;
+}
+/* title */
+.hotel-header-title > h2 {
+  margin-top: 10px;
+  font-family: inherit;
+  font-size: 38px; 
+  line-height: 32px;
+  letter-spacing: 2px;
+  text-shadow: rgba(4, 0, 0, 0.6) 0px 0px 80px;
 }
 
 
-.first-content {
-  height: 200px;
+.hotel-header-disc {
+  font-size: 18px;
+  letter-spacing: 1.8px;
+  line-height: 32px;
+  text-shadow: 0 0 80px rgb(4 0 0 / 60%);
+}
+
+.hotel-header-bg {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.hotel-header-title > h2 > span,
+.hotel-header-disc > span {
+  transition: all 500ms cubic-bezier(.445,.05,.55,.95);
+  /* transition: opacity 500ms cubic-bezier(.445,.05,.55,.95); */
+  opacity: 0;
+}
+
+
+.text-visible {
+  opacity: 1 !important;
 }
 
 </style>
