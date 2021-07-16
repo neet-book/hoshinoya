@@ -7,7 +7,9 @@
           <use v-bind="{ 'xlink:href': `#logo-hotel-${ rateInfo.hotelNameEn }-small` }"></use></svg>
           {{ rateInfo.hotelName }}
         </div>
-        <div :class="{ 'is-disabled': disabled }">一晚一间<br>{{ rateInfo.price }}</div>
+        <div :class="{ 'is-disabled': disabled }">一晚一间<br>
+          {{ rateInfo.unit }} {{ rateInfo.price }}~
+        </div>
       </div>
       <div class="hotel-picure">
         <div class="img-body" :style="{ backgroundImage: `url(${rateInfo.picture})` }"></div>
