@@ -71,8 +71,6 @@ export default class Index extends Vue {
     {
       name: '富士',
       nameEN: 'fuji',
-      logo: 'logo-hotel-fuji',
-      number: 1,
       source: '/image/top_hero1_fuji.jpg',
       sourceSmall: '/image/card-3-fuji.jpg',
       discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'

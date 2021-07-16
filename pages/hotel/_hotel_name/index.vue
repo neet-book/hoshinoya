@@ -1,6 +1,6 @@
 <template>
   <div class="hotel">
-    <hotel-menu :hotel="hotelInfo"  page='index' :rate-list="pageData.hotelRateList" />
+    <hotel-menu :hotel="hotelInfo"  page='index' /> 
     <div class="hotel-page-container">
       <header>
         <div class="hotel-header-container">

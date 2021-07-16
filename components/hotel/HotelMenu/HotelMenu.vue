@@ -25,6 +25,7 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import HotelMenuBar from './HotelMenuBar.vue'
 import HotelMenuArea from './HotelMenuArea.vue'
+import { getHotelRateInfos } from '~/utils/network'
 
 interface Hotel {
   name: string
@@ -36,6 +37,12 @@ interface Hotel {
   components: {
     HotelMenuBar,
     HotelMenuArea
+  },
+  async fetch({store}) {
+    if (store.state.hotelRateList.length === 0) {
+      const data = await getHotelRateInfos()
+      store.commit('updateHotelRateInfo', data)
+    }
   }
 })
 export default class HotelMenu extends Vue {

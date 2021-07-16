@@ -24,5 +24,5 @@ export const getters: GetterTree<RootState, RootState> = {
 export const mutations: MutationTree<RootState> = {
     updateName: (state, hotelName: string) => state.hotelName = hotelName,
     updateNameEn: (state, hotelNameEn: string) => state.hotelNameEn = hotelNameEn,
-    updateRateInfo: (state, rateInfo: HotelRateInfo[]) => state.rateInfoList = rateInfo
+    updateHotelRateInfo: (state, rateInfo: HotelRateInfo[]) => state.rateInfoList = rateInfo
 }
