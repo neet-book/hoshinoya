@@ -48,10 +48,9 @@ async function start () {
     await nuxt.ready()
   }
 
-
-  app.use(hotelRouter.routes()).use(hotelRouter.allowedMethods())
   app.use(accessLogger())
-
+  app.use(hotelRouter.routes()).use(hotelRouter.allowedMethods())
+  
   app.use((ctx) => {
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling

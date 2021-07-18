@@ -50,7 +50,7 @@
       </header>
       <main>
         <div class="first-content" style="height: 100px;">
-          <buttn @click="vi = !vi" style="padding-left: 20px;">change</buttn>
+          <button @click="vi = !vi" style="padding-left: 20px;">change</button>
         </div>
       </main>
     </div>
@@ -60,16 +60,19 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
-
+import { getHotelRateInfos } from '~/utils/network'
 
 @Component({
   components: {
     HotelMenu
   },
+  async fetch({ store }) {
+    const data = await getHotelRateInfos()
+    store.commit('updateHotelRateInfo', data)
+  },
   mounted() {
     const that: any = this
     setTimeout(() => {
-      console.log('timeout')
       that.vi = true
     }, 200);
   }

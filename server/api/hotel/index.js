@@ -7,6 +7,7 @@ const HotelRateInfo = require('../dbs/models/HotelRateInfo')
 router.get('/hotel_rate_info', async (ctx, next) => {
     // console.log('hotel_rate_info')i
     const rateInfos = await HotelRateInfo.find()
+    // console.log(rateInfos)
     if (rateInfos) {
         ctx.body = {
             code: 1,
