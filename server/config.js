@@ -3,7 +3,7 @@ const path = require('path')
 module.exports = {
   dbs: {
     get host() {
-      return '192.168.2.183'
+      return 'localhost'
     },
     get port() {
       return 27017
