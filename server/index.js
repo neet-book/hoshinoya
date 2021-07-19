@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const { dbs } = require('./config')
 
 const hotelRouter = require('./api/hotel')
+const homeRouter = require('./api/home')
 
 const app = new Koa()
 
@@ -50,6 +51,7 @@ async function start () {
 
   app.use(accessLogger())
   app.use(hotelRouter.routes()).use(hotelRouter.allowedMethods())
+  app.use(homeRouter.routes()).use(homeRouter.allowedMethods())
   
   app.use((ctx) => {
     ctx.status = 200

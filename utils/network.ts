@@ -5,7 +5,7 @@ const common = axios.create({
 })
 
 export async function getHotelRateInfos() {
-    const { data: { code, data } } = await common.get('/hotel_rate_info')
+    const { data: { code, data } } = await common.get('/hotel/hotel_rate_info')
     if (code === 1) {
         return data
     } else {

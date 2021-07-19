@@ -1,16 +1,15 @@
 const Router = require('koa-router')
+const HoshinoayHomeModeul = require('../dbs/models/HoshinoyaHome')
 const router = new Router()
-const HotelRateInfo = require('../dbs/models/HotelRateInfo')
 
-router.prefix('/hotel')
-
-router.get('/hotel_rate_info', async (ctx) => {
-    const rateInfos = await HotelRateInfo.find()
-    if (rateInfos) {
+router.get('/hoshinoya_home', async (ctx) => {
+    console.log('hoshinoya_home')
+    const data = await  HoshinoayHomeModeul.find()
+    if (data) {
         ctx.body = {
             code: 1,
             msg: 'ok',
-            data: rateInfos
+            data: data
         }
     } else {
         ctx.body = {
@@ -21,6 +20,4 @@ router.get('/hotel_rate_info', async (ctx) => {
     }
 })
 
-
 module.exports = router
-
