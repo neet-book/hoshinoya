@@ -56,7 +56,9 @@ export default class HotelBookingMenu extends Vue {
 .menu-bar.visible {
   height: 100%;
   background-color: #0000;
-  transition: all 2000ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: background-color 2000ms cubic-bezier(0.165, 0.84, 0.44, 1),
+    height 2000ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  
 }
 
 .menu-bar:hover {
@@ -88,7 +90,7 @@ export default class HotelBookingMenu extends Vue {
   word-break: break-all;
   text-align: center;
   opacity: 0;
-  transition: opacity 900ms cubic-bezier(0.445,0.05,0.55,0.95) 200ms;
+  transition: opacity 900ms cubic-bezier(0.445,0.05,0.55,0.95) 20ou0ms;
 }
 
 .nemu-bar-name.show {

@@ -58,14 +58,14 @@ export default class HotelMenu extends Vue {
 }
 
 .menu-content-container {
-  width: 0;
+  width: 100vw;
   height: 100%;
   display: inline-block;
   overflow-y: hidden;
   position: absolute;
   top: 0;
-  left: 0;
-  transition: width 400ms cubic-bezier(.165,.84,.44,1);
+  left: -100vw;
+  transition: left 400ms cubic-bezier(.165,.84,.44,1);
   transition-delay: 100ms;
 }
 
@@ -115,6 +115,7 @@ export default class HotelMenu extends Vue {
   right: 55px;
   transform: translate(-50%, -50%);
   width: 1em;
+  cursor: default;
 }
 
 .menu-text-bar-hidden{

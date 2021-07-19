@@ -33,15 +33,15 @@ export default class HotelRateList extends Vue {
   @Prop(Array) rateInfos: RateInfo[] | undefined
   get rateInfoList() {
     let n: number = this.rateInfos ? this.rateInfos.length % 3 : 0
+    const rateInfos: any = this.rateInfos?.concat([])
     if (n > 0) {
       // 填充列表直至能被3整除
       n = 3 - n
-      const rateInfos: any = this.rateInfos
       for (let i = 0; i < n; i++) {
         rateInfos.push(null)
       }
     }
-    return this.rateInfos
+    return rateInfos
   }
 }
 </script>

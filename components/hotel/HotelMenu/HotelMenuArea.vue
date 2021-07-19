@@ -242,10 +242,6 @@ export default class HotelMenuArea extends Vue {
   margin-bottom: 50px;
 }
 
-/* 底部链接 */
-/* .footer-links {
-  
-} */
 
 .footer-links > a {
   color: black;
