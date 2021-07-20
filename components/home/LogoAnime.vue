@@ -17,7 +17,7 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 interface Logo {
-  number: number
+  hotelID: number
   logo: string
 }
 

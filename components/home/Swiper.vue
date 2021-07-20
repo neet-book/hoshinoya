@@ -9,7 +9,7 @@
         :key="slider.number"
       >
         <div class="slider-img">
-          <div class="img-body" :style="{ backgroundImage: `url(${slider.source})` }"></div>
+          <div class="img-body" :style="{ backgroundImage: `url(${slider.image.normal})` }"></div>
         </div>
       </li>
     </ul>
@@ -19,9 +19,9 @@
         class="current-hotel"
       >
         <li
-          v-for="hotel in sliderList" :key="hotel.number"
-          :class="{ activited: hotel.number == activity }"
-        >HOSHINOYA {{ hotel.nameEN }}</li>
+          v-for="slider in sliderList" :key="slider.hotelID"
+          :class="{ activited: slider.HotelID == activity }"
+        >HOSHINOYA {{ slider.hotelNameEn }}</li>
       </ul>
       <div class="controler">
         <div class="prev-btn" @click="toPrev">prev</div>
@@ -30,7 +30,7 @@
             class="ctl-num"
             v-for="num in indicatorNums"
             :key="num.n"
-            :class="num.calss"
+            :class="num.class"
           >
             {{ num.number | numFilter }}
           </li>
@@ -50,15 +50,18 @@ import LogoAnime from './LogoAnime.vue'
 interface indicNum {
   n: number
   number: number,
-  calss: string[]
+  class: string[]
 }
 
-interface Slider {
-  name: string
-  nameEN:string
-  logoname: string
-  number: number
-  source: string
+export interface SliderImage {
+  hoteName: string
+  hotelNameEn:string
+  hotelID: number | string
+  image: {
+    normal: string,
+    big: string,
+    square: string
+  }
 }
 
 @Component({
@@ -80,7 +83,7 @@ interface Slider {
   }
 })
 export default class Swiper extends Vue {
-  @Prop(Array) sliderList: Slider[] | undefined
+  @Prop(Array) sliderList: SliderImage[] | undefined
   // 活动的slider
   activity:number = 1
   timer: any = 0
@@ -90,18 +93,18 @@ export default class Swiper extends Vue {
   prevTimestamp: number = 0
   nextTimestamp: number = 0
   indicatorNums: indicNum[] = [
-    { n: 1, number: 0, calss: ['ctl-num-pre'] },
-    { n: 2, number: 1, calss: ['ctl-num-current'] },
-    { n: 3, number: 2, calss: ['ctl-num-next'] },
+    { n: 1, number: 0, class: ['ctl-num-pre'] },
+    { n: 2, number: 1, class: ['ctl-num-current'] },
+    { n: 3, number: 2, class: ['ctl-num-next'] },
   ]
 
   get currentHotel(): string {
-    const currentSlid =  (this.sliderList as Slider [])[this.activity - 1]
-    return currentSlid.nameEN
+    const currentSlid =  (this.sliderList as SliderImage [])[this.activity - 1]
+    return currentSlid.hotelNameEn
   }
 
   changeSlider(toN: number): void {
-    const len = (this.sliderList as Slider[]).length
+    const len = (this.sliderList as SliderImage[]).length
     const current = this.activity
     if (current + toN <= 0) {
       this.activity = len - Math.abs(current + toN)
@@ -117,10 +120,10 @@ export default class Swiper extends Vue {
 
   changeIndicNum(): void {
     const [pre, current, next] = this.indicatorNums
-    pre.calss = ['ctl-num-next']
+    pre.class = ['ctl-num-next']
     next.number = this.activity
-    next.calss = ['ctl-num-current']
-    current.calss = ['ctl-num-pre']
+    next.class = ['ctl-num-current']
+    current.class = ['ctl-num-pre']
     this.indicatorNums = [current, next, pre]
   }
 

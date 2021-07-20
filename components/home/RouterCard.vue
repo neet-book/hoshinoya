@@ -1,6 +1,6 @@
 <template>
   <div class="router-card">
-    <nuxt-link calss='router-link' :to="'/hotel/' + content.nameEN" v-if="JSON.stringify(content) !== '{}'">
+    <nuxt-link calss='router-link' :to="'/hotel/' + content.hotelNameEn" v-if="JSON.stringify(content) !== '{}'">
       <div class="router-card-container"
         ref="container"
         @mousemove="onMousemove"
@@ -12,14 +12,14 @@
           <div 
           class="router-bg-img" 
           :class="{ active: mouseIn }"
-          :style="{ backgroundImage: `url(${content.sourceSmall})`}"
+          :style="{ backgroundImage: `url(${content.image.normal})`}"
         ></div>
         </div>
         <div class="router-info" :class="{ active: mouseIn }">
           <div class="router-info-container">
-            <div class="router-name">{{ content.name }}</div>
+            <div class="router-name">{{ content.hotelName}}</div>
             <svg class="router-logo">
-              <use v-bind="{ 'xlink:href': '#' + content.logo + '-small'}"></use>
+              <use v-bind="{ 'xlink:href': `#logo-hotel-${content.hotelNameEn}-small` }"></use>
             </svg>
             <div
               class="router-disc"
@@ -37,6 +37,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
+
+export interface CardImage {
+  hotelName: string
+  hotelNameEn:string
+  hotelID: number | string
+  discription: string,
+  image: {
+    normal: string,
+    big: string,
+    square: string
+  }
+}
 
 @Component
 export default class RouterCard extends Vue {

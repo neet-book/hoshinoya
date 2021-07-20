@@ -12,3 +12,14 @@ export async function getHotelRateInfos() {
         return []
     }
 }
+
+export async function getHoshinoyaHome() {
+    const url = '/hoshinoya_home'
+    const { data: { code, msg, data } } = await common.get(url)
+    if (code === 1) {
+        return data
+    } else {
+        console.log(`[network] ${url} msg: ${msg} data: ${data}`)
+        return {}
+    }
+}

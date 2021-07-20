@@ -2,13 +2,12 @@
   <div class="container">
     <header>
       <div class="top-head">
-        <swiper :slider-list="hotels" class="top-slider" v-on:slider-change="topSlider = $event" />
-        <!-- logo -->
+        <swiper :slider-list="swiperImages" class="top-slider" v-on:slider-change="topSlider = $event" />
         <div class="top-head-logo-container">
           <div class="top-head-logos">
             <div class="top-logoanime">
               <div class="logo-border"></div>
-              <logo-anime :logos="hotels" :current="topSlider" />
+              <logo-anime :logos="swiperImages" :current="topSlider" />
             </div>
             <!-- 文字logo -->
             <svg class="top-head-logo-text"><use xlink:href="#logo-hoshinoya-text"></use></svg>
@@ -25,7 +24,7 @@
         <ul>
           <li v-for="(cards, n) of cardList" :key="n">
             <template v-for="card of cards">
-              <router-card :content="card" :key="card.name" />
+              <router-card :content="card" :key="card.hotelID" />
             </template>
           </li>
         </ul>
@@ -54,9 +53,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import { SliderImage } from  '~/components/home/Swiper.vue'
 import Swiper from  '~/components/home/Swiper.vue'
 import LogoAnime from '~/components/home/LogoAnime.vue'
 import RouterCard from '~/components/home/RouterCard.vue'
+import { getHoshinoyaHome } from '~/utils/network'
 
 @Component({
   components: {
@@ -64,79 +65,23 @@ import RouterCard from '~/components/home/RouterCard.vue'
     LogoAnime,
     RouterCard
   },
+  async asyncData() {
+    const data = await getHoshinoyaHome()
+    return data
+  },
+
 })
 export default class Index extends Vue {
   topSlider: number = 1
-  hotels = [
-    {
-      name: '富士',
-      nameEN: 'fuji',
-      source: '/image/top_hero1_fuji.jpg',
-      sourceSmall: '/image/card-3-fuji.jpg',
-      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
-    },
-    {
-      name: '京都',
-      nameEN: 'kyoto',
-      logo: 'logo-hotel-kyoto',
-      number: 2,
-      source: '/image/top_hero2_kyoto.jpg',
-      sourceSmall: '/image/card-3-fuji.jpg',
-      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
-    },
-    {
-      name: '轻泽',
-      nameEN: 'karuizawa',
-      logo: 'logo-hotel-karuizawa',
-      number: 3,
-      source: '/image/top_hero3_karuizawa.jpg',
-      sourceSmall: '/image/card-3-fuji.jpg',
-      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
-    },
-    {
-      name: '东京',
-      nameEN: 'tokyo',
-      logo: 'logo-hotel-tokyo',
-      number: 4,
-      source: '/image/top_hero4_tokyo.jpg',
-      sourceSmall: '/image/card-3-fuji.jpg',
-      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
-    },
-    {
-      name: '嫩巴黎',
-      nameEN: 'bali',
-      logo: 'logo-hotel-bali',
-      number: 5,
-      source: '/image/top_hero5_bali.jpg',
-      sourceSmall: '/image/card-3-fuji.jpg',
-      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
-    },
-    {
-      name: 'ko',
-      nameEN: 'okinawa',
-      logo: 'logo-hotel-okinawa',
-      number: 6,
-      source: '/image/top_hero6_okinawa.jpg',
-      sourceSmall: '/image/card-3-fuji.jpg',
-      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
-    },
-    {
-      name: 'fe',
-      nameEN: 'okinawa',
-      logo: 'logo-hotel-okinawa',
-      number: 7,
-      source: '/image/top_hero6_okinawa.jpg',
-      sourceSmall: '/image/card-3-fuji.jpg',
-      discription: '于丘陵高地\n体验时尚豪华露营的梦幻乐趣'
-    }
-  ]
+  swiperImages: SliderImage[] | undefined = []
+  navCardImages: undefined | any[] = []
 
   get cardList() {
-    const hotels = this.hotels.reverse()
+    const cards= (this.navCardImages as any[]).concat([]).reverse()
     const len = 3;
     const cardList = []
-    for (let index = 0; hotels.length > index;) {
-      cardList.push(hotels.slice(index, index + len))
+    for (let index = 0; cards?.length > index;) {
+      cardList.push(cards.slice(index, index + len))
       index += len
     }
     const lastList = cardList[cardList.length - 1]

@@ -3,8 +3,7 @@ const HoshinoayHomeModeul = require('../dbs/models/HoshinoyaHome')
 const router = new Router()
 
 router.get('/hoshinoya_home', async (ctx) => {
-    console.log('hoshinoya_home')
-    const data = await  HoshinoayHomeModeul.find()
+    const data = await  HoshinoayHomeModeul.findOne()
     if (data) {
         ctx.body = {
             code: 1,
