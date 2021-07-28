@@ -7,7 +7,7 @@
           <div class="top-head-logos">
             <div class="top-logoanime">
               <div class="logo-border"></div>
-              <logo-anime :logos="swiperImages" :current="topSlider" />
+              <logo-anime :logos="logList" :current="topSlider" />
             </div>
             <!-- 文字logo -->
             <svg class="top-head-logo-text"><use xlink:href="#logo-hoshinoya-text"></use></svg>
@@ -56,6 +56,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import { SliderImage } from  '~/components/home/Swiper.vue'
 import Swiper from  '~/components/home/Swiper.vue'
 import LogoAnime from '~/components/home/LogoAnime.vue'
+import { Logo } from '~/components/home/LogoAnime.vue'
 import RouterCard from '~/components/home/RouterCard.vue'
 import { getHoshinoyaHome } from '~/utils/network'
 
@@ -72,7 +73,7 @@ import { getHoshinoyaHome } from '~/utils/network'
 
 })
 export default class Index extends Vue {
-  topSlider: number = 1
+  topSlider: number = 0
   swiperImages: SliderImage[] | undefined = []
   navCardImages: undefined | any[] = []
 
@@ -94,6 +95,20 @@ export default class Index extends Vue {
 
     return cardList
   }
+
+  get logoList(): Logo[] {
+    if (this.swiperImages === undefined) return []
+    const list = []
+    for (let { hotelNameEn, hotelID } of this.swiperImages) {
+      list.push({
+        hotelID,
+        logo: `logo-hotel-${hotelNameEn}`
+      })
+    }
+    
+    return list
+  }
+
 }
 </script>
 

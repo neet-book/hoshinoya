@@ -4,12 +4,12 @@
     <ul>
       <li 
         class="slider"
-        :class="{ activited: slider.number == activity, isReady: slider.number == activity }"
+        :class="{ activited: slider.hotelID == activity , isReady: slider.hotelID == activity }"
         v-for="slider in sliderList" 
-        :key="slider.number"
+        :key="slider.hotelNameEn"
       >
         <div class="slider-img">
-          <div class="img-body" :style="{ backgroundImage: `url(${slider.image.normal})` }"></div>
+          <div class="img-body" :style="{ backgroundImage: ` url(${slider.image.normal})` }"></div>
         </div>
       </li>
     </ul>
@@ -20,7 +20,7 @@
       >
         <li
           v-for="slider in sliderList" :key="slider.hotelID"
-          :class="{ activited: slider.HotelID == activity }"
+          :class="{ activited: slider.hotelID == activity }"
         >HOSHINOYA {{ slider.hotelNameEn }}</li>
       </ul>
       <div class="controler">
@@ -32,7 +32,7 @@
             :key="num.n"
             :class="num.class"
           >
-            {{ num.number | numFilter }}
+            {{ num.number + 1 | numFilter }}
           </li>
         </ul>
         <span class="delimit">/</span>
@@ -69,26 +69,25 @@ export interface SliderImage {
     LogoAnime
   },
   mounted(): void {
-    // @ts-ignore
-    this.timer = this.changeSlider(1)
+    const that: any = this
+    // setTimeout(() => {
+      that.timer = that.changeSlider(1)
+    // }, that.interval)
   },
   filters: {
     numFilter(n: number): string {
-      if (n < 10) {
-        return '0' + n
-      } else {
-        return n.toString()
-      }
+      return n.toString().padStart(2, '0')
     }
   }
 })
 export default class Swiper extends Vue {
   @Prop(Array) sliderList: SliderImage[] | undefined
   // 活动的slider
-  activity:number = 1
+  activity:number = 0
   timer: any = 0
-  // 节流
+  // 节流延迟时间
   delay = 1300
+  // 轮播图间隔时间
   interval = 4000
   prevTimestamp: number = 0
   nextTimestamp: number = 0
@@ -99,17 +98,20 @@ export default class Swiper extends Vue {
   ]
 
   get currentHotel(): string {
-    const currentSlid =  (this.sliderList as SliderImage [])[this.activity - 1]
+    const currentSlid =  (this.sliderList as SliderImage [])[this.activity]
     return currentSlid.hotelNameEn
   }
 
   changeSlider(toN: number): void {
-    const len = (this.sliderList as SliderImage[]).length
+    const count = (this.sliderList as SliderImage[]).length
     const current = this.activity
+    
     if (current + toN <= 0) {
-      this.activity = len - Math.abs(current + toN)
-    } else if (current + toN > len) {
-      this.activity = (current + toN) - len
+      // toN 为负数，下一张是最后一张
+      this.activity = count - Math.abs(current + toN)
+    } else if (current + toN >= count) {
+      // 当前为最后一张
+      this.activity = (current + toN) - count
     } else {
       this.activity += toN
     }

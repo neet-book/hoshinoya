@@ -4,7 +4,7 @@
       <li 
         v-for="logo in logos" :key="logo.name" 
         class="logo"
-        :class="{ hidden: logo.number === hiddenLogo, visible: logo.number === current}">
+        :class="{ hidden: logo.hotelID === hiddenLogo, visible: logo.hotelID === current}">
         <svg>
           <use v-bind="{ 'xlink:href': '#' + logo.logo }"></use>
         </svg>
@@ -16,8 +16,8 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
-interface Logo {
-  hotelID: number
+export interface Logo {
+  hotelID: number | string
   logo: string
 }
 
