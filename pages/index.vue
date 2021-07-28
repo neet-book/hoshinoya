@@ -7,7 +7,7 @@
           <div class="top-head-logos">
             <div class="top-logoanime">
               <div class="logo-border"></div>
-              <logo-anime :logos="logList" :current="topSlider" />
+              <logo-anime :logos="logoList" :current="topSlider" />
             </div>
             <!-- 文字logo -->
             <svg class="top-head-logo-text"><use xlink:href="#logo-hoshinoya-text"></use></svg>
