@@ -56,7 +56,7 @@
       <div class="room-booking">
         <div class="booking-button">
           <div class="booking-button-cont">
-            <div class="calendar"></div>客房预定
+            <div class="booking-calendar"></div>客房预定
           </div>
         </div>
         <div class="hotel-hotline">
@@ -212,10 +212,10 @@ export default class HotelMenuArea extends Vue {
   line-height: 108px;
 }
 
-.calendar {
+.booking-calendar {
   display: inline-block;
   width: 13px;
-  height: 13px;
+  height: 13px !important;
   margin-right: 5px;
   background-image: url("~assets/svg/calendar-black.svg");
   background-position: center center;

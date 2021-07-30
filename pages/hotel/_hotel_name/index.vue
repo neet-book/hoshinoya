@@ -7,7 +7,7 @@
           <div class="hotel-header-fonts">
             <div class="hotel-header-logos">
               <svg viewBox="0 0 114 114">
-                <use v-bind="{ 'xlink:href': '#' + hotelInfo.logo }"></use>
+                <use v-bind="{ 'xlink:href': '#logo-hotel-' + hotelNameEn }"></use>
               </svg>
               <svg viewBox="0 0 114 114">
                 <use xlink:href="#logo-hoshinoya-text"></use>
@@ -18,26 +18,25 @@
             </div>
             <div class="hotel-header-title">
               <p>虹夕诺雅</p>
-              <p>{{ pageData.name }}</p>
+              <p>{{ hotelName }}</p>
               <h2> 
-                <template v-for="(row, row_index) of pageData.copy.split('\n')">
+                <template v-for="(row, row_index) of topSection.title.split('\n')">
                   <span 
                     v-for="(char, char_index) of row"
                     :class="{'text-visible': vi}"
-                    :style="`transition-delay: ${ delayTime(row_index, char_index, row.length, pageData.copy) }ms`" 
+                    :style="`transition-delay: ${ delayTime(row_index, char_index, row.length, topSection.title) }ms`" 
                     :key="`lien-${row_index}-${char_index}`"
-                  >{{ char }}
-                  </span>
+                  >{{ char }}</span>
                   <br :key="`-${row_index}`"> 
                 </template>
               </h2>
             </div>
             <div class="hotel-header-disc" >
-              <template v-for="(row, row_index) of pageData.discription.split('\n')">
+              <template v-for="(row, row_index) of topSection.content.split('\n')">
                 <template v-for="(char, char_index) of row">
                   <span
                     :class="{ 'text-visible': vi}"
-                    :style="`transition-delay: ${delayTime(row_index, char_index, row.length, pageData.discription, 10)}ms`" 
+                    :style="`transition-delay: ${delayTime(row_index, char_index, row.length, topSection.content, 10)}ms`" 
                     :key="row_index + '-' + char_index"
                   >{{char}}</span>
                 </template>
@@ -45,7 +44,7 @@
               </template>
             </div>
           </div>
-          <div class="hotel-header-bg" :style="`background-image: url(/image/${pageData.nameEn}/hotel_page_top_background.jpg)`"></div>
+          <div class="hotel-header-bg" :style="`background-image: url(${topSection.backgroundImage.normal})`"></div>
         </div>
       </header>
       <main>
@@ -61,6 +60,65 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
 import { getHotelRateInfos, getHotelIntroduction } from '~/utils/network'
+
+export interface ImageUrl {
+  big?: string
+  normal?: string
+  square?: string
+}
+
+export interface TopSection {
+  title: string,
+  content: string,
+  backgroundImage: ImageUrl
+}
+
+export interface LargeSection {
+  title: string
+  content: string
+  circleImage: ImageUrl
+  mapImage : ImageUrl
+}
+
+export interface OutlineFirstSection {
+  title: string
+  carrouselImtes: [
+    {
+      title: string,
+      image: ImageUrl
+    }
+  ]
+  disc: string
+}
+
+export interface OutlineSecondSection {
+  title: string,
+  grids: [
+    {
+      image: ImageUrl
+    }
+  ],
+  disc: string,
+  subDisc: {
+    title: string,
+    content: string
+  }
+}
+
+ export interface OutlineThirdSection {
+  title: string
+  carrouselItems: [
+    {
+      title: string,
+      image: ImageUrl
+    }
+  ]
+  disc: string,
+  subDisc: {
+    title: string,
+    content: string
+  }
+}
 
 @Component({
   components: {
@@ -83,12 +141,21 @@ import { getHotelRateInfos, getHotelIntroduction } from '~/utils/network'
   }
 })
 export default class Hotel extends Vue {
+  hotelNameEn: string = ''
+  hoelName: string = ''
+  topSection: TopSection | undefined 
+  largeSection: LargeSection | undefined
+  outlineFirstSection: OutlineFirstSection | undefined
+  outlineSecondSection: OutlineSecondSection | undefined
+  outlineTridSection: OutlineThirdSection | undefined  
+
+
   vi: boolean = false
   get hotelInfo() {
     return {
-      name: this.pageData.name,
-      nameEn: this.pageData.nameEn,
-      logo: this.pageData.logo
+      name: this.hoelName,
+      nameEn: this.hotelNameEn,
+      logo: 'logo-hotel-' + this.hotelNameEn
     }
   }
 
@@ -109,72 +176,6 @@ export default class Hotel extends Vue {
     return level
   }
 
-  pageData = {
-    name: '冲绳',
-    nameEn: 'okinawa',
-    logo: 'logo-hotel-okinawa',
-    copy: '在山谷的\n村落里聆听\n森林之声',
-    discription: '轻井泽的森林是诉说者。\n在路的尽头，他们向旅人低声私语。\n在柔和的阳光中，随风飘动的叶子摩擦的声音。\n不知从哪里传来的鸟鸣。草丛中潜伏的虫声。\n没有停歇的，细微的河水声传到耳边。\n万籁俱寂的村落，随着太阳升起，\n被森林丰富的声音包着。',
-    pageHeadBG: '',
-    hotelRateList: [
-      {
-        'name': '轻井泽',
-        'copy': '远离烦嚣 拥抱大自然\r\n享受天然温泉的高级度假酒店', 
-        'price': 'Y84,000', 
-        'hotel_id': 1, 
-        'nameEn': 'karuizawa'
-      },
-      {
-        'name': '京都', 
-        'copy': '风景如画\n恍如走进京都千年古城\r\n尽显皇族风范的高级旅馆', 
-        'price': 'Y109,000', 
-        'hotel_id': 7, 
-        'nameEn': 'kyoto'
-      },
-      {
-        'name': '富士',
-        'copy': '于丘陵高地\r\n体验时尚豪华露营的梦幻乐趣', 
-        'price': 'Y67,000', 
-        'hotel_id': 14, 
-        'nameEn': 'fuji'
-      },
-      {
-        'name': '竹富岛', 
-        'copy': '感受美丽珊瑚岛\r\n体验琉球自然文化遗産的高级度假酒店', 
-        'price': 'Y75,000', 
-        'hotel_id': 10, 
-        'nameEn': 'taketomijima'
-      },
-      {
-        'name': '冲绳', 
-        'copy': '都留在“御城墙”的住宅', 
-        'price': 'Y109,000', 
-        'hotel_id': 18, 
-        'nameEn': 'okinawa'
-      },
-      {
-        'name': '东京', 
-        'copy': '于日本首都东京\r\n向世界展现日本的好客之道', 
-        'price': 'Y84,000', 
-        'hotel_id': 15, 
-        'nameEn': 'tokyo'
-      },
-      {
-        'name': '巴厘岛', 
-        'copy': '圣河旁的村落\r\n古老的精神在此栖息', 
-        'price': 'Rp8,100,000', 
-        'hotel_id': 502, 
-        'nameEn': 'bali'
-      },
-      {
-        'name': '谷关', 
-        'copy': '在温泉溪谷的楼阁中\r\n享受最舒适的熟睡', 
-        'price': 'NT$18,000', 
-        'hotel_id': 503, 
-        'nameEn': 'guguan'
-      }
-    ]
-  }
   
 }
 </script>

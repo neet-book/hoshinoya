@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="hotel-picure">
-        <div class="img-body" :style="{ backgroundImage: `url(${rateInfo.picture})` }"></div>
+        <div class="img-body" :style="{ backgroundImage: `url(${rateInfo.image})` }"></div>
       </div>
     </a>
   </div>
