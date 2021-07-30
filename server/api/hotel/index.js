@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 const router = new Router()
 const HotelRateInfo = require('../dbs/models/HotelRateInfo')
-const HotelIntroduction = require('../dbs/models/HotelIntroductoin')
+const HotelIntroduction = require('../dbs/models/Hotelntroduction')
 
 router.prefix('/hotel')
 
@@ -22,7 +22,7 @@ router.get('/hotel_rate_info', async (ctx) => {
     }
 })
 
-router.get('/hotel/:hotel/introduction', async (ctx) => {
+router.get('/introduction/:hotel', async (ctx) => {
     const hotel = ctx.params.hotel
     const data = await HotelIntroduction.findOne({ hotelNameEn: hotel })
     if (data) {

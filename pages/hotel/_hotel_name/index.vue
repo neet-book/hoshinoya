@@ -60,7 +60,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
-import { getHotelRateInfos } from '~/utils/network'
+import { getHotelRateInfos, getHotelIntroduction } from '~/utils/network'
 
 @Component({
   components: {
@@ -69,6 +69,11 @@ import { getHotelRateInfos } from '~/utils/network'
   async fetch({ store }) {
     const data = await getHotelRateInfos()
     store.commit('updateHotelRateInfo', data)
+  },
+  async asyncData(ctx) {
+    const hotel = ctx.params.hotel_name
+    const data = await getHotelIntroduction(hotel)
+    return data || {}
   },
   mounted() {
     const that: any = this
