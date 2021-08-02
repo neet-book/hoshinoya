@@ -77,7 +77,7 @@ const HotelIntroductionSchema = new Schema({
 
 })
 
-const collection = 'hotel_introductions'
+const collection = 'hotel_introduction'
 
 HotelIntroductionSchema.set('collection', collection)
 
