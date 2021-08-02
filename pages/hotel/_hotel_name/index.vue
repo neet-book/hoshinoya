@@ -4,6 +4,7 @@
     <div class="hotel-page-container">
       <header>
         <div class="hotel-header-container">
+          <div class="hotel-header-bg" :style="`background-image: url(${topSection.backgroundImage.normal})`"></div>
           <div class="hotel-header-fonts">
             <div class="hotel-header-logos">
               <svg viewBox="0 0 114 114">
@@ -16,18 +17,15 @@
                 <use xlink:href="#logo-hoshinoya-mark"></use>
               </svg>
             </div>
-            <div class="hotel-header-title">
+            <div class="hotel-header-page-title">
               <p>虹夕诺雅</p>
               <p>{{ hotelName }}</p>
+            </div>
+            <div class="hotel-header-title">
               <h2> 
                 <template v-for="(row, row_index) of topSection.title.split('\n')">
-                  <span 
-                    v-for="(char, char_index) of row"
-                    :class="{'text-visible': vi}"
-                    :style="`transition-delay: ${ delayTime(row_index, char_index, row.length, topSection.title) }ms`" 
-                    :key="`lien-${row_index}-${char_index}`"
-                  >{{ char }}</span>
-                  <br :key="`-${row_index}`"> 
+                  {{ row }}
+                  <br :key="row_index"> 
                 </template>
               </h2>
             </div>
@@ -44,7 +42,6 @@
               </template>
             </div>
           </div>
-          <div class="hotel-header-bg" :style="`background-image: url(${topSection.backgroundImage.normal})`"></div>
         </div>
       </header>
       <main>
@@ -182,7 +179,7 @@ export default class Hotel extends Vue {
 
 <style scoped>
 .hotel {
-  font-family: hsn-zhcn-serif-semibold, hsn-zhtw-serif-semibold, serif;
+  font-family: hsn-zhcn-serif-regulari, hsn-zhcn-serif-semibold, hsn-zhtw-serif-semibold, serif;
 }
 
 
@@ -192,75 +189,101 @@ export default class Hotel extends Vue {
   color: white;
   border-bottom: 1px solid;
   overflow: hidden;
+  background: #ccc;
 }
 
 .hotel-header-fonts {
-  margin-top: 132px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 736px;
   text-align: center;
+  margin: auto;
 }
 
 .hotel-header-logos {
-  width: 48px;
+  width: 52px;
   margin: 0 auto;
 }
 
 .hotel-header-logos > svg {
   fill: white;
-  margin-top: 4px;
+  margin-top: 10px;
 }
 
-.hotel-header-title {
-  margin-top: 12px;
+.hotel-header-logs > svg:nth-child(1) {
+  margin-top: 0px;
 }
-.hotel-header-title > p{
+
+.hotel-header-page-title {
+  margin-top: 16px;
+  letter-spacing: 1.2px;
+}
+
+.hotel-header-page-title > p {
   padding: 0;
   margin: 0;
 }
-/* page name */
-.hotel-header-title p:nth-child(1) {
-  font-size: 21px;
-  line-height: 21px;
-  letter-spacing: 1.2px;
-  font-weight: 400; 
+
+.hotel-header-page-title > p:nth-child(2){
+  font-size: 15px;
   padding-top: 10px;
 }
+/* page name */
+.hotel-header-page-title p:nth-child(1) {
+  font-size: 21px;
+  font-weight: 400; 
+}
 /* title */
+.hotel-header-title {
+  position: absolute;
+  top: 400px;
+  left: 0; 
+  right: 0;
+  transform: translateY(-50%);
+}
+
 .hotel-header-title > h2 {
-  margin-top: 10px;
   font-family: inherit;
-  font-size: 38px; 
-  line-height: 32px;
+  font-size: 42px; 
+  line-height: 60px;
   letter-spacing: 2px;
   text-shadow: rgba(4, 0, 0, 0.6) 0px 0px 80px;
 }
 
 
 .hotel-header-disc {
+  margin: auto;
   font-size: 18px;
   letter-spacing: 1.8px;
   line-height: 32px;
   text-shadow: 0 0 80px rgb(4 0 0 / 60%);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .hotel-header-bg {
   width: 100%;
   height: 100%;
-  background-position: center;
+  background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -1;
+  bottom: 0;
+  right: 0;
 }
 
 .hotel-header-title > h2 > span,
 .hotel-header-disc > span {
   transition: all 500ms cubic-bezier(.445,.05,.55,.95);
-  /* transition: opacity 500ms cubic-bezier(.445,.05,.55,.95); */
   opacity: 0;
 }
-
 
 .text-visible {
   opacity: 1 !important;
