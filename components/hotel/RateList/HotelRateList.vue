@@ -11,16 +11,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import RateCard from  './RateCard.vue'
-
-export interface RateInfo {
-  hotelId: number
-  hotelName: string
-  hotelNameEn: string
-  copy: string
-  price: number | string
-  unit?: string
-  type?: string
-}
+import { RateInfo } from './RateCard.vue'
 
 @Component({
   components: {

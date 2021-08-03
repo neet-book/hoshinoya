@@ -19,7 +19,16 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { RateInfo } from './HotelRateList.vue'
+
+export interface RateInfo {
+  hotelId: number
+  hotelName: string
+  hotelNameEn: string
+  copy: string
+  price: number | string
+  unit?: string
+  type?: string
+}
 
 @Component
 export default class HotelRate extends Vue {

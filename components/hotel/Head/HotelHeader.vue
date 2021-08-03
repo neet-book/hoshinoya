@@ -1,45 +1,46 @@
 <template>
+  <header>
     <div class="hotel-header-container">
-        <div class="hotel-header-fonts">
-            <div class="hotel-header-logos">
-                <svg viewBox="0 0 114 114">
-                <use v-bind="{ 'xlink:href': '#' + headerContent.logo }"></use>
-                </svg>
-                <svg viewBox="0 0 114 114">
-                <use xlink:href="#logo-hoshinoya-text"></use>
-                </svg>
-                <svg viewBox="0 0 114 114">
-                <use xlink:href="#logo-hoshinoya-mark"></use>
-                </svg>
-            </div>
-            <div class="hotel-header-title">
-                <p>虹夕诺雅</p>
-                <p>{{ pageData.name }}</p>
-                <p class="hotel-header-title-line" v-for="(row, row_index) of headerContent.copy.split('\n')" :key="`title-${row_index}`">
-                <span 
-                    v-for="(char, char_index) of row"
-                    :class="{'text-visible': vi}"
-                    :style="`transition-delay: ${ delayTime(row_index, char_index, row.length, headerContent.copy) }ms`" 
-                    :key="`lien-${row_index}-${char_index}`"
-                >{{char}}</span>
-                </p>
-            </div>
-            <div class="hotel-header-disc" >
-                <template v-for="(row, row_index) of pageData.discription.split('\n')">
-                <template v-for="(char, char_index) of row">
-                    <span
-                    :class="{ 'text-visible': vi}"
-                    :style="`transition-delay: ${delayTime(row_index, char_index, row.length, headerContent.discription, 10)}ms`" 
-                    :key="row_index + '-' + char_index"
-                    >{{char}}</span>
-                </template>
-                <br :key="row_index">
-                </template>
-            </div>
+      <!-- 背景 -->
+      <div class="hotel-header-bg" :class="{ visible: vi }" :style="`background-image: url(${topSection.backgroundImage.normal})`"></div>
+      <div class="hotel-header-fonts" :class="{ 'visible': vi }">
+        <!-- logo -->
+        <div class="hotel-header-logos">
+          <svg viewBox="0 0 114 114">
+            <use v-bind="{ 'xlink:href': '#logo-hotel-' + hotelNameEn }"></use>
+          </svg>
+          <svg viewBox="0 0 114 114">
+            <use xlink:href="#logo-hoshinoya-text"></use>
+          </svg>
+          <svg viewBox="0 0 114 114">
+            <use xlink:href="#logo-hoshinoya-mark"></use>
+          </svg>
         </div>
-        <div class="hotel-header-bg" :style="`background-image: url(/image/${headerContent.nameEn}/hotel_page_top_background.jpg)`"></div>
+        <div class="hotel-header-page-title">
+          <p>虹夕诺雅</p>
+          <p>{{ hotelName }}</p>
+        </div>
+        <div class="hotel-header-title" :class="{ 'visible': vi }">
+          <h2> 
+            <template v-for="(row, row_index) of topSection.title.split('\n')">
+              {{ row }}
+              <br :key="row_index"> 
+            </template>
+          </h2>
+        </div>
+        <div class="hotel-header-disc" >
+          <p 
+            v-for="(row, row_index) of topSection.content.split('\n')" 
+            :key="row_index" 
+            :class="{ 'visible': vi }"
+            :style="{ transitionDelay: row_index * 200  + 1000 + 'ms' }"
+          >
+            {{ row }}
+          </p>
+        </div>
+      </div>
     </div>
-
+  </header>
 </template>
 <script lang="ts">
 export interface HeaderData {

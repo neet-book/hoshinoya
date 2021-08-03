@@ -2,48 +2,7 @@
   <div class="hotel">
     <hotel-menu :hotel="hotelInfo"  page='index' /> 
     <div class="hotel-page-container">
-      <header>
-        <div class="hotel-header-container">
-          <!-- 背景 -->
-          <div class="hotel-header-bg" :class="{ visible: vi }" :style="`background-image: url(${topSection.backgroundImage.normal})`"></div>
-          <div class="hotel-header-fonts" :class="{ 'visible': vi }">
-            <!-- logo -->
-            <div class="hotel-header-logos">
-              <svg viewBox="0 0 114 114">
-                <use v-bind="{ 'xlink:href': '#logo-hotel-' + hotelNameEn }"></use>
-              </svg>
-              <svg viewBox="0 0 114 114">
-                <use xlink:href="#logo-hoshinoya-text"></use>
-              </svg>
-              <svg viewBox="0 0 114 114">
-                <use xlink:href="#logo-hoshinoya-mark"></use>
-              </svg>
-            </div>
-            <div class="hotel-header-page-title">
-              <p>虹夕诺雅</p>
-              <p>{{ hotelName }}</p>
-            </div>
-            <div class="hotel-header-title" :class="{ 'visible': vi }">
-              <h2> 
-                <template v-for="(row, row_index) of topSection.title.split('\n')">
-                  {{ row }}
-                  <br :key="row_index"> 
-                </template>
-              </h2>
-            </div>
-            <div class="hotel-header-disc" >
-              <p 
-                v-for="(row, row_index) of topSection.content.split('\n')" 
-                :key="row_index" 
-                :class="{ 'visible': vi }"
-                :style="{ transitionDelay: row_index * 200  + 1000 + 'ms' }"
-              >
-                {{ row }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </header>
+      
       <main>
         <div class="first-content" style="height: 100px;">
           <button @click="vi = !vi" style="padding-left: 20px;">change</button>

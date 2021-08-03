@@ -78,7 +78,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import HotelRateList from '../HotelRateList.vue'
+import HotelRateList from '~/components/hotel/RateList/HotelRateList.vue'
 
 
 @Component({
