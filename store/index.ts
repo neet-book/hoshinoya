@@ -1,10 +1,8 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
-import { HotelRateInfo } from '~/components/hotel/hotel'
-
 interface HotelState {
     hotelName: string
     hotelNameEn: string
-    rateInfoList: HotelRateInfo[]
+    rateInfoList: Hotel.HotelRateInfo[]
 }
 
 export const state = (): HotelState => {
@@ -22,7 +20,7 @@ export const getters: GetterTree<RootState, RootState> = {
 }
 
 export const mutations: MutationTree<RootState> = {
-    updateName: (state, hotelName: string) => state.hotelName = hotelName,
-    updateNameEn: (state, hotelNameEn: string) => state.hotelNameEn = hotelNameEn,
-    updateHotelRateInfo: (state, rateInfo: HotelRateInfo[]) => state.rateInfoList = rateInfo
+    updateHotelName: (state, hotelName: string) => state.hotelName = hotelName,
+    updateHotelNameEn: (state, hotelNameEn: string) => state.hotelNameEn = hotelNameEn,
+    updateHotelRateInfo: (state, rateInfo: Hotel.HotelRateInfo[]) => state.rateInfoList = rateInfo
 }
