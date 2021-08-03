@@ -19,5 +19,4 @@ export default class DefaultLayout extends Vue {}
 </script>
 
 <style>
-
 </style>

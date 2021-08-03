@@ -6,7 +6,7 @@
 
 @font-face {
     font-family: "hsn-zhcn-serif-regular";
-    src: url("~static/fonts/NotoSansCJKsc-Regular.woff2");
+    src: url("~static/fonts/NotoSansCJKsc-Regular.woff2")  format("woff2");
 }
 
 @font-face {

@@ -61,5 +61,9 @@ module.exports = {
     extend (config, ctx) {
     }
   },
-  telemetry: false
+  telemetry: false,
+  router: {
+    middleware: 'router-redirect'
+  }
+  
 }

@@ -4,8 +4,10 @@
     <div class="hotel-page-container">
       <header>
         <div class="hotel-header-container">
-          <div class="hotel-header-bg" :style="`background-image: url(${topSection.backgroundImage.normal})`"></div>
-          <div class="hotel-header-fonts">
+          <!-- 背景 -->
+          <div class="hotel-header-bg" :class="{ visible: vi }" :style="`background-image: url(${topSection.backgroundImage.normal})`"></div>
+          <div class="hotel-header-fonts" :class="{ 'visible': vi }">
+            <!-- logo -->
             <div class="hotel-header-logos">
               <svg viewBox="0 0 114 114">
                 <use v-bind="{ 'xlink:href': '#logo-hotel-' + hotelNameEn }"></use>
@@ -21,7 +23,7 @@
               <p>虹夕诺雅</p>
               <p>{{ hotelName }}</p>
             </div>
-            <div class="hotel-header-title">
+            <div class="hotel-header-title" :class="{ 'visible': vi }">
               <h2> 
                 <template v-for="(row, row_index) of topSection.title.split('\n')">
                   {{ row }}
@@ -30,16 +32,14 @@
               </h2>
             </div>
             <div class="hotel-header-disc" >
-              <template v-for="(row, row_index) of topSection.content.split('\n')">
-                <template v-for="(char, char_index) of row">
-                  <span
-                    :class="{ 'text-visible': vi}"
-                    :style="`transition-delay: ${delayTime(row_index, char_index, row.length, topSection.content, 10)}ms`" 
-                    :key="row_index + '-' + char_index"
-                  >{{char}}</span>
-                </template>
-                <br :key="row_index">
-              </template>
+              <p 
+                v-for="(row, row_index) of topSection.content.split('\n')" 
+                :key="row_index" 
+                :class="{ 'visible': vi }"
+                :style="{ transitionDelay: row_index * 200  + 1000 + 'ms' }"
+              >
+                {{ row }}
+              </p>
             </div>
           </div>
         </div>
@@ -189,7 +189,7 @@ export default class Hotel extends Vue {
   color: white;
   border-bottom: 1px solid;
   overflow: hidden;
-  background: #ccc;
+  /* background: #ccc; */
 }
 
 .hotel-header-fonts {
@@ -201,6 +201,7 @@ export default class Hotel extends Vue {
   height: 736px;
   text-align: center;
   margin: auto;
+  transition-delay: 500ms;
 }
 
 .hotel-header-logos {
@@ -266,6 +267,10 @@ export default class Hotel extends Vue {
   right: 0;
 }
 
+.hotel-header-disc > p {
+  margin: 0;
+}
+
 .hotel-header-bg {
   width: 100%;
   height: 100%;
@@ -279,13 +284,16 @@ export default class Hotel extends Vue {
   right: 0;
 }
 
-.hotel-header-title > h2 > span,
-.hotel-header-disc > span {
-  transition: all 500ms cubic-bezier(.445,.05,.55,.95);
+/* 显示过度 */
+.hotel-header-fonts,
+.hotel-header-title,
+.hotel-header-bg,
+.hotel-header-disc > p {
+  transition: opacity 1500ms cubic-bezier(.445,.05,.55,.95);
   opacity: 0;
 }
 
-.text-visible {
+.visible {
   opacity: 1 !important;
 }
 

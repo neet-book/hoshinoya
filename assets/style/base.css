@@ -1,6 +1,7 @@
 
 body {
     font-family: "Helvetica Neue LT W01_55 Roman", hsn-zhcn-sans-demilight, hsn-zhtw-sans-demilight, sans-serif;;
+    -webkit-font-smoothing: antialiased;
 }
 
 li {
