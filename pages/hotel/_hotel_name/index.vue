@@ -1,5 +1,5 @@
 <template>
-  <div class="hotel">
+  <div class="hotel" @scroll="onScroll">
     <hotel-menu :hotel="hotelInfo"  page='index' /> 
     <div class="hotel-page-container">
       <hotel-header :content="topSection"></hotel-header>
@@ -47,7 +47,9 @@ export default class Hotel extends Vue {
   outlineFirstSection: Hotel.OutlineFirstSection | undefined
   outlineSecondSection: Hotel.OutlineSecondSection | undefined
   outlineTridSection: Hotel.OutlineThirdSection | undefined  
-
+  
+  // 页面滚动距离
+  distance: number = 0
 
   vi: boolean = false
   get hotelInfo() {
@@ -58,23 +60,11 @@ export default class Hotel extends Vue {
     }
   }
 
-  
-  delayTime(rowIndex: number, charIndex: number, charCount: number, text: string, level=100): number {
-    const rowCount = text.split('\n').length
-    // 最后一行
-    if (rowIndex + 1 === rowCount) {
-      return level * (charCount - charIndex) + level
-    }
-
-    // 第一行
-    if (rowIndex === 0) {
-      if (charIndex === 0) return 0
-      return 10 * charIndex + level
-    }
-
-    return level
+  onScroll(event: Event) {
+    const container: Element = event.target as Element
+    this.$store.commit('updateDistance', container.scrollTop)
   }
-
+  
   
 }
 </script>
@@ -82,5 +72,11 @@ export default class Hotel extends Vue {
 <style scoped>
 .hotel {
   font-family: hsn-zhcn-serif-regulari, hsn-zhcn-serif-semibold, hsn-zhtw-serif-semibold, serif;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
 }
+
+
+
 </style>

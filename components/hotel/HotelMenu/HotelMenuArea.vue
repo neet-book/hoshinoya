@@ -17,35 +17,35 @@
         <ul>
           <li>
             <nuxt-link
-              :to="'/hotel/' + nameEn + '/'"
+              :to="'/hotel/' + hotelNameEn" 
               class="link-list-item"
               :class="{ isCurrent: page == 'index' }"
             >特点</nuxt-link>
           </li>
           <li>
             <nuxt-link
-              :to="'/hotel/' + nameEn + '/rooms/'"
+              :to="'/hotel/' + hotelNameEn + '/rooms'"
               class="link-list-item"
               :class="{ isCurrent: page == 'room' }"
             >客房</nuxt-link>
           </li>
           <li>
             <nuxt-link
-              :to="'/hotel/' + nameEn + '/dining/'"
+              :to="'/hotel/' + hotelNameEn + '/dining'"
               class="link-list-item"
               :class="{ isCurrent: page == 'dining' }"
             >餐饮</nuxt-link>
           </li>
           <li>
             <nuxt-link
-              :to="'/hotel/' + nameEn + '/experience/'"
+              :to="'/hotel/' + hotelNameEn + '/experience'"
               class="link-list-item"
               :class="{ isCurrent: page == 'experience' }"
             >体验</nuxt-link>
           </li>
           <li>
             <nuxt-link
-              :to="'/hotel/' + nameEn + '/access/'"
+              :to="'/hotel/' + hotelNameEn + '/access'"
               class="link-list-item"
               :class="{ isCurrent: page == 'access' }"
             >交通</nuxt-link>
@@ -77,7 +77,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 import HotelRateList from '~/components/hotel/RateList/HotelRateList.vue'
 
 
@@ -86,17 +86,15 @@ import HotelRateList from '~/components/hotel/RateList/HotelRateList.vue'
 })
 
 export default class HotelMenuArea extends Vue {
-  @Prop(String) hotelName: string | undefined
-  @Prop(String) hotelNameEn: string | undefined
-  @Prop(String) logo: string | undefined
-  @Prop(String) page: string | undefined
+  hotelName: string | undefined = this.$store.state.hotelName
+  hotelNameEn: string | undefined = this.$store.state.hotelNameEn
+  logo: string = 'hotel-logo-' + this.$store.state.hotelNameEn
 
-  get nameEn(): string {
-    if (this.$route?.params.hotel_name) {
-      return this.$route.params.hotel_name
-    } else {
-      return ''
-    }
+  get page(): string {
+    const arr = this.$route.path.split('/')
+    const current = arr[arr.length - 1]
+    return current === this.hotelNameEn ? 'index' : current
+    
   }
 }
 </script>

@@ -2,7 +2,7 @@
   <div class="hotel-rate-list">
     <ul>
       <li v-for="rateInfo of rateInfoList" :key="rateInfo ? rateInfo.hotelID : null" class="card-li">
-        <rate-card v-if="rateInfo !== null" :rate-info="rateInfo"  :disabled="rateInfo.nameEn === currentHotel" />
+        <rate-card v-if="rateInfo !== null" :rate-info="rateInfo"  :disabled="rateInfo.hotelNameEn === currentHotel" />
         <div v-else class="rate-info-placeholder"></div>
       </li>
     </ul>
@@ -20,8 +20,8 @@ import { RateInfo } from './RateCard.vue'
 })
 
 export default class HotelRateList extends Vue {
-  @Prop(String) currentHotel: string | undefined
   @Prop(Array) rateInfos: RateInfo[] | undefined
+  currentHotel: string = this.$store.state.hotelNameEn
   get rateInfoList() {
     let n: number = this.rateInfos ? this.rateInfos.length % 3 : 0
     const rateInfos: any = this.rateInfos?.concat([])

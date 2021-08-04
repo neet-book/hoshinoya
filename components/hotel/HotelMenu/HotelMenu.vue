@@ -1,14 +1,10 @@
 <template>
   <div class="hotel-menu">
-    <hotel-menu-bar class="menu-bar" :hotel-name="hotel.nameEn"  @menu-click="isOpen = $event" />
+    <hotel-menu-bar class="menu-bar"  @menu-click="isOpen = $event" />
     <div class="menu-content-container" :class="{ 'content-open': isOpen }">
       <!-- 菜单内容区域 -->
       <hotel-menu-area
         class="menu-area"
-        :hotel-name="hotel.name"
-        :hotel-name-en="hotel.nameEn"
-        :logo="hotel.logo"
-        :page="page"
         :class="{ 
           'area-visible': isOpen,
           'area-hidden': !isOpen
@@ -39,9 +35,6 @@ interface Hotel {
   }
 })
 export default class HotelMenu extends Vue {
-  @Prop({ type: Object, required: true }) hotel: Hotel | undefined
-  // 当前位于哪个介绍页面
-  @Prop({ type: String, required: true }) page: string | undefined
   isOpen : boolean = false
 }
 </script>

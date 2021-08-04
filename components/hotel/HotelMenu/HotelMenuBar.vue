@@ -1,5 +1,6 @@
 <template>
-  <div class="menu-bar" @click="onClick" :class="{ visible }">
+  <div class="menu-bar" @click="onClick" :class="{ visible }"> 
+    <div class="site-name-en" :class="{ visible: $store.state.distance > 1000 }">HOSHINOYA {{ $store.state.hotelNameEn.toUpperCase() }}</div>
     <div class="menu-bar-icon">
       <div class="menu-bar-icon-menu" :class="{ active: !active }">
         <div class="icon-line"></div>
@@ -9,18 +10,12 @@
       <div class="menu-bar-icon-close" :class="{ active: active }">
       </div>
     </div>
-    <div class="nemu-bar-name" :class="{ show: showName }">HOSHINOYA {{ hotel | nameFilter }}</div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
-  filters: {
-    nameFilter(name: string): string {
-      return name?.toUpperCase()
-    }
-  },
   mounted() {
     setTimeout(() => {
       (this as any).visible = true
@@ -28,13 +23,11 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator'
   }
 })
 export default class HotelBookingMenu extends Vue {
-  @Prop(String) hotel: string | undefined
-  @Prop(Boolean) showName: boolean | undefined
-  active: boolean = false
+  opened: boolean = false
   visible: boolean = false
   onClick(): void {
-    this.active = !this.active
-    this.$emit('menu-click', this.active)
+    this.opened= !this.opened
+    this.$emit('menu-click', this.opened)
   }
 }
 </script>
@@ -76,24 +69,29 @@ export default class HotelBookingMenu extends Vue {
   right: 0;
 }
 
-.nemu-bar-name {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1em;
+.site-name-en {
+  width: 110px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  
+  user-select: none;
 
-  font-family: BauerBodoni;
-  writing-mode: vertical-rl;
+  font-family: "Bauer Bodoni Pro_1 W01 Roman";
+  color: black;
   font-size: 11px;
+  line-height: 110px;
   letter-spacing: 1.8px;
   word-break: break-all;
   text-align: center;
+  writing-mode: vertical-rl;
+
   opacity: 0;
-  transition: opacity 900ms cubic-bezier(0.445,0.05,0.55,0.95) 20ou0ms;
+  transition: opacity 900ms cubic-bezier(.445,.05,.55,.95) 200ms;
 }
 
-.nemu-bar-name.show {
+.site-name-en.visible {
   opacity: 1;
 }
 
@@ -147,7 +145,9 @@ export default class HotelBookingMenu extends Vue {
 }
 
 @media screen and (max-width: 950px) {
-  .menu-bar {
+  .menu-bar,
+  .site-name-ene
+  {
     width: 60px;
   }
 
