@@ -86,9 +86,17 @@ import HotelRateList from '~/components/hotel/RateList/HotelRateList.vue'
 })
 
 export default class HotelMenuArea extends Vue {
-  hotelName: string | undefined = this.$store.state.hotelName
-  hotelNameEn: string | undefined = this.$store.state.hotelNameEn
-  logo: string = 'hotel-logo-' + this.$store.state.hotelNameEn
+  get hotelName() : string {
+    return this.$store.state.hotelName
+  }
+
+  get hotelNameEn(): string {
+    return this.$store.state.hotelNameEn
+  }
+  
+  get logo(): string {
+    return 'logo-hotel-' + this.$store.state.hotelNameEn
+  }
 
   get page(): string {
     const arr = this.$route.path.split('/')

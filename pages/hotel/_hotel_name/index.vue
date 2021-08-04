@@ -4,7 +4,7 @@
     <div class="hotel-page-container">
       <hotel-header :content="topSection"></hotel-header>
       <main>
-        <div class="first-content" style="height: 100px;">
+        <div class="first-content" style="height: 1000px;">
           <button @click="vi = !vi" style="padding-left: 20px;">change</button>
         </div>
       </main>
@@ -62,7 +62,11 @@ export default class Hotel extends Vue {
 
   onScroll(event: Event) {
     const container: Element = event.target as Element
-    this.$store.commit('updateDistance', container.scrollTop)
+
+    // 优化滚动事件
+    window.requestAnimationFrame(() => {
+      this.$store.commit('updateDistance', container.scrollTop)
+    })
   }
   
   
@@ -77,6 +81,8 @@ export default class Hotel extends Vue {
   overflow: auto;
 }
 
-
+.first-content {
+  height: 500px;
+}
 
 </style>

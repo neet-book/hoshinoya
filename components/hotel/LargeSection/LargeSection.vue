@@ -4,9 +4,10 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 @Component
-export default class LargeSection extends Vue {
+export default class LaroogeSection extends Vue {
+  @Prop() lageSection: Hotel.LargeSection | undefined 
 }
 </script>
 

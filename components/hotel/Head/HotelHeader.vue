@@ -2,7 +2,12 @@
   <header>
     <div class="hotel-header-container">
       <!-- 背景 -->
-      <div class="hotel-header-bg" :class="{ visible }" :style="`background-image: url(${content.backgroundImage.normal})`"></div>
+      <div 
+        class="hotel-header-bg" 
+        :class="{ visible }" 
+        :style="{ backgroundImage: `url(${content.backgroundImage.normal})`, transform: `translate3d(0px, ${ move }px, 0px)`}"
+        
+        ></div>
       <div class="hotel-header-fonts" :class="{ visible }">
         <!-- logo -->
         <div class="hotel-header-logos">
@@ -64,6 +69,10 @@ export default class  extends Vue {
   get hotelName(): string {
     return this.$store.state.hotelName
   }
+
+  get move(): number {
+    return this.$store.state.distance / 3.3
+  }  
 }
 
 </script>
