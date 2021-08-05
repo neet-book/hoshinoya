@@ -4,9 +4,7 @@
     <div class="hotel-page-container">
       <hotel-header :content="topSection"></hotel-header>
       <main>
-        <div class="first-content" style="height: 1000px;">
-          <button @click="vi = !vi" style="padding-left: 20px;">change</button>
-        </div>
+       <large-section :content="largeSection"></large-section> 
       </main>
     </div>
   </div>
@@ -16,12 +14,14 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
 import HotelHeader from '~/components/hotel/Head/HotelHeader.vue'
+import LargeSection from '~/components/hotel/LargeSection/LargeSection.vue'
 import { getHotelRateInfos, getHotelIntroduction } from '~/utils/network'
 
 @Component({
   components: {
     HotelMenu,
-    HotelHeader
+    HotelHeader,
+    LargeSection
   },
   async fetch({ store }) {
     const data = await getHotelRateInfos()

@@ -2,12 +2,12 @@
   <div class="menu-bar" @click="onClick" :class="{ visible }"> 
     <div class="site-name-en" :class="{ visible: $store.state.distance > 1000 }">HOSHINOYA {{ $store.state.hotelNameEn.toUpperCase() }}</div>
     <div class="menu-bar-icon">
-      <div class="menu-bar-icon-menu" :class="{ opened: !active }">
+      <div class="menu-bar-icon-menu" :class="{ opened }">
         <div class="icon-line"></div>
         <div class="icon-line"></div>
         <div class="icon-line"></div>
       </div>
-      <div class="menu-bar-icon-close" :class="{ opened: active }">
+      <div class="menu-bar-icon-close" :class="{ opened }">
       </div>
     </div>
   </div>

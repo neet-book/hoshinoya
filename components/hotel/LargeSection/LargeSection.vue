@@ -7,10 +7,15 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 @Component
 export default class LaroogeSection extends Vue {
-  @Prop() lageSection: Hotel.LargeSection | undefined 
+  @Prop() content: Hotel.LargeSection | undefined 
+  get hoteNameEn(): string {
+    return this.$store.state.hoteName
+  }
 }
 </script>
 
-
 <style scoped>
+.large-section {
+  padding-top: 170px;
+}
 </style>
