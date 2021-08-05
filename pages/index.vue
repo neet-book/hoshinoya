@@ -272,4 +272,14 @@ footer {
 .footer-links-language {
   margin-left: 10px;
 }
+
+@media screen and (max-width: 900px) {
+  .top-head {
+    display: none;
+  }
+
+  .hotel-router > ul > li {
+    display: block;
+  }
+}
 </style>

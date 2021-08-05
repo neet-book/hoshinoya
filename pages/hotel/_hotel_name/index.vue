@@ -62,8 +62,7 @@ export default class Hotel extends Vue {
 
   onScroll(event: Event) {
     const container: Element = event.target as Element
-
-    // 优化滚动事件
+    // 优化scroll
     window.requestAnimationFrame(() => {
       this.$store.commit('updateDistance', container.scrollTop)
     })
