@@ -117,6 +117,6 @@ export default class LaroogeSection extends Vue {
   width: 100%;
   background-position: center;
   background-size: contain;
-  background-repeat: no-repeat;
+background-repeat: no-repeat;
 }
 </style>
