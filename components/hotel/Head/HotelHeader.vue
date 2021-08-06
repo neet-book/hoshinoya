@@ -85,7 +85,8 @@ export default class  extends Vue {
   color: white;
   border-bottom: 1px solid;
   overflow: hidden;
-  /* background: #ccc; */
+
+  font-family: "hsn-zhcn-serif-regular", serif;
 }
 
 .hotel-header-fonts {
@@ -146,6 +147,7 @@ export default class  extends Vue {
   font-family: inherit;
   font-size: 42px; 
   line-height: 60px;
+  font-weight: 400;
   letter-spacing: 2px;
   text-shadow: rgba(4, 0, 0, 0.6) 0px 0px 80px;
 }

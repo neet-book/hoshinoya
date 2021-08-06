@@ -5,13 +5,13 @@
 }
 
 @font-face {
-    font-family: "hsn-zhcn-serif-regular";
+    font-family: "hsn-zhcn-sans-regular";
     src: url("~static/fonts/NotoSansCJKsc-Regular.woff2")  format("woff2");
 }
 
 @font-face {
-    font-family: "hsn-zhcn-sans-regular";
-    src: url('~static/fonts/NotoSerifCJKsc-Regular.woff2');
+    font-family: "hsn-zhcn-serif-regular";
+    src: url('~static/fonts/NotoSerifCJKsc-Regular.woff2') format("woff2");
 }
 
 @font-face {

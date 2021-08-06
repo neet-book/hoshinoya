@@ -67,14 +67,11 @@ export default class Hotel extends Vue {
       this.$store.commit('updateDistance', container.scrollTop)
     })
   }
-  
-  
 }
 </script>
 
 <style scoped>
 .hotel {
-  font-family: hsn-zhcn-serif-regulari, hsn-zhcn-serif-semibold, hsn-zhtw-serif-semibold, serif;
   width: 100vw;
   height: 100vh;
   overflow: auto;
