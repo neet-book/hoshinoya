@@ -1,5 +1,4 @@
 import axios from "axios"
-import { HotelIntroduction } from './network.d'
 
 const common = axios.create({ baseURL: 'http://localhost:3000' })
 const hotelInstance = axios.create({ baseURL: 'http://localhost:3000/hotel'})
@@ -24,10 +23,10 @@ export async function getHoshinoyaHome() {
     }
 }
 
-export async function getHotelIntroduction(hotel: string): Promise<HotelIntroduction | null> {
+export async function getHotelIntroduction(hotel: string): Promise<Hotel.HotelIntroduction | null> {
     const { data: { code, data } } = await hotelInstance.get(`/introduction/${hotel}`)
     if (code === 1) {
-        return data as HotelIntroduction
+        return data as Hotel.HotelIntroduction
     } else {
         return null
     }

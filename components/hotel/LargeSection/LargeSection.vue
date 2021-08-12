@@ -1,18 +1,11 @@
 <template>
   <div class="large-section">
-    <h2 class="outline-title" ref="outline" :class="{ show: outline_showed }">
-      <span 
-        v-for="(text, index) in content.title.split('\n')"
-        :style="{ 'transition-delay': index * 100 + 'ms' }"
-        :key="index">{{ text }}<br :key="'br' + index">
-      </span>
-      <svg viewBox="0 0 35 35">
-        <use v-bind="{ 'xlink:href': `#logo-hotel-${hotelNameEn}-small` }"></use>
-      </svg>
-    </h2>
-    <div class="outline-content">
-      {{ content.content }}
-    </div>
+    <div class="outline-fonts" ref=outline>
+      <outline-title class="outline-title" :title="content.title" :show="outline_showed" ></outline-title> 
+      <div class="outline-content">
+        {{ content.content }}
+      </div>
+    </div> 
     <!-- 圆形图 -->
     <div class="switch-area" >
       <div class="circle-container" :class="{ show: circle_showed }" ref="circle">
@@ -35,7 +28,12 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import OutlineTitle from '~/components/hotel/OutlineTitle.vue'
+
 @Component({
+  components:{
+    OutlineTitle
+  },
   mounted() {
     const that: any = this
     that.document = document
@@ -82,38 +80,8 @@ export default class LaroogeSection extends Vue {
 }
 
 .outline-title {
-  position: relative;
-  margin-bottom: 50px;
-  padding-bottom: 48px;
-
-  text-align: center;
-  vertical-align: baseline;
-  letter-spacing: 3px;
-  font-size: 28px;
-  line-height: 44px;
-  font-weight: 400;
-  
-}
-
-.outline-title > span {
-  opacity: 0;
-  transition: opacity 900ms cubic-bezier(.445,.05,.55,.95);
-}
-
-.outline-title.show > span {
-  opacity: 1;
-}
-
-.outline-title > svg {
-  width: 16px;
-  height: 16px;
-  fill: black;
-  stroke: black;
-
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
+    margin-bottom: 50px;
+    padding-bottom: 48px;
 }
 
 .outline-content {

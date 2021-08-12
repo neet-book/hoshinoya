@@ -14,7 +14,7 @@ declare namespace Hotel {
     normal?: string
     square?: string
   }
-
+  
   interface TopSection {
     title: string,
     content: string,
@@ -30,7 +30,7 @@ declare namespace Hotel {
 
   interface OutlineFirstSection {
     title: string
-    carrouselImtes: [
+    carrouselItems: [
       {
         title: string,
         image: ImageUrl
@@ -66,5 +66,16 @@ declare namespace Hotel {
       title: string,
       content: string
     }
+  }
+
+  interface HotelIntroduction {
+    hotelID: number,
+    hotelName: string,
+    hotelNameEn: string,
+    topSection: TopSection
+    largeSection: LargeSection
+    outlineFirstSection: OutlineFirstSection
+    outlineSecondSection: OutlineSecondSection
+    outlineThirdSection: OutlineThirdSection
   }
 }
