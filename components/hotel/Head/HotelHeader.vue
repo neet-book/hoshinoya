@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="hotel-header-container">
+    <div class="hotel-header-container" ref="container">
       <!-- 背景 -->
       <div 
         class="hotel-header-bg" 
@@ -71,7 +71,13 @@ export default class  extends Vue {
   }
 
   get move(): number {
-    return this.$store.state.distance / 3.3
+    const container = this.$refs.container as Element
+    const distance = this.$store.state.distance
+    if ( distance && distance > container.clientHeight ) { 
+      return container.clientHeight
+    } else {
+      return distance / 3 
+    }
   }  
 }
 
