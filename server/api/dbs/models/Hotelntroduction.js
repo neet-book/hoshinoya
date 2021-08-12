@@ -30,7 +30,7 @@ const HotelIntroductionSchema = new Schema({
   },
   outlineFirstSection: {
     title: String,
-    carrouselImtes: [
+    carrouselItems: [
       {
         title: String,
         image: {
