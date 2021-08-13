@@ -15,7 +15,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 @Component
 export default class  extends Vue {
   @Prop(String) title: string | undefined
-  @Prop(Boolean) show: boolean | undefined
+  @Prop({ type: Boolean, default: true }) show: boolean | undefined
   get hotelNameEn(): string {
     return this.$store.state.hotelNameEn
   }
@@ -26,8 +26,9 @@ export default class  extends Vue {
 <style scoped>
 .outline-title {
   position: relative;
+  font-family: "hsn-zhcn-serif-light" , serif;
 
-
+  padding-bottom: 48px;
   text-align: center;
   vertical-align: baseline;
   letter-spacing: 3px;

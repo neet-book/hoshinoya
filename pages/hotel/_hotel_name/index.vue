@@ -5,6 +5,7 @@
       <hotel-header :content="topSection"></hotel-header>
       <main>
        <large-section :content="largeSection"></large-section> 
+       <outline-first-section :content="outlineFirstSection" ></outline-first-section>
       </main>
     </div>
   </div>
@@ -15,13 +16,15 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
 import HotelHeader from '~/components/hotel/Head/HotelHeader.vue'
 import LargeSection from '~/components/hotel/LargeSection/LargeSection.vue'
+import OutlineFirstSection from '~/components/hotel/outlines/OutlineFirstSection.vue'
 import { getHotelRateInfos, getHotelIntroduction } from '~/utils/network'
 
 @Component({
   components: {
     HotelMenu,
     HotelHeader,
-    LargeSection
+    LargeSection,
+    OutlineFirstSection
   },
   async fetch({ store }) {
     const data = await getHotelRateInfos()
@@ -80,5 +83,4 @@ export default class Hotel extends Vue {
 .first-content {
   height: 500px;
 }
-
 </style>

@@ -80,8 +80,7 @@ export default class LaroogeSection extends Vue {
 }
 
 .outline-title {
-    margin-bottom: 50px;
-    padding-bottom: 48px;
+  margin-bottom: 50px;
 }
 
 .outline-content {
@@ -146,6 +145,8 @@ export default class LaroogeSection extends Vue {
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
+
+  padding-bottom: 114px;
 }
 
 .map-image-body {
