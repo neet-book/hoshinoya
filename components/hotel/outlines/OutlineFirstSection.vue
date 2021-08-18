@@ -1,22 +1,23 @@
 <template>
   <div class="outline-frist-section">
     <outline-title class="outline-title" :title="content.title" :show="outlineTitleShowed"></outline-title>
-    <carrousel images="content.carrouselItems"></carrousel>
+    <carousel :images="content.carouselItems"></carousel>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import OutlineTitle from '~/components/hotel/OutlineTitle.vue'
-import Carrousel from '~/components/hotel/Carrousel.vue'
+import Carousel from '~/components/hotel/Carousel.vue'
 
 @Component({
   components: {
     OutlineTitle,
-    Carrousel 
+    Carousel 
   }
 })
 export default class OutlineFristSection extends Vue {
-  @Prop(Object) content: Hotel.OutlineFirstSection | undefined 
+  @Prop(Object) content: Hotel.OutlineFirstSection | undefined
+  outlineTitleShowed = false
 }
 </script>
 
