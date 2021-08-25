@@ -50,8 +50,6 @@ export default class Carousel extends Vue {
     const el = event.target as Element
     this.itemWidth = el.clientHeight * 1.5
   }
-
-
 }
 </script>
 
