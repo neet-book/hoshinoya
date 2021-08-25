@@ -5,8 +5,8 @@
         <div 
           v-for="(item, index) of images"
           class="carousel-item" :key="index"
-          :style="{ width: itemWidth + 'px' }"
-          ref="carr-item"
+          :style="{ width: itemWidth + 'px', transform: `translateX(${carouseler ? carouseler.itemPositions[index].x : 0}px)` }"
+          ref="carrItem"
           @resize="onItemSizeChange"
         >
           <div class="item-text">#{{ index > 9 ? index : index.toString().padStart('0') }} _ {{ item.title }}</div>
@@ -29,6 +29,7 @@
   </div>
 </template>
 <script lang="ts">
+import Carouseler from './carouseler'
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 interface image {
@@ -36,19 +37,23 @@ interface image {
   image: Hotel.ImageUrl
 }
 
-
 @Component({
   mounted() {
     const that: any = this
-    that.itemWidth = that.$refs.container.clientHeight * 1.5
+    const items: Element[] = that.$refs.carrItem
+    if (items) { 
+      that.carouseler = new Carouseler(items[0].clientWidth, items.length)
+    }
   }
 })
 export default class Carousel extends Vue {
   @Prop(Array) images: image[] | undefined 
+  carouseler: Carouseler | null = null
   itemWidth: number = 0
   onItemSizeChange(event: Event) {
     const el = event.target as Element
     this.itemWidth = el.clientHeight * 1.5
+    if (this.carouseler) this.carouseler.resize(this.itemWidth)
   }
 }
 </script>
