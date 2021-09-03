@@ -3,6 +3,7 @@ interface Position {
   id: number
   x: number
   y: number
+  visible: boolean
 }
 
 export default class Carouseler {
@@ -13,21 +14,27 @@ export default class Carouseler {
   currentIndex: number = 2
   maxItemcount: number = 3
   itemPositions: Position[] = []
-  status: actions = 'moved'
+  status: actions = 'changed'
   timer: NodeJS.Timeout | null = null
   constructor(itemWidth: number, itemCount: number) {
     this.itemCount = itemCount
+    this.resize(itemWidth)
     for (let i = 0; i < itemCount; i ++) {
       this.itemPositions[i] = {
         id: i,
-        x: 0,
-        y: 0
+        x: this.viewWidth * i - this.distance,
+        y: 0,
+        visible: true
       }
     }
-    this.resize(itemWidth)
+
+    for (let i = 0; i < this.maxItemcount; i++) {
+      this.itemPositions[i].x = -this.distance + this.itemWidth * i
+    }
   }
 
   resize(itemWidth: number) {
+    this.itemWidth = itemWidth
     const viewWidth = document.documentElement.clientWidth
     if (viewWidth / itemWidth > 3) {
       // 页面显示4个item
@@ -42,22 +49,21 @@ export default class Carouseler {
     this.viewWidth = viewWidth
   }
 
-  carrouselHander() {
-    // 判断刚才执行完的行为是什么
+  carouselHander() {
+    let delay = 1000
     if (this.status === 'moved') {
       // 移动结束，转为切换
-      this.changeAction()
-      this.timer = setTimeout(this.carrouselHander, 2000)
-    }
-
-    if (this.status === 'changed') {
+      this.exchangeAction()
+      delay = 3000
+    } else {
       // 切换结束，转为移动
-      this.movingAction()
-      this.timer = setTimeout(this.carrouselHander, 3000)
+      this.moveAction()
+      delay = 2000
     }
+    this.timer = setTimeout(() => this.carouselHander(), delay)
   }
 
-  movingAction() {
+  moveAction() {
     let preIndex = this.currentIndex - 1,
     nextIndex = this.currentIndex + 1
 
@@ -68,18 +74,19 @@ export default class Carouseler {
     currentPosition = this.itemPositions[this.currentIndex],
     nextPosition = this.itemPositions[nextIndex]
 
-    prePosition.x = -this.distance
-    currentPosition.x = prePosition.x + this.itemWidth
-    nextPosition.x
+    prePosition.x -= this.distance
+    currentPosition.x -= this.distance
+    nextPosition.x  -= this.distance 
 
     this.status = 'moved'
   }
 
-  changeAction() {
+  exchangeAction() {
+    console.log(1)
     let preIndex = this.currentIndex - 1,
     nextIndex = this.currentIndex + 1
 
-    if (preIndex < 0) preIndex = this.itemCount
+    if (preIndex < 0) preIndex = this.itemCount - 1
     if (nextIndex >= this.itemCount) nextIndex = 0
 
     let prePosition = this.itemPositions[preIndex],
@@ -88,22 +95,39 @@ export default class Carouseler {
 
 
     // 处理旧preItem
-    prePosition.x = prePosition.x - this.distance
-    // 处理新preItem
+    if (this.maxItemcount < this.itemCount) {
+      if ((preIndex - 1 < 0) && this.maxItemcount < this.itemCount)  {
+        this.itemPositions[this.itemCount - 1].visible = false
+        this.itemPositions[this.itemCount - 1].x = this.viewWidth
+      } else {
+        this.itemPositions[preIndex - 1].visible = false
+        this.itemPositions[preIndex - 1].x = this.viewWidth
+      }
+    }
+    prePosition.x = - this.itemWidth
+    // 处理新curentItem
     currentPosition.x = prePosition.x + this.itemWidth
+    nextPosition.x = prePosition.x + this.itemWidth
 
-    // 处理currentItem
-    prePosition = currentPosition 
+    // 处理新的nextItem
     currentPosition = nextPosition 
-    this.currentIndex += 1
-
+    this.currentIndex = nextIndex
     // 处理nextItem
-    nextIndex = this.currentIndex + 1
+    nextIndex += 1
     if (nextIndex >= this.itemCount) nextIndex = 0
     nextPosition = this.itemPositions[nextIndex]
-    
+    nextPosition.visible = true    
     nextPosition.x = currentPosition.x + this.itemWidth 
 
     this.status = 'changed'
+  }
+
+  stop() {
+    clearTimeout(this.timer as NodeJS.Timeout)
+    this.timer = null
+  }
+
+  start() {
+    if (this.timer === null ) this.carouselHander() 
   }
 }

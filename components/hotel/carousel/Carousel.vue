@@ -4,8 +4,10 @@
       <div class="carousel-container" ref="container">
         <div 
           v-for="(item, index) of images"
-          class="carousel-item" :key="index"
-          :style="{ width: itemWidth + 'px', transform: `translateX(${carouseler ? carouseler.itemPositions[index].x : 0}px)` }"
+          class="carousel-item" 
+          :class="{ visible: carouseler ? carouseler.itemPositions[index].visible : true }"
+          :key="index"
+          :style="{ width: imageWidth + 'px', transform: `translateX(${carouseler ? carouseler.itemPositions[index].x : 0}px)` }"
           ref="carrItem"
           @resize="onItemSizeChange"
         >
@@ -25,6 +27,10 @@
           </li>
         </ul>
       </div>
+      <div style="text-align: center;">
+      <button @click="carouseler.start()">start</button>
+      <button @click="carouseler.stop()">stop</button>
+      </div>
     </div>
   </div>
 </template>
@@ -41,19 +47,29 @@ interface image {
   mounted() {
     const that: any = this
     const items: Element[] = that.$refs.carrItem
+    const el = items[0]
+    that.imageWidth = el ? el.clientHeight * 1.5 : 0
+    console.log(items)
     if (items) { 
-      that.carouseler = new Carouseler(items[0].clientWidth, items.length)
+      that.carouseler = new Carouseler(that.imageWidth + 50, items.length)
+      that.carouseler.start()
     }
+    console.log(that.carouceler)
+
+  },
+  beforeDestroy() {
+    const that: any = this
+    that.carouseler.stop()
   }
 })
 export default class Carousel extends Vue {
   @Prop(Array) images: image[] | undefined 
   carouseler: Carouseler | null = null
-  itemWidth: number = 0
+  imageWidth: number = 0
   onItemSizeChange(event: Event) {
     const el = event.target as Element
-    this.itemWidth = el.clientHeight * 1.5
-    if (this.carouseler) this.carouseler.resize(this.itemWidth)
+    this.imageWidth = el.clientHeight * 1.5
+    if (this.carouseler) this.carouseler.resize(this.imageWidth)
   }
 }
 </script>
@@ -74,6 +90,13 @@ export default class Carousel extends Vue {
   height: 100%;
   max-height: 700px;
   padding-left: 50px;
+  transition: transform 2000ms;
+
+  opacity: 0;
+}
+
+.carousel-item.visible {
+  opacity: 1;
 }
 
 .item-text {
@@ -121,4 +144,5 @@ export default class Carousel extends Vue {
   top: 6px;
   left: 6px;
 }
+
 </style>
