@@ -1,15 +1,17 @@
 <template>
   <div class="carousel">
     <div class="carousel-area">
-      <div class="carousel-container" ref="container">
+      <div 
+        class="carousel-container" 
+        ref="container"
+      >
         <div 
           v-for="(item, index) of images"
           class="carousel-item" 
           :class="{ visible: carouseler ? carouseler.itemPositions[index].visible : true }"
           :key="index"
-          :style="{ width: imageWidth + 'px', transform: `translateX(${carouseler ? carouseler.itemPositions[index].x : 0}px)` }"
           ref="carrItem"
-          @resize="onItemSizeChange"
+          :style="{ width: imageWidth + 'px', transform: `translateX(${carouseler ? carouseler.itemPositions[index].x : -11}px)` }"
         >
           <div class="item-text">#{{ index > 9 ? index : index.toString().padStart('0') }} _ {{ item.title }}</div>
           <div class="item-image"
@@ -49,24 +51,23 @@ interface image {
     const items: Element[] = that.$refs.carrItem
     const el = items[0]
     that.imageWidth = el ? el.clientHeight * 1.5 : 0
-    console.log(items)
     if (items) { 
       that.carouseler = new Carouseler(that.imageWidth + 50, items.length)
-      that.carouseler.start()
     }
-    console.log(that.carouceler)
-
+    that.resizeHandle = () => that.onViewResize() 
+    window.addEventListener('resize', that.resizeHandle)
   },
   beforeDestroy() {
     const that: any = this
     that.carouseler.stop()
+    window.removeEventListener('resize', that.resizeHandle)
   }
 })
 export default class Carousel extends Vue {
   @Prop(Array) images: image[] | undefined 
   carouseler: Carouseler | null = null
   imageWidth: number = 0
-  onItemSizeChange(event: Event) {
+  onViewResize(event: Event) {
     const el = event.target as Element
     this.imageWidth = el.clientHeight * 1.5
     if (this.carouseler) this.carouseler.resize(this.imageWidth)

@@ -22,7 +22,7 @@ export default class Carouseler {
     for (let i = 0; i < itemCount; i ++) {
       this.itemPositions[i] = {
         id: i,
-        x: this.viewWidth * i - this.distance,
+        x: this.itemWidth * i - this.distance,
         y: 0,
         visible: true
       }
@@ -65,13 +65,13 @@ export default class Carouseler {
 
   moveAction() {
     let preIndex = this.currentIndex - 1,
-    nextIndex = this.currentIndex + 1
-
+    nextIndex = this.currentIndex + 1,
+    currentIndex = this.currentIndex
     if (preIndex < 0) preIndex = this.itemCount - 1
     if (nextIndex >= this.itemCount) nextIndex = 0
 
     let prePosition = this.itemPositions[preIndex],
-    currentPosition = this.itemPositions[this.currentIndex],
+    currentPosition = this.itemPositions[currentIndex],
     nextPosition = this.itemPositions[nextIndex]
 
     prePosition.x -= this.distance
@@ -82,7 +82,6 @@ export default class Carouseler {
   }
 
   exchangeAction() {
-    console.log(1)
     let preIndex = this.currentIndex - 1,
     nextIndex = this.currentIndex + 1
 
@@ -95,20 +94,17 @@ export default class Carouseler {
 
 
     // 处理旧preItem
-    if (this.maxItemcount < this.itemCount) {
-      if ((preIndex - 1 < 0) && this.maxItemcount < this.itemCount)  {
-        this.itemPositions[this.itemCount - 1].visible = false
-        this.itemPositions[this.itemCount - 1].x = this.viewWidth
-      } else {
-        this.itemPositions[preIndex - 1].visible = false
-        this.itemPositions[preIndex - 1].x = this.viewWidth
-      }
+    if ((preIndex - 1 < 0) && this.maxItemcount < this.itemCount)  {
+      this.itemPositions[this.itemCount - 1].visible = false
+      this.itemPositions[this.itemCount - 1].x = this.viewWidth
+    } else {
+      this.itemPositions[preIndex - 1].visible = false
+      this.itemPositions[preIndex - 1].x = this.viewWidth
     }
-    prePosition.x = - this.itemWidth
-    // 处理新curentItem
-    currentPosition.x = prePosition.x + this.itemWidth
-    nextPosition.x = prePosition.x + this.itemWidth
 
+    prePosition.x = -this.itemWidth
+    currentPosition.x = -this.distance
+    nextPosition.x  = currentPosition.x + this.itemWidth
     // 处理新的nextItem
     currentPosition = nextPosition 
     this.currentIndex = nextIndex
