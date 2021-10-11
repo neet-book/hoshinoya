@@ -6,15 +6,22 @@ interface Position {
   visible: boolean
 }
 
+// 移动距离为item宽度的64%
+// 切换item的移动距离为item宽度的18%
+
 export default class Carouseler {
   itemCount: number = 0
   distance: number = 0
+  
   viewWidth: number = 0
   itemWidth: number = 0 
   currentIndex: number = 2
   maxItemcount: number = 3
   itemPositions: Position[] = []
   status: actions = 'changed'
+  // item移动和切换间隔和持续时间
+  moveTime: number = 5000
+  changeTime: number = 600
   timer: NodeJS.Timeout | null = null
   constructor(itemWidth: number, itemCount: number) {
     this.itemCount = itemCount
@@ -49,18 +56,19 @@ export default class Carouseler {
     this.viewWidth = viewWidth
   }
 
-  carouselHander() {
+  carouselHandler() {
     let delay = 1000
+    console.info('hander')
     if (this.status === 'moved') {
       // 移动结束，转为切换
       this.exchangeAction()
-      delay = 3000
+      delay = this.changeTime 
     } else {
       // 切换结束，转为移动
       this.moveAction()
-      delay = 2000
+      delay = this.moveTime 
     }
-    this.timer = setTimeout(() => this.carouselHander(), delay)
+    this.timer = setTimeout(() => this.carouselHandler(), delay)
   }
 
   moveAction() {
@@ -124,6 +132,6 @@ export default class Carouseler {
   }
 
   start() {
-    if (this.timer === null ) this.carouselHander() 
+    if (this.timer === null ) this.carouselHandler() 
   }
 }

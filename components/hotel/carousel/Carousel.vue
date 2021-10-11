@@ -8,7 +8,7 @@
         <div 
           v-for="(item, index) of images"
           class="carousel-item" 
-          :class="{ visible: carouseler ? carouseler.itemPositions[index].visible : true }"
+          :class="{ visible: carouseler ? carouseler.itemPositions[index].visible : true, move: carouseler ? carouseler.status == 'moved' : false }"
           :key="index"
           ref="carrItem"
           :style="{ width: imageWidth + 'px', transform: `translateX(${carouseler ? carouseler.itemPositions[index].x : -11}px)` }"
@@ -60,7 +60,7 @@ interface image {
   beforeDestroy() {
     const that: any = this
     that.carouseler.stop()
-    window.removeEventListener('resize', that.resizeHandle)
+    window.removeEventListener('resize', that.onViewResize)
   }
 })
 export default class Carousel extends Vue {
@@ -91,8 +91,8 @@ export default class Carousel extends Vue {
   height: 100%;
   max-height: 700px;
   padding-left: 50px;
-  transition: transform 2000ms;
 
+  transition: transform 500ms;
   opacity: 0;
 }
 
@@ -146,4 +146,7 @@ export default class Carousel extends Vue {
   left: 6px;
 }
 
+.carousel-item.move {
+  transition: transform 5000ms;
+}
 </style>
