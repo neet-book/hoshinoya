@@ -11,8 +11,8 @@ interface Position {
 
 export default class Carouseler {
   itemCount: number = 0
-  distance: number = 0
-  
+  moveDistance: number = 0
+  changeDistance: number = 0
   viewWidth: number = 0
   itemWidth: number = 0 
   currentIndex: number = 2
@@ -29,30 +29,32 @@ export default class Carouseler {
     for (let i = 0; i < itemCount; i ++) {
       this.itemPositions[i] = {
         id: i,
-        x: this.itemWidth * i - this.distance,
+        x: this.itemWidth * i - (this.moveDistance + this.changeDistance),
         y: 0,
         visible: true
       }
     }
 
-    for (let i = 0; i < this.maxItemcount; i++) {
-      this.itemPositions[i].x = -this.distance + this.itemWidth * i
-    }
+    // for (let i = 0; i < this.maxItemcount; i++) {
+    //   this.itemPositions[i].x = -this.distance + this.itemWidth * i
+    // }
   }
 
   resize(itemWidth: number) {
     this.itemWidth = itemWidth
     const viewWidth = document.documentElement.clientWidth
-    if (viewWidth / itemWidth > 3) {
-      // 页面显示4个item
-      this.maxItemcount = 4
-      this.distance = (viewWidth - itemWidth * 2) / 2 
-    } else {
-      // 页面显示3个item
-      this.maxItemcount = 3
-      this.distance = (viewWidth - itemWidth) / 2
-    }
+    // if (viewWidth / itemWidth > 3) {
+    //   // 页面显示4个item
+    //   this.maxItemcount = 4
+    //   this.distance = (viewWidth - itemWidth * 2) / 2 
+    // } else {
+    //   // 页面显示3个item
+    //   this.maxItemcount = 3
+    //   this.distance = (viewWidth - itemWidth) / 2
+    // }
 
+    this.moveDistance = itemWidth * 0.64
+    this.changeDistance = itemWidth * 0.18
     this.viewWidth = viewWidth
   }
 
@@ -82,9 +84,9 @@ export default class Carouseler {
     currentPosition = this.itemPositions[currentIndex],
     nextPosition = this.itemPositions[nextIndex]
 
-    prePosition.x -= this.distance
-    currentPosition.x -= this.distance
-    nextPosition.x  -= this.distance 
+    prePosition.x -= this.moveDistance
+    currentPosition.x -= this.moveDistance
+    nextPosition.x  -= this.moveDistance 
 
     this.status = 'moved'
   }
@@ -102,16 +104,12 @@ export default class Carouseler {
 
 
     // 处理旧preItem
-    if ((preIndex - 1 < 0) && this.maxItemcount < this.itemCount)  {
-      this.itemPositions[this.itemCount - 1].visible = false
-      this.itemPositions[this.itemCount - 1].x = this.viewWidth
-    } else {
-      this.itemPositions[preIndex - 1].visible = false
-      this.itemPositions[preIndex - 1].x = this.viewWidth
-    }
+    let oldPreIndex = preIndex - 1 < 0 ? this.itemCount - 1 : preIndex - 1
+    this.itemPositions[oldPreIndex].visible = false
+    this.itemPositions[oldPreIndex].x = this.viewWidth
 
     prePosition.x = -this.itemWidth
-    currentPosition.x = -this.distance
+    currentPosition.x = -this.changeDistance
     nextPosition.x  = currentPosition.x + this.itemWidth
     // 处理新的nextItem
     currentPosition = nextPosition 
