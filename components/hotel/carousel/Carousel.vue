@@ -92,7 +92,7 @@ export default class Carousel extends Vue {
   max-height: 700px;
   padding-left: 50px;
 
-  transition: transform 500ms;
+  transition: transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0ms;
   opacity: 0;
 }
 
