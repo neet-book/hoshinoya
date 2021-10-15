@@ -3,15 +3,13 @@
     <div class="carousel-area">
       <div 
         class="carousel-container" 
-        ref="container"
       >
         <div 
           v-for="(item, index) of images"
           class="carousel-item" 
-          :class="{ visible: carouseler ? carouseler.itemPositions[index].visible : true, move: carouseler ? carouseler.status == 'moved' : false }"
           :key="index"
           ref="carrItem"
-          :style="{ width: imageWidth + 'px', transform: `translateX(${carouseler ? carouseler.itemPositions[index].x : -11}px)` }"
+          :style="{ width: imageWidth + 'px' }"
         >
           <div class="item-text">#{{ index > 9 ? index : index.toString().padStart('0') }} _ {{ item.title }}</div>
           <div class="item-image"
@@ -37,7 +35,6 @@
   </div>
 </template>
 <script lang="ts">
-import Carouseler from './carouseler'
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 interface image {
@@ -50,27 +47,54 @@ interface image {
     const that: any = this
     const items: Element[] = that.$refs.carrItem
     const el = items[0]
+    // item长度为高的1.5倍
     that.imageWidth = el ? el.clientHeight * 1.5 : 0
-    if (items) { 
-      that.carouseler = new Carouseler(that.imageWidth + 50, items.length)
-    }
-    that.resizeHandle = () => that.onViewResize() 
-    window.addEventListener('resize', that.resizeHandle)
+    // 监听页面尺寸变化
+    window.addEventListener('resize', that.onViewResize)
+    that.carouselerStart()
   },
   beforeDestroy() {
     const that: any = this
-    that.carouseler.stop()
+    that.carouselerStop()
     window.removeEventListener('resize', that.onViewResize)
   }
 })
 export default class Carousel extends Vue {
   @Prop(Array) images: image[] | undefined 
-  carouseler: Carouseler | null = null
+  @Prop(Number) interval: number | undefined
   imageWidth: number = 0
+  viewWidth: number = 0
+
+  timer: number | null = null
+
+  get carouselItems(): image[] {
+    if (this.images) {
+      const first = this.images[0]
+      const last = this.images[this.images.length - 1]
+      return [first, ...this.images, last]
+    }
+
+    return []
+  }
+
+  carouseler() {
+    
+    this.timer = window.setTimeout(() => this.carouseler(), this.interval)
+  }
+
+  carouselerStart() {
+    this.carouseler()
+  }
+
+  carouselerStop() {
+    // @ts-ignore
+    window.clearTimeout(this.timer)  
+  }
+
   onViewResize(event: Event) {
     const el = event.target as Element
     this.imageWidth = el.clientHeight * 1.5
-    if (this.carouseler) this.carouseler.resize(this.imageWidth)
+    this.viewWidth = document.documentElement.clientWidth
   }
 }
 </script>
@@ -93,7 +117,6 @@ export default class Carousel extends Vue {
   padding-left: 50px;
 
   transition: transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0ms;
-  opacity: 0;
 }
 
 .carousel-item.visible {
