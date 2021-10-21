@@ -36,7 +36,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-
+import { DIRECTION, Carouseler } from './carouseler'
 interface image {
   title: string,
   image: Hotel.ImageUrl
@@ -49,9 +49,10 @@ interface image {
     const el = items[0]
     // item长度为高的1.5倍
     that.imageWidth = el ? el.clientHeight * 1.5 : 0
+    that.carouseler = new Carouseler(that.imageWidth, that.images.length)
+    that.positionList = [...that.carouseler.positions]
     // 监听页面尺寸变化
     window.addEventListener('resize', that.onViewResize)
-    that.carouselerStart()
   },
   beforeDestroy() {
     const that: any = this
