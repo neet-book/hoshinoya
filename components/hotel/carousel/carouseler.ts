@@ -1,6 +1,6 @@
 type actions = 'moved' | 'changed'
 // 移动距离为item宽度的64%
-interface Position {
+export interface Position {
   x: number
   y: number
   visible: boolean
@@ -17,47 +17,62 @@ export class Carouseler {
   direction: direction
   timer: any
   delay: number = 5000 
+  firstPositionX: number = 0
+  lastPositionX: number = 0
   constructor(width: number, count: number, direction: direction = 1 ) {
     this.direction = direction
     this.count = count
     this.distance = width * 0.64    
-    const pCont = this.count + 2
     const minusDis = (-width + this.distance) 
-    for (let i = 0; i < pCont; i++) {
-      this.positions.push({ x: minusDis + (i * width), y: 0, visible: true })  
+    for (let i = 0; i < count; i++) {
+      this.positions.push({ x: minusDis + (i * width) - width, y: 0, visible: true })  
     }
+    this.firstPositionX = this.positions[0].x
+    this.lastPositionX = this.positions[count - 1].x
   }  
 
   carouselHandler(direction: direction) {
+    const count = this.count
     const firstPosition = this.positions[0]
-    const firstX = firstPosition.x
-    const lastPosition = this.positions[this.positions.length - 1]
-    const lastX = lastPosition.x
-    const count = this.positions.length
-
+    const lastPosition = this.positions[this.count - 1]
     if (direction === DIRECTION.LEFT) {
+      // 将元素向前移一位
       for (let i = 0; i < count - 1 ; i++) {
-        this.positions[i + 1].x = this.positions[i].x
         this.positions[i] = this.positions[i + 1]
       }
-      
+      // 将原来第一个元素放到最后 
       this.positions[count - 1] = firstPosition
+      //  将数组元素值往后移动一位 
+      for (let i = count - 1 ; i < 1; i--) {
+        this.positions[i].x = this.positions[i - 1].x
+      }
+
+      this.positions[0].x = this.firstPositionX 
+
       lastPosition.visible = true
       firstPosition.visible = false
-      firstPosition.x = lastX
     }
 
     if (direction === DIRECTION.RIGHT) {
+      // 元素往后移一位
       for (let i = count - 1; i > 0; i--) {
-        this.positions[i - 1].x = this.positions[i].x
         this.positions[i] = this.positions[i - 1]
       }
-
+      // 原来的最后一位元素移到第一位
       this.positions[0] = lastPosition
+      // 数组元素的值往前移一位
+      for (let i = 0; i < count - 2; i++) {
+        this.positions[i].x = this.positions[i + 1].x
+      }
+      this.positions[count - 1].x = this.lastPositionX 
+
       firstPosition.visible = true
       lastPosition.visible = false
-      lastPosition.x = firstX
     }
+
+    this.timer = setTimeout(() => {
+      this.carouselHandler(direction) 
+    }, this.delay );
   }
 
   previous() {
@@ -81,5 +96,14 @@ export class Carouseler {
   stop() {
     window.clearTimeout(this.timer)
     this.timer = null
+  }
+
+  reset(width: number) {
+    this.distance = width * 0.6
+    const pCont = this.positions.length 
+    const minusDis = (-width + this.distance) 
+    for (let i = 0; i < pCont; i++) {
+      this.positions[i].x =  minusDis + (i * width)
+    }
   }
 }
