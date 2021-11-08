@@ -7,7 +7,7 @@
         <div 
           v-for="(item, index) of images"
           class="carousel-item" 
-          :class="{ visible: positionList[indexe] ? positionList[index].visible : true }"
+          :class="{ visible: positionList[index] ? positionList[index].visible : false }"
           :key="index"
           ref="carItem"
           :style="{ width: imageWidth + 'px', transform: `translate3d(${positionList[index] ? positionList[index].x : 0}px, 0px, 0px)` }"
@@ -51,8 +51,8 @@ interface image {
     // item长度为高的1.5倍
     that.imageWidth = el ? el.clientHeight * 1.5 : 0
     that.$nextTick(() => {
-      console.log(el.clientWidth)
       that.carouseler = new Carouseler(el.clientWidth, that.images.length)
+      // 创建positions数组副本给组件的positionList
       that.positionList = [...that.carouseler.positions]
       that.carouseler.start()
     })
@@ -87,8 +87,11 @@ export default class Carousel extends Vue {
     const el = event.target as Element
     this.imageWidth = el.clientHeight * 1.5
     this.viewWidth = document.documentElement.clientWidth
+    let items = this.$refs.carItem as Element[]
+    let itemWidth = items[0].clientWidth
+    console.log(`onViewResize: itemWidht = ${itemWidth}`)
     this.$nextTick(() => {
-      this.carouseler!.reset(el.clientWidth)
+      this.carouseler!.reset(itemWidth)
     })
   }
 }
@@ -112,7 +115,7 @@ export default class Carousel extends Vue {
   padding-left: 50px;
   opacity: 0;
 
-  transition: transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0ms;
+  transition: transform 600ms ;
 }
 
 
