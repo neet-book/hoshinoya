@@ -31,15 +31,15 @@ export class Carouseler {
   positions: Position[] = []
   direction: direction
   width: number
-  private timer: any
+  private timer: any = null
   delay: number = 5000 
   firstPositionX: number = 0
   lastPositionX: number = 0
-  constructor(width: number, count: number, direction: direction = DIRECTION.RIGHT as direction ) {
+  constructor(width: number, count: number, direction: direction = DIRECTION.LEFT as direction ) {
     this.direction = direction
     this.width = width
     this.count = count
-    this.distance = width * 0.64    
+    this.distance = width * 0.45    
     const minusDis = (-width + this.distance) 
     for (let i = 0; i < count; i++) {
       this.positions.push({ x: minusDis + (i * width) - width, y: 0, visible: true })  
@@ -105,7 +105,7 @@ export class Carouseler {
   }
 
   start() {
-    if (this.timer === null) return
+    if (this.timer !== null) return 
     this.timer = window.setTimeout(() => this.carouselHandler(this.direction), this.delay)
   } 
 
@@ -116,11 +116,9 @@ export class Carouseler {
 
   reset(width: number) {
     this.distance = width * 0.64    
-    const minusDis = (-width + this.distance) 
-    for (let i = 0; i < this.count; i++) {
-      this.positions.push({ x: minusDis + (i * width) - width, y: 0, visible: true })  
-    }
-    this.firstPositionX = this.positions[0].x
-    this.lastPositionX = this.positions[this.count - 1].x
+    this.width = width
+    const minusDis = -width + this.distance 
+    this.firstPositionX = -width * 2 + this.direction
+    this.lastPositionX = minusDis + (this.count - 1 * width) - width
   }
 }

@@ -20,23 +20,13 @@
       </div>
     </div>
     <div class="navi">
-      <div class="navi-container">
-        <ul>
-          <li class="navi-item" v-for="n of images.length" :key="n" :data-num="n">
-            <span></span>
-            <i></i>
-          </li>
-        </ul>
-      </div>
-      <div style="text-align: center;">
-      <button @click="carouseler.start()">start</button>
-      <button @click="carouseler.stop()">stop</button>
-      </div>
+      <carousel-nav :count="images.length" :direction="-1" :interval="5000"></carousel-nav>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import CarouselNav from './carousel_nav.vue'
 import { DIRECTION, Carouseler, Position } from './carouseler'
 interface image {
   title: string,
@@ -44,6 +34,9 @@ interface image {
 }
 
 @Component({
+  components: {
+    CarouselNav
+  },
   mounted() {
     const that: any = this
     const items: Element[] = that.$refs.carItem
@@ -73,13 +66,6 @@ export default class Carousel extends Vue {
   positionList: Position[] = []
   carouseler: Carouseler | null = null
   get carouselItems(): image[] {
-    // if (this.images) {
-    //   const first = this.images[0]
-    //   const last = this.images[this.images.length - 1]
-    //   return [first, ...this.images, last]
-    // }
-
-    // return []
     return this.images as image[]
   }
 
@@ -99,6 +85,9 @@ export default class Carousel extends Vue {
 
 
 <style scoped>
+.carousel {
+  overflow: hidden;
+}
 .carousel-area {
   position: relative;
 }
@@ -115,7 +104,7 @@ export default class Carousel extends Vue {
   padding-left: 50px;
   opacity: 0;
 
-  transition: transform 600ms ;
+  transition: transform 5000ms ;
 }
 
 
