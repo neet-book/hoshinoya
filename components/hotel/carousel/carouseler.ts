@@ -1,5 +1,6 @@
 /** 描述元素位置，是否显示的Position接口 */ 
 export interface Position {
+  id: number,
   x: number
   y: number
   visible: boolean
@@ -23,6 +24,7 @@ export class Carouseler {
    * @param {DIRECTION} direction - 轮播图滚动方向
    * @private {number} timer - 定时器ID
    * @param {number} delay - 轮播时间 
+   * @param {number} centerItemIndex - 显示在页面中间的元素在positions数组的index
    * @param {number} firstPositionX - 第一个轮播元素的起始位置
    * @param {number} lastPositionX - 最后一个轮播元素的结束位置
    */
@@ -35,15 +37,38 @@ export class Carouseler {
   delay: number = 5000 
   firstPositionX: number = 0
   lastPositionX: number = 0
+  centerItemIndex: number = 1
+  
   constructor(width: number, count: number, direction: direction = DIRECTION.LEFT as direction ) {
     this.direction = direction
     this.width = width
     this.count = count
     this.distance = width * 0.45    
-    const minusDis = (-width + this.distance) 
-    for (let i = 0; i < count; i++) {
-      this.positions.push({ x: minusDis + (i * width) - width, y: 0, visible: true })  
+    
+    const viewWidth = document.documentElement.clientWidth
+    // 将中间项的起始位置作为初始值
+    let startPosition = (viewWidth - width) / 2,
+    // index为0的项是不显示的，所以centerIndex从1开始
+    centerIndex = 1
+    // 找到位于页面边缘项的起始位置
+    while (startPosition > 0) {
+      startPosition -= width
+      centerIndex += 1
     }
+    // 位于页面边缘的项的起始位置不是真正的起始位置
+    startPosition -= width
+
+    for (let i = 0; i < count; i++) {
+      this.positions.push({
+        id: i,
+        x: startPosition + i * width,
+        y: 0,
+        visible: true
+      })
+    }
+
+    this.centerItemIndex = centerIndex
+
     this.firstPositionX = this.positions[0].x
     this.lastPositionX = this.positions[count - 1].x
   }  
@@ -86,9 +111,6 @@ export class Carouseler {
       }
     }
 
-    this.timer = setTimeout(() => {
-      this.carouselHandler(direction) 
-    }, this.delay );
   }
 
   previous() {
