@@ -4,7 +4,7 @@
     <ul>
       <li 
         class="slider"
-        :class="{ activited: slider.hotelID == activity , isReady: slider.hotelID == activity }"
+        :class="{ activited: slider.hotelID == activity}"
         v-for="slider in sliderList" 
         :key="slider.hotelNameEn"
       >

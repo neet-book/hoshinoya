@@ -69,14 +69,25 @@ export default class CarouselNav extends Vue {
 }
 
 .navi-item > div {
-  /* border-bottom: solid 1px black; */
+  width: 100%;
+  border-bottom: solid 1px black;
   font-style: normal;
   position: absolute;
-  top: 10px;
-  /* transform: translateY(-50%); */
+
+  transform: scaleX(0);
+  transform-origin: right;
+
+  transition: transform 600ms cubic-bezier(.25,.46,.45,.94);
 }
 
 .navi-item.active > div {
-  width: 20px;
+  transform-origin: left;
+  transform: scaleX(0.9);
+  transition: transform 5000ms;
+}
+
+.navi-item.active:last-child > div {
+  transform: scaleX(0);
+  
 }
 </style>

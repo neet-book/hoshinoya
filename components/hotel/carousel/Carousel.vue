@@ -7,7 +7,7 @@
         <div 
           v-for="(item, index) of images"
           class="carousel-item" 
-          :class="{ visible: positionList[index] ? positionList[index].visible : false }"
+          :class="{ visible: positionList[index] ? positionList[index].visible : false, 'is-ready': isReady }"
           :key="index"
           ref="carItem"
           :style="{ width: imageWidth + 'px', transform: `translate3d(${positionList[index] ? positionList[index].x : 0}px, 0px, 0px)` }"
@@ -48,9 +48,11 @@ interface image {
       // 创建positions数组副本给组件的positionList
       that.positionList = [...that.carouseler.positions]
       that.carouseler.start()
+      setTimeout(() => that.isReady = true, 0)
     })
     // 监听页面尺寸变化
     window.addEventListener('resize', that.onViewResize)
+    
   },
   beforeDestroy() {
     const that: any = this
@@ -61,6 +63,7 @@ interface image {
 export default class Carousel extends Vue {
   @Prop(Array) images: image[] | undefined 
   @Prop(Number) interval: number | undefined
+  isReady: boolean = false
   imageWidth: number = 0
   viewWidth: number = 0
   positionList: Position[] = []
@@ -75,10 +78,18 @@ export default class Carousel extends Vue {
     this.viewWidth = document.documentElement.clientWidth
     let items = this.$refs.carItem as Element[]
     let itemWidth = items[0].clientWidth
-    console.log(`onViewResize: itemWidht = ${itemWidth}`)
     this.$nextTick(() => {
       this.carouseler!.reset(itemWidth)
     })
+  }
+
+  onPageVisibilityChange() {
+    /** 页面隐藏时停止动画 */
+    if (document.hidden !== undefined) {
+      document.hidden ? this.carouseler?.stop() : this.carouseler?.start()
+    } else {
+      document.visibilityState === 'hidden' ? this.carouseler?.stop() : this.carouseler?.start()
+    }
   }
 }
 </script>
@@ -104,10 +115,11 @@ export default class Carousel extends Vue {
   padding-left: 50px;
   opacity: 0;
 
-  transition: transform 5000ms ;
 }
 
-
+.carousel-item.is-ready {
+  transition: transform 5000ms ;
+}
 .carousel-item.visible {
   opacity: 1;
 }
@@ -156,9 +168,5 @@ export default class Carousel extends Vue {
   position: absolute;
   top: 6px;
   left: 6px;
-}
-
-.carousel-item.move {
-  transition: transform 5000ms;
 }
 </style>
