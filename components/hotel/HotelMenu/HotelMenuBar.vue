@@ -112,12 +112,12 @@ export default class HotelBookingMenu extends Vue {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  transform: scale(0, 1);
-  transition: width 400ms cubic-bezier(.165,.84,.44,1) 100ms;
+  transform: scale(1, 1);
+  transition: transform 400ms cubic-bezier(.165,.84,.44,1) 100ms;
 }
 
-.menu-bar-icon-menu.active {
-  transform: scale(1, 1);
+.menu-bar-icon-menu.opened {
+  transform: scale(0, 1);
   transition: transform 400ms cubic-bezier(.165,.84,.44,1);
 }
 
@@ -139,7 +139,7 @@ export default class HotelBookingMenu extends Vue {
   transition: transform 100ms cubic-bezier(.165,.84,.44,1);
 }
 
-.menu-bar-icon-close.active {
+.menu-bar-icon-close.opened {
   transform: scale(1, 1);
   transition: transform 400ms cubic-bezier(.165,.84,.44,1) 100ms
 }
