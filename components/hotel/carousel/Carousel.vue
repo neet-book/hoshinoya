@@ -12,7 +12,7 @@
           ref="carItem"
           :style="{ width: imageWidth + 'px', transform: `translate3d(${positionList[index] ? positionList[index].x : 0}px, 0px, 0px)` }"
         >
-          <div class="item-text">#{{ index > 9 ? index : index.toString().padStart('0') }} _ {{ item.title }}</div>
+          <div class="item-text">#{{ index > 9 ? index : index.toString().padStart(2, '0') }} _ {{ item.title }}</div>
           <div class="item-image"
             :style="{ backgroundImage: `url(${item.image.normal})` }"
           ></div>
@@ -52,14 +52,17 @@ interface image {
     })
     // 监听页面尺寸变化
     window.addEventListener('resize', that.onViewResize)
-    
+    // 监听页面显示变化
+    document.addEventListener("visibilitychange", that.onPageVisibilityChange)
   },
   beforeDestroy() {
     const that: any = this
     that.carouseler!.stop()
     window.removeEventListener('resize', that.onViewResize)
+    window.removeEventListener('visibilitychange', that.onPageVisibilityChange)
   }
 })
+
 export default class Carousel extends Vue {
   @Prop(Array) images: image[] | undefined 
   @Prop(Number) interval: number | undefined
@@ -85,6 +88,7 @@ export default class Carousel extends Vue {
 
   onPageVisibilityChange() {
     /** 页面隐藏时停止动画 */
+
     if (document.hidden !== undefined) {
       document.hidden ? this.carouseler?.stop() : this.carouseler?.start()
     } else {
@@ -93,7 +97,6 @@ export default class Carousel extends Vue {
   }
 }
 </script>
-
 
 <style scoped>
 .carousel {

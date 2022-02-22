@@ -1,6 +1,6 @@
 
 module.exports = {
-  mode: 'universal',
+  // mode: 'universal',
   /*
   ** Headers of the page
   */
@@ -35,7 +35,7 @@ module.exports = {
   /*
   ** Nuxt.js dev-modules
   */
-  devModules: [
+  buildModules: [
   ],
   /*
   ** Nuxt.js modules
