@@ -17,10 +17,10 @@
     "baseUrl": ".",
     "paths": {
       "~/*": [
-        "./*"
+        "/*"
       ],
       "@/*": [
-        "./*"
+        "/*"
       ]
     },
     "types": [
@@ -28,7 +28,7 @@
       "@nuxt/types",
     ]
   },
-  "include": ["./types/*.d.ts"],
+  "include": ["./types/*.d.ts", "*.ts"],
   "exclude": [
     "node_modules"
   ]
