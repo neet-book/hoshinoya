@@ -9,6 +9,7 @@ export function debounce(fun: any, delay: number) {
     return function (...arg: any[]) {
         clearTimeout(timer)
         timer = setTimeout(() => {
+            // @ts-ignore
             fun.apply(this, arg)
             timer = null
         }, delay)
@@ -30,10 +31,12 @@ export function throttle(fun: any, delay: number, immediate: boolean, callback:(
     return function (...args: any[]) {
         if (timer === null && timestamp === 0) {
             if (immediate) {
+                // @ts-ignore
                 fun.apply(this, args)
             }
             timestamp = Date.now() + delay
             timer = setTimeout(() => {
+                // @ts-ignore
                 if (!immediate) fun.apply(this, args)
                 timer = null
                 timestamp = 0
@@ -46,6 +49,7 @@ export function throttle(fun: any, delay: number, immediate: boolean, callback:(
                 clearTimeout(timer)
                 timestamp = 0
                 timer = null
+                // @ts-ignore
                 if (!immediate) fun.apply(this, args)
             }
         }

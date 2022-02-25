@@ -1,7 +1,7 @@
 <template>
   <div class="outline-frist-section">
     <outline-title class="outline-title" :title="content.title" :show="outlineTitleShowed"></outline-title>
-    <carousel :images="content.carouselItems"></carousel>
+    <carousel :items="content.carouselItems"></carousel>
   </div>
 </template>
 <script lang="ts">
@@ -15,7 +15,7 @@ import Carousel from '~/components/hotel/carousel/Carousel.vue'
     Carousel 
   }
 })
-export default class OutlineFristSection extends Vue {
+export default class OutlineFirstSection extends Vue {
   @Prop(Object) content: Hotel.OutlineFirstSection | undefined
   outlineTitleShowed = false
 }

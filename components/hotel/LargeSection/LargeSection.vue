@@ -30,6 +30,9 @@
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import OutlineTitle from '~/components/hotel/OutlineTitle.vue'
 
+/**\
+ * 酒店页面中间带有圆形宣传图，酒店地图部分的组件类
+ */
 @Component({
   components:{
     OutlineTitle
@@ -39,7 +42,7 @@ import OutlineTitle from '~/components/hotel/OutlineTitle.vue'
     that.document = document
   }
 })
-export default class LaroogeSection extends Vue {
+export default class LargeSection extends Vue {
   @Prop() content: Hotel.LargeSection | undefined 
   circle_showed: boolean = false
   outline_showed: boolean = false
@@ -49,14 +52,14 @@ export default class LaroogeSection extends Vue {
   }
 
   get distance(): number { 
-    var distance = this.$store.state.distance
-    var viewHeight = this.document?.documentElement.clientHeight || 0
+    let distance = this.$store.state.distance
+    let viewHeight = this.document?.documentElement.clientHeight || 0
     if (!this.circle_showed) {
-      var outline : any = this.$refs.outline
+      let outline : any = this.$refs.outline
       if (outline && distance > outline.offsetTop - viewHeight) this.outline_showed= true
     }
 
-    var circle : any = this.$refs.circle
+    let circle : any = this.$refs.circle
     if (!this.circle_showed) {
       // @ts-ignore
       if (circle && distance > circle.offsetTop - viewHeight) this.circle_showed = true
