@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel-item" :class="{ click }" @click="click = !click">
+  <div class="carousel-item">
     <span class="carousel-title">{{ info.title }}</span>
     <div class="carousel-body">
       <div
@@ -35,7 +35,8 @@ export default class CarouselItem extends Vue {
 
 <style scoped>
 .carousel-item {
-  height: 99%;
+  box-sizing: border-box;
+  height: 100%;
   padding-left: 49px;
   position: relative;
 }
