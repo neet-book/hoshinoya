@@ -34,7 +34,7 @@ router.get('/introduction/:hotel', async (ctx) => {
     } else {
         ctx.body = {
             code: 0,
-            msg: `no searched ${hotel} introductiuon`,
+            msg: `no searched ${hotel} introduction`,
             data: null
         }
     }

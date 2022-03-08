@@ -16,7 +16,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
 import HotelHeader from '~/components/hotel/Head/HotelHeader.vue'
 import LargeSection from '~/components/hotel/LargeSection/LargeSection.vue'
-import OutlineFirstSection from '~/components/hotel/outlines/OutlineFirstSection.vue'
+import OutlineFirstSection from '~/components/hotel/Outlines/OutlineFirstSection.vue'
 import { getHotelRateInfos, getHotelIntroduction } from '~/utils/network'
 
 @Component({

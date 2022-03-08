@@ -51,7 +51,6 @@ enum DIRECTION { left = 1, right = -1}
         })
       }
 
-      this.moveSize = moveSize
       for (let position of positions) {
         this.positions.push(position)
       }
@@ -116,7 +115,7 @@ enum DIRECTION { left = 1, right = -1}
       this.itemWidth = this.areaHeight * 1.5
 
       // 移动距离
-      let moveSize = this.itemWidth * .5
+      let moveSize = this.itemWidth - (window.innerWidth - this.itemWidth) / 2 + 49
       // 起始位置
       let positionZero = (this.itemWidth + moveSize) * -1
       this.transition = false

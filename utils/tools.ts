@@ -55,3 +55,23 @@ export function throttle(fun: any, delay: number, immediate: boolean, callback:(
         }
     }
 }
+
+/**
+ * 返回[min, max]之间的整数随机数
+ * @param min
+ * @param max
+ */
+export function randomInt(min: number, max?: number) {
+    if (max === undefined) {
+        max = min
+        min = 0
+    }
+    if (crypto) {
+        const maxUint32 = 0xffffffff
+        // @ts-ignore
+        const randomFloat = crypto.getRandomValues(new Uint32Array(1)) / maxUint32
+        return Math.floor(randomFloat * (max - min + 1) + min)
+    } else {
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+}

@@ -1,14 +1,14 @@
 <template>
   <div class="large-section">
     <div class="outline-fonts" ref=outline>
-      <outline-title class="outline-title" :title="content.title" :show="outline_showed" ></outline-title> 
+      <outline-title class="outline-title" :title="content.title" :show="outlineShowed" ></outline-title>
       <div class="outline-content">
         {{ content.content }}
       </div>
     </div> 
     <!-- 圆形图 -->
     <div class="switch-area" >
-      <div class="circle-container" :class="{ show: circle_showed }" ref="circle">
+      <div class="circle-container" :class="{ show: circleShowed }" ref="circle">
         <div class="circle-image"> 
           <div
             ref="circleImg"
@@ -44,25 +44,28 @@ import OutlineTitle from '~/components/hotel/OutlineTitle.vue'
 })
 export default class LargeSection extends Vue {
   @Prop() content: Hotel.LargeSection | undefined 
-  circle_showed: boolean = false
-  outline_showed: boolean = false
+  circleShowed: boolean = false
+  outlineShowed: boolean = false
   document: any = null
   get hotelNameEn(): string {
     return this.$store.state.hotelNameEn
   }
 
+  /**
+   * 计算页面是否滚动到组件所在位置, 计算圆形图偏移量
+   */
   get distance(): number { 
     let distance = this.$store.state.distance
     let viewHeight = this.document?.documentElement.clientHeight || 0
-    if (!this.circle_showed) {
+    if (!this.outlineShowed) {
       let outline : any = this.$refs.outline
-      if (outline && distance > outline.offsetTop - viewHeight) this.outline_showed= true
+      if (outline && distance > outline.offsetTop - viewHeight) this.outlineShowed= true
     }
 
     let circle : any = this.$refs.circle
-    if (!this.circle_showed) {
+    if (!this.circleShowed) {
       // @ts-ignore
-      if (circle && distance > circle.offsetTop - viewHeight) this.circle_showed = true
+      if (circle && distance > circle.offsetTop - viewHeight) this.circleShowed = true
     }
     if (circle) {
       if (circle.offsetTop + circle.offsetHeight > distance) {
