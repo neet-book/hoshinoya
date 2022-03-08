@@ -2,7 +2,7 @@
   <div class="carousel-navi">
     <div class="navi-container">
       <ul>
-        <li class="navi-item" v-for="n of count" :key="n" :class="{ active: n === activeIndex }">
+        <li class="navi-item" v-for="n of count" :key="n" :class="{ active: n === num + 1 }">
           <span></span>
           <div></div>
         </li>
@@ -17,10 +17,7 @@ import { DIRECTION } from './carouseler'
 @Component
 export default class CarouselNav extends Vue {
   @Prop(Number) count: number | undefined
-  @Prop({ type: Number, default: DIRECTION.LEFT }) direction: number | undefined
-  @Prop(Number) interval: number | undefined
-
-  activeIndex: number = 1 
+  @Prop(Number) num: number | undefined
 }
 </script>
 

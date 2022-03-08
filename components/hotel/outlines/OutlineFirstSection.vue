@@ -7,7 +7,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import OutlineTitle from '~/components/hotel/OutlineTitle.vue'
-import Carousel from '~/components/hotel/carousel/Carousel.vue'
+import Carousel from '~/components/hotel/Carousel/Carousel.vue'
 
 @Component({
   components: {
