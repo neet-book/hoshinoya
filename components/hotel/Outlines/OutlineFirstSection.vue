@@ -38,6 +38,9 @@ export default class OutlineFirstSection extends Vue {
 </script>
 
 <style scoped>
+.outline-first-section {
+  padding-bottom: 115px;
+}
 .outline-title {
   margin-bottom: 50px;
 }
