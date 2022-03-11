@@ -132,6 +132,7 @@ enum DIRECTION { left = 1, right = -1}
 
     this.initialCarouseler()
     this.start()
+    setTimeout(() => this.transition = true, 0)
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onResize)
@@ -150,7 +151,7 @@ export default class Carousel extends Vue
   center_index: number = 0
   positions: [] =[]
   moveSize: number = 0
-  transition: boolean = true
+  transition: boolean = false
 
   initialCarouseler: () => void
   carouseler: (direction: DIRECTION) => void

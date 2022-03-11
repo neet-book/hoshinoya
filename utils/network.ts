@@ -12,6 +12,9 @@ export async function getHotelRateInfos() {
     }
 }
 
+/**
+ * 获取Hoshinoya主页数据
+ */
 export async function getHoshinoyaHome() {
     const url = '/hoshinoya_home'
     const { data: { code, msg, data } } = await common.get(url)
@@ -23,6 +26,10 @@ export async function getHoshinoyaHome() {
     }
 }
 
+/**
+ * 获取酒店详细介绍数据
+ * @param hotel 要获取数据的酒店名称
+ */
 export async function getHotelIntroduction(hotel: string): Promise<Hotel.HotelIntroduction | null> {
     const { data: { code, data } } = await hotelInstance.get(`/introduction/${hotel}`)
     if (code === 1) {

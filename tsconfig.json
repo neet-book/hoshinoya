@@ -26,9 +26,10 @@
     "types": [
       "@types/node",
       "@nuxt/types",
+      "/types/*.d.ts"
     ]
   },
-  "include": ["./types/*.d.ts", "*.ts"],
+  "include": ["*.ts"],
   "exclude": [
     "node_modules"
   ]

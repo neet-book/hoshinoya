@@ -4,8 +4,9 @@
     <div class="hotel-page-container">
       <hotel-header :content="topSection"></hotel-header>
       <main>
-       <large-section :content="largeSection"></large-section> 
-       <outline-first-section :content="outlineFirstSection" ></outline-first-section>
+        <large-section :content="largeSection"></large-section>
+        <outline-first-section :content="outlineFirstSection" ></outline-first-section>
+        <outline-second-section :content="outlineSecondSection"></outline-second-section>
       </main>
     </div>
   </div>
@@ -18,9 +19,11 @@ import HotelHeader from '~/components/hotel/Head/HotelHeader.vue'
 import LargeSection from '~/components/hotel/LargeSection/LargeSection.vue'
 import OutlineFirstSection from '~/components/hotel/Outlines/OutlineFirstSection.vue'
 import { getHotelRateInfos, getHotelIntroduction } from '~/utils/network'
+import OutlineSecondSection from "../../../components/hotel/Outlines/OutlineSecondSection.vue";
 
 @Component({
   components: {
+    OutlineSecondSection,
     HotelMenu,
     HotelHeader,
     LargeSection,
@@ -42,14 +45,14 @@ import { getHotelRateInfos, getHotelIntroduction } from '~/utils/network'
   }
 })
 
-export default class Hotel extends Vue {
+export default class HotelPage extends Vue {
   hotelNameEn: string = ''
-  hoelName: string = ''
+  hotelName: string = ''
   topSection: Hotel.TopSection | undefined 
   largeSection: Hotel.LargeSection | undefined
   outlineFirstSection: Hotel.OutlineFirstSection | undefined
   outlineSecondSection: Hotel.OutlineSecondSection | undefined
-  outlineTridSection: Hotel.OutlineThirdSection | undefined  
+  outlineThirdSection: Hotel.OutlineThirdSection | undefined
   
   // 页面滚动距离
   distance: number = 0
@@ -57,7 +60,7 @@ export default class Hotel extends Vue {
   vi: boolean = false
   get hotelInfo() {
     return {
-      name: this.hoelName,
+      name: this.hotelName,
       nameEn: this.hotelNameEn,
       logo: 'logo-hotel-' + this.hotelNameEn
     }
