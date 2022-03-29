@@ -18,6 +18,7 @@ import { DIRECTION } from './carouseler'
 export default class CarouselNav extends Vue {
   @Prop(Number) count: number | undefined
   @Prop(Number) num: number | undefined
+  @Prop(Number) direction: DIRECTION
 }
 </script>
 

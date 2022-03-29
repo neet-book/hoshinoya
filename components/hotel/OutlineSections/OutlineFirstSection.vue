@@ -28,7 +28,8 @@ export default class OutlineFirstSection extends Vue {
       const distance = this.$store.state.distance
       const title = this.$refs.title as Vue
       if (title) {
-        this.isShowed = distance + window.innerHeight > title.$el.offsetTop
+        const el = title.$el as Element
+        this.isShowed = distance + window.innerHeight > el.offsetTop
       }
     }
     return this.isShowed

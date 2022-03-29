@@ -10,21 +10,22 @@
         ></div>
       <div class="hotel-header-fonts" :class="{ visible }">
         <!-- logo -->
-        <div class="hotel-header-logos">
-          <svg viewBox="0 0 114 114">
-            <use v-bind="{ 'xlink:href': '#logo-hotel-' + hotelNameEn }"></use>
-          </svg>
-          <svg viewBox="0 0 114 114">
-            <use xlink:href="#logo-hoshinoya-text"></use>
-          </svg>
-          <svg viewBox="0 0 114 114">
-            <use xlink:href="#logo-hoshinoya-mark"></use>
-          </svg>
-        </div>
-        <div class="hotel-header-page-title">
-          <p>虹夕诺雅</p>
-          <p>{{ hotelName }}</p>
-        </div>
+<!--        <div class="hotel-header-logos">-->
+<!--          <svg viewBox="0 0 114 114">-->
+<!--            <use v-bind="{ 'xlink:href': '#logo-hotel-' + hotelNameEn }"></use>-->
+<!--          </svg>-->
+<!--          <svg viewBox="0 0 114 114">-->
+<!--            <use xlink:href="#logo-hoshinoya-text"></use>-->
+<!--          </svg>-->
+<!--          <svg viewBox="0 0 114 114">-->
+<!--            <use xlink:href="#logo-hoshinoya-mark"></use>-->
+<!--          </svg>-->
+<!--        </div>-->
+<!--        <div class="hotel-header-page-title">-->
+<!--          <p>虹夕诺雅</p>-->
+<!--          <p>{{ hotelName }}</p>-->
+<!--        </div>-->
+        <vertical-logo class="header-logo"></vertical-logo>
         <div class="hotel-header-title" :class="{ visible }">
           <h2> 
             <template v-for="(row, row_index) of content.title.split('\n')">
@@ -49,8 +50,10 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import VerticalLogo from "../VerticalLogo.vue";
 
 @Component({
+  components: { VerticalLogo },
   mounted() {
     const that: any = this
     // 加载完成后延迟显示文字内容
@@ -59,7 +62,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
     }, 200);
   }
 })
-export default class  extends Vue {
+export default class HotelHeader extends Vue {
   @Prop(Object) content: Hotel.TopSection | undefined
   visible: boolean = false
   get hotelNameEn(): string {
@@ -92,7 +95,7 @@ export default class  extends Vue {
   border-bottom: 1px solid;
   overflow: hidden;
 
-  font-family: "hsn-zhcn-serif-regular", serif;
+  font-family: hsn-zhcn-serif-regular, serif;
 }
 
 .hotel-header-fonts {
@@ -105,41 +108,16 @@ export default class  extends Vue {
   text-align: center;
   margin: auto;
   transition-delay: 500ms;
+  text-shadow: 0 0 80px rgb(4 0 0 / 60%);
 }
 
-.hotel-header-logos {
-  width: 52px;
-  margin: 0 auto;
-}
-
-.hotel-header-logos > svg {
-  fill: white;
-  margin-top: 10px;
-}
-
-.hotel-header-logs > svg:nth-child(1) {
-  margin-top: 0px;
-}
-
-.hotel-header-page-title {
-  margin-top: 16px;
-  letter-spacing: 1.2px;
-}
-
-.hotel-header-page-title > p {
-  padding: 0;
-  margin: 0;
-}
-
-.hotel-header-page-title > p:nth-child(2){
-  font-size: 15px;
-  padding-top: 10px;
-}
-/* page name */
-.hotel-header-page-title p:nth-child(1) {
+.header-logo {
   font-size: 21px;
-  font-weight: 400; 
+  fill: white;
+  letter-spacing: 1.2px;
+  font-family: hsn-zhcn-serif-semibold, serif;
 }
+
 /* title */
 .hotel-header-title {
   position: absolute;

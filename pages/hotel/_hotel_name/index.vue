@@ -7,27 +7,35 @@
         <large-section :content="largeSection"></large-section>
         <outline-first-section :content="outlineFirstSection" ></outline-first-section>
         <outline-second-section :content="outlineSecondSection"></outline-second-section>
+        <outline-third-section :content="outlineThirdSection"></outline-third-section>
       </main>
+      <footer>
+        <hotel-footer></hotel-footer>
+      </footer>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import HotelMenu from '~/components/hotel/HotelMenu/HotelMenu.vue'
-import HotelHeader from '~/components/hotel/Head/HotelHeader.vue'
-import LargeSection from '~/components/hotel/LargeSection/LargeSection.vue'
-import OutlineFirstSection from '~/components/hotel/Outlines/OutlineFirstSection.vue'
+import HotelMenu from '/components/hotel/HotelMenu/HotelMenu.vue'
+import HotelHeader from '/components/hotel/Head/HotelHeader.vue'
+import LargeSection from '/components/hotel/LargeSection/LargeSection.vue'
+import OutlineFirstSection from '/components/hotel/OutlineSections/OutlineFirstSection.vue'
 import { getHotelRateInfos, getHotelIntroduction } from '~/utils/network'
-import OutlineSecondSection from "../../../components/hotel/Outlines/OutlineSecondSection.vue";
+import OutlineSecondSection from "/components/hotel/OutlineSections/OutlineSecondSection.vue";
+import OutlineThirdSection from "/components/hotel/OutlineSections/OutlineThirdSections"
+import HotelFooter from "/components/hotel/Footer/HotelFooter.vue";
 
 @Component({
   components: {
-    OutlineSecondSection,
     HotelMenu,
     HotelHeader,
     LargeSection,
-    OutlineFirstSection
+    OutlineFirstSection,
+    OutlineSecondSection,
+    OutlineThirdSection,
+    HotelFooter,
   },
   async fetch({ store }) {
     const data = await getHotelRateInfos()
@@ -36,7 +44,7 @@ import OutlineSecondSection from "../../../components/hotel/Outlines/OutlineSeco
   async asyncData(ctx) {
     const hotel = ctx.params.hotel_name
     const data = await getHotelIntroduction(hotel)
-    return data || {}
+    return data
   },
   mounted() {
     const that: any = this
