@@ -9,22 +9,6 @@
         
         ></div>
       <div class="hotel-header-fonts" :class="{ visible }">
-        <!-- logo -->
-<!--        <div class="hotel-header-logos">-->
-<!--          <svg viewBox="0 0 114 114">-->
-<!--            <use v-bind="{ 'xlink:href': '#logo-hotel-' + hotelNameEn }"></use>-->
-<!--          </svg>-->
-<!--          <svg viewBox="0 0 114 114">-->
-<!--            <use xlink:href="#logo-hoshinoya-text"></use>-->
-<!--          </svg>-->
-<!--          <svg viewBox="0 0 114 114">-->
-<!--            <use xlink:href="#logo-hoshinoya-mark"></use>-->
-<!--          </svg>-->
-<!--        </div>-->
-<!--        <div class="hotel-header-page-title">-->
-<!--          <p>虹夕诺雅</p>-->
-<!--          <p>{{ hotelName }}</p>-->
-<!--        </div>-->
         <vertical-logo class="header-logo"></vertical-logo>
         <div class="hotel-header-title" :class="{ visible }">
           <h2> 
@@ -76,7 +60,7 @@ export default class HotelHeader extends Vue {
   get move(): number {
     const container = this.$refs.container as Element
     const distance = this.$store.state.distance
-    if ( distance && distance > container.clientHeight ) { 
+    if ( container && distance > container.clientHeight ) {
       return container.clientHeight
     } else {
       return distance / 3 

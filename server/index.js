@@ -25,8 +25,8 @@ async function start () {
   } = nuxt.options.server
 
   mongoose.connect(dbs.uri, {
-    user: dbs.username,
-    pass: dbs.password,
+    // user: dbs.username,
+    // pass: dbs.password,
     bufferCommands: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
