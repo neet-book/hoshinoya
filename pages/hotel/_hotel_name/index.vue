@@ -25,7 +25,7 @@ import OutlineFirstSection from '/components/hotel/OutlineSections/OutlineFirstS
 import { getHotelRateInfos, getHotelIntroduction } from '~/utils/network'
 import OutlineSecondSection from "/components/hotel/OutlineSections/OutlineSecondSection.vue";
 import OutlineThirdSection from "/components/hotel/OutlineSections/OutlineThirdSections"
-import HotelFooter from "/components/hotel/Footer/HotelFooter.vue";
+import HotelBottom from "/components/hotel/HotelBottom/HotelBottom.vue";
 
 @Component({
   components: {
@@ -35,7 +35,7 @@ import HotelFooter from "/components/hotel/Footer/HotelFooter.vue";
     OutlineFirstSection,
     OutlineSecondSection,
     OutlineThirdSection,
-    HotelFooter,
+    HotelFooter: HotelBottom,
   },
   async fetch({ store }) {
     const data = await getHotelRateInfos()
@@ -50,6 +50,7 @@ import HotelFooter from "/components/hotel/Footer/HotelFooter.vue";
     const that: any = this
     that.$store.commit('updateHotelName', that.hotelName)
     that.$store.commit('updateHotelNameEn', that.hotelNameEn)
+
   }
 })
 
