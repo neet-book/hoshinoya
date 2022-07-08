@@ -42,7 +42,7 @@ export interface CardImage {
   hotelName: string
   hotelNameEn:string
   hotelID: number | string
-  discription: string,
+  description: string,
   image: {
     normal: string,
     big: string,
@@ -62,8 +62,8 @@ export default class RouterCard extends Vue {
     displacementY: number = 0
 
     get discList() {
-      if (this.content.discription) {
-        return this.content.discription.split('\n')
+      if (this.content.description) {
+        return this.content.description.split('\n')
       }
       return []
     }
@@ -81,7 +81,7 @@ export default class RouterCard extends Vue {
       const container = this.$refs.container as HTMLElement
       if (container === undefined) return
       const containerWidth = container.clientWidth
-      const containerHeigh = container.clientHeight
+      const containerHeight = container.clientHeight
       // 计算鼠标位移
       const displacementX = this.displacementX + (x - this.positionX)
       const displacementY = this.displacementY + (y - this.positionY)
@@ -90,7 +90,7 @@ export default class RouterCard extends Vue {
       const level = 50
       // 计算偏移量
       this.offsetX = Math.round((displacementX / containerWidth) * 100) / level
-      this.offsetY = Math.round((displacementY / containerHeigh) * 100) / level
+      this.offsetY = Math.round((displacementY / containerHeight) * 100) / level
 
       this.positionX = x
       this.positionY = y
@@ -146,7 +146,7 @@ export default class RouterCard extends Vue {
 }
 
 .router-name {
-  text-shadow: rgb(0, 0, 0) 0px 0px 80px;
+  text-shadow: rgb(0, 0, 0) 0 0 80px;
 }
 
 .router-disc {
@@ -155,7 +155,7 @@ export default class RouterCard extends Vue {
   letter-spacing: 0.1em;
   font-weight: 400;
   box-sizing:border-box;
-  text-shadow: rgb(0, 0, 0) 0px 0px 80px;
+  text-shadow: rgb(0, 0, 0) 0 0 80px;
 }
 
 .router-logo {

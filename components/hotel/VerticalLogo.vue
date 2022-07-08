@@ -20,7 +20,10 @@
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
 
-@Component()
+/**
+ * 垂直展示logo和酒店名
+ */
+@Component
 export default class VerticalLogo extends Vue {
   get logo() {
     return '#logo-hotel-' + this.$store.state.hotelNameEn

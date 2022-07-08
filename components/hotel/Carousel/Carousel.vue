@@ -130,7 +130,11 @@ enum DIRECTION { left = 1, right = -1}
 
     this.initialCarouseler()
     this.start()
-    setTimeout(() => this.transition = true, 0)
+
+    setTimeout(() => {
+      // 当元素都移动指定位置后开启过度效果
+      this.transition = true
+    }, 0)
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onResize)
