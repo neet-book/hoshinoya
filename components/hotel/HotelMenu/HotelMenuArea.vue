@@ -19,35 +19,35 @@
             <nuxt-link
               :to="'/hotel/' + hotelNameEn" 
               class="link-list-item"
-              :class="{ isCurrent: page == 'index' }"
+              :class="{ isCurrent: page === 'index' }"
             >特点</nuxt-link>
           </li>
           <li>
             <nuxt-link
               :to="'/hotel/' + hotelNameEn + '/rooms'"
               class="link-list-item"
-              :class="{ isCurrent: page == 'room' }"
+              :class="{ isCurrent: page === 'room' }"
             >客房</nuxt-link>
           </li>
           <li>
             <nuxt-link
               :to="'/hotel/' + hotelNameEn + '/dining'"
               class="link-list-item"
-              :class="{ isCurrent: page == 'dining' }"
+              :class="{ isCurrent: page === 'dining' }"
             >餐饮</nuxt-link>
           </li>
           <li>
             <nuxt-link
               :to="'/hotel/' + hotelNameEn + '/experience'"
               class="link-list-item"
-              :class="{ isCurrent: page == 'experience' }"
+              :class="{ isCurrent: page === 'experience' }"
             >体验</nuxt-link>
           </li>
           <li>
             <nuxt-link
               :to="'/hotel/' + hotelNameEn + '/access'"
               class="link-list-item"
-              :class="{ isCurrent: page == 'access' }"
+              :class="{ isCurrent: page === 'access' }"
             >交通</nuxt-link>
           </li>
         </ul>
@@ -69,8 +69,8 @@
       </div>
       <!-- 底部链接 -->
       <div class="footer-link">
-        <div class="footer-links"><nuxt-link to="/about">关于我们</nuxt-link><div class="sparate"></div><nuxt-link to="/reservations">我的订单</nuxt-link></div>
-        <ul class="languages"><li>日本語</li><li class="sparate"></li><li>English</li><li class="sparate"></li><li>繁體中文</li></ul>
+        <div class="footer-links"><nuxt-link to="/about">关于我们</nuxt-link><div class="separator"></div><nuxt-link to="/reservations">我的订单</nuxt-link></div>
+        <ul class="languages"><li>日本語</li><li class="separator"></li><li>English</li><li class="separator"></li><li>繁體中文</li></ul>
       </div>
     </div>
     
@@ -277,7 +277,7 @@ export default class HotelMenuArea extends Vue {
 }
 
 /* 分隔符 */
-.sparate
+.separator
 {
   height: 14px;
   width: 5px;
@@ -289,7 +289,7 @@ export default class HotelMenuArea extends Vue {
   background-position: center center;
 }
 
-.footer-links > .sparate {
+.footer-links > .separator {
   height: 18px;
   display: inline-block;
   vertical-align:top;

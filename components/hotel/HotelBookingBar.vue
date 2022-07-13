@@ -134,4 +134,8 @@ export default class HotelBookingBar extends Vue {
   text-align: center;
   flex-shrink: 1;
 }
+
+@media screen and (max-width: 900px) {
+
+}
 </style>
