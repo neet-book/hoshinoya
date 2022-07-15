@@ -8,6 +8,10 @@
       <div class="booking-button">客房预订</div>
       <div class="booking-bar-bestrate">最佳价格保证</div>
     </div>
+
+    <div class="booking-bar-container min-900px">
+        <div class="calendar"></div>客房预订
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -135,7 +139,27 @@ export default class HotelBookingBar extends Vue {
   flex-shrink: 1;
 }
 
-@media screen and (max-width: 900px) {
+.booking-bar-container.min-900px {
+  display: none;
+}
 
+@media screen and (max-width: 900px) {
+  .booking-bar-container {
+    display: none;
+  }
+
+  .booking-bar-container.min-900px {
+    display: block;
+    text-align: center;
+    padding: 0;
+    line-height: 80px;
+  }
+
+  .booking-bar-container:hover {
+    box-sizing: border-box;
+    border: solid 1px;
+    background-color: white;
+    line-height: 78px;
+  }
 }
 </style>

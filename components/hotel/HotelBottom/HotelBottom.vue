@@ -27,8 +27,9 @@ export default class HotelBottom extends Vue {
 
 <style scoped>
 .hotel-bottom {
+  width: 680px;
   padding-top: 115px;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
 }
 
 .booking-bar-container {
@@ -48,7 +49,6 @@ export default class HotelBottom extends Vue {
 /* 预约 */
 .booking-tell span:nth-child(1) {
   font-size: 11px;
-  margin-left: 9px;
 }
 
 /* 电话号码 */
@@ -68,7 +68,17 @@ export default class HotelBottom extends Vue {
   .booking-tell {
     border-bottom: solid 1px rgb(0, 0, 0, .1);
     padding-bottom: 15px;
+
   }
 
+  .booking-tell span {
+    display: block;
+    text-align: left;
+  }
+
+  .booking-tell span:nth-child(2) {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
 }
 </style>
