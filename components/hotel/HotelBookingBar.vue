@@ -40,7 +40,7 @@ export default class HotelBookingBar extends Vue {
 <style scoped>
 .booking-bar-container {
   box-sizing: border-box;
-  width: 680px;
+  width: 100%;
   height: 80px;
   padding: 18px 18px 0 18px;
   background-color: #e6e6e6;
@@ -56,8 +56,8 @@ export default class HotelBookingBar extends Vue {
 
 .booking-date {
   box-sizing: border-box;
-  width: 320px;
-  height: 46px;
+  width: 300px;
+  height: 44px;
   border: 1px solid rgb(199, 199, 199);
   border-radius: 2px;
   background-color: white;
@@ -111,8 +111,8 @@ export default class HotelBookingBar extends Vue {
 
 .booking-button {
   box-sizing: border-box;
-  width: 120px;
-  height: 46px;
+  width: 110px;
+  height: 44px;
   margin-left: 8px;
   border-radius: 2px;
 
