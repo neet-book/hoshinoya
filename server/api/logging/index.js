@@ -15,7 +15,7 @@ const config = {
         app: {
             // 日志输出类型 file: 输出为普通文件，console: 输出至控制台, dateFile: 按时间输出至不同文件 
             type: 'dateFile',
-            encoding: 'utf-9',
+            encoding: 'utf-8',
             // 是否压缩滚动日志文件
             compress: false,
             // 删除大于指定天数的日志文件
