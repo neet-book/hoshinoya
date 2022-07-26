@@ -4,22 +4,18 @@
     <div class="booking-bar-container">
       <hotel-booking-bar></hotel-booking-bar>
     </div>
-    <div class="bottom-nav-container">
-      <hotel-nav class="bottom-nav"></hotel-nav>
-    </div>
   </div>
 </template>
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
 import VerticalLogo from '/components/hotel/VerticalLogo'
-import HotelBookingBar from '../HotelBookingBar'
-import HotelNav from '/components/hotel/HotelNav/HotelNav'
+import HotelBookingBar from "../HotelBookingBar.vue";
 
 /**
  * 酒店介绍的底部内容
  */
 @Component({
-  components: { HotelBookingBar, VerticalLogo, HotelNav }
+  components: { HotelBookingBar, VerticalLogo }
 })
 export default class HotelBottom extends Vue {
 
@@ -28,8 +24,6 @@ export default class HotelBottom extends Vue {
 
 <style scoped>
 .hotel-bottom {
-  width: 600px;
-  margin: auto;
   padding-top: 115px;
 }
 
@@ -38,13 +32,5 @@ export default class HotelBottom extends Vue {
 }
 .footer-logo {
   color: rgb(51, 51, 51);
-}
-
-.bottom-nav-container {
-  margin-top: 114px;
-}
-
-.bottom-nav {
-  width: 100%;
 }
 </style>
