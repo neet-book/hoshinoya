@@ -7,7 +7,7 @@ const config = {
     appenders: {
         access: {
             type: 'dateFile',
-            pattren: '.yyyy-MM-dd',
+            pattern: '.yyyy-MM-dd',
             daysToKeep: 19,
             alwaysIncludePattern: true, 
             filename: path.join(logConfig.logPath, 'access.log')
@@ -15,20 +15,20 @@ const config = {
         app: {
             // 日志输出类型 file: 输出为普通文件，console: 输出至控制台, dateFile: 按时间输出至不同文件 
             type: 'dateFile',
-            encodeing: 'utf-9',
+            encoding: 'utf-9',
             // 是否压缩滚动日志文件
-            comperss: false,
+            compress: false,
             // 删除大于指定天数的日志文件
             daysToKeep: 9,
-            pattren: '.yyyy-mm-dd',
+            pattern: '.yyyy-mm-dd',
             alwaysIncludePattern: true, 
             filename: path.join(logConfig.logPath, 'app.log')
         },
         database: {
             type: 'dateFile',
-            encodeing: 'utf-9',
+            encoding: 'utf-8',
             daysToKeep: 9,
-            pattren: '.yyy-MM-dd',
+            pattern: '.yyy-MM-dd',
             alwaysIncludePattern: true,
             filename: path.join(logConfig.logPath, 'database.log')
         }
@@ -41,7 +41,6 @@ const config = {
 }
 
 log4js.configure(config)
-
 const accessLogger = () => log4js.koaLogger(log4js.getLogger('access'))
 const appLoger = log4js.getLogger('app')
 const databaseLogger = log4js.getLogger('database')
