@@ -1,5 +1,5 @@
 <template>
-  <div class="hotel" @scroll="onScroll">
+  <div class="hotel" >
     <hotel-menu :hotel="hotelInfo"  page='index' /> 
     <div class="hotel-page-container">
       <hotel-header :content="topSection"></hotel-header>
@@ -74,24 +74,10 @@ export default class HotelPage extends Vue {
       logo: 'logo-hotel-' + this.hotelNameEn
     }
   }
-
-  onScroll(event: Event) {
-    const container: Element = event.target as Element
-    // 优化scroll
-    window.requestAnimationFrame(() => {
-      this.$store.commit('updateDistance', container.scrollTop)
-    })
-  }
 }
 </script>
 
 <style scoped>
-.hotel {
-  width: 100vw;
-  height: 100vh;
-  overflow: auto;
-}
-
 .first-content {
   height: 500px;
 }

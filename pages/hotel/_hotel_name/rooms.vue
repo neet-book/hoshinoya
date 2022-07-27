@@ -7,7 +7,9 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
-@Component
+@Component({
+  layout: 'hotel'
+})
 export default class LogoAnime extends Vue {
   
 }

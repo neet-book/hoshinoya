@@ -1,12 +1,13 @@
 <template>
-  <div class="hotel-booking-bar" @click="openBooking">
-    <div class="booking-bar-container">
+  <div class="hotel-booking-bar">
+    <div class="booking-bar-container" :class="{ box }">
+      <div class="booking-bar-bestrate" v-if="box" >最佳价格保证</div>
       <div class="booking-date">
         <div>入住日</div>
         <div class="calendar"></div><div>{{ currentDate }}</div>
       </div>
       <div class="booking-button">客房预订</div>
-      <div class="booking-bar-bestrate">最佳价格保证</div>
+      <div class="booking-bar-bestrate" v-if="!box">最佳价格保证</div>
     </div>
 
     <div class="booking-bar-container min-900px">
@@ -15,7 +16,7 @@
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue} from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 enum WEEK { '日', '一', '二', '三', '四', '五', '六' }
 
@@ -24,24 +25,25 @@ enum WEEK { '日', '一', '二', '三', '四', '五', '六' }
  */
 @Component({})
 export default class HotelBookingBar extends Vue {
-  isOpen: boolean = false
+  @Prop({ type: Boolean, default: () => false }) box: boolean | undefined
+
   get currentDate() {
     const date = new Date(),
         month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(),
         day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
     return `${date.getFullYear()} / ${month} / ${day}   (${WEEK[date.getDay()]})`
   }
-  openBooking() {
-    this.isOpen = !this.isOpen
-  }
 }
 </script>
 
 <style scoped>
+.hotel-booking-bar, .booking-bar-container{
+  width: 100%;
+  height: 100%;
+}
+
 .booking-bar-container {
   box-sizing: border-box;
-  width: 100%;
-  height: 80px;
   padding: 18px 18px 0 18px;
   background-color: #e6e6e6;
   border-radius: 4px;
@@ -50,6 +52,11 @@ export default class HotelBookingBar extends Vue {
   display: flex;
   flex-wrap: nowrap;
 }
+
+.booking-bar-container.box {
+  flex-wrap: wrap;
+}
+
 .booking-date > div {
   float: left;
 }
@@ -137,6 +144,11 @@ export default class HotelBookingBar extends Vue {
   font-size: 15px;
   text-align: center;
   flex-shrink: 1;
+}
+
+.box > .booking-bar-bestrate {
+  text-align: left;
+
 }
 
 .booking-bar-container.min-900px {

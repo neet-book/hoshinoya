@@ -12,7 +12,7 @@
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
 import VerticalLogo from '/components/hotel/VerticalLogo'
-import HotelBookingBar from '../HotelBookingBar'
+import HotelBookingBar from '/components/hotel/HotelBookingBar'
 import HotelNav from '/components/hotel/HotelNav/HotelNav'
 
 /**
@@ -35,6 +35,7 @@ export default class HotelBottom extends Vue {
 
 .booking-bar-container {
   margin-top: 40px;
+  height: 80px;
 }
 .footer-logo {
   color: rgb(51, 51, 51);
