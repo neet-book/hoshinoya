@@ -54,13 +54,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import { SliderImage } from  '~/components/home/Swiper.vue'
-import Swiper from  '~/components/home/Swiper.vue'
-import LogoAnime from '~/components/home/LogoAnime.vue'
-import { Logo } from '~/components/home/LogoAnime.vue'
+import {Component, Vue} from 'nuxt-property-decorator'
+import Swiper, {SliderImage} from '~/components/home/Swiper.vue'
+import LogoAnime, {Logo} from '~/components/home/LogoAnime.vue'
 import RouterCard from '~/components/home/RouterCard.vue'
-import { getHoshinoyaHome } from '~/utils/network'
+import {getHoshinoyaHome} from '~/utils/network'
 
 @Component({
   components: {
@@ -69,10 +67,8 @@ import { getHoshinoyaHome } from '~/utils/network'
     RouterCard
   },
   async asyncData() {
-    const data = await getHoshinoyaHome()
-    return data
+    return await getHoshinoyaHome()
   },
-
 })
 export default class Index extends Vue {
   topSlider: number = 0

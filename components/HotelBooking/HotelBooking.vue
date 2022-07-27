@@ -2,8 +2,9 @@
   <div class="hotel-booking">
     <div class="hotel-booking-bg">
       <div class="hotel-booking-container">
+        <!-- 查询条件 -->
         <div class="hotel-booking-cond-container">
-
+          <booking-cond v-model="queryCond"></booking-cond>
         </div>
         <!-- 日历符号说明 -->
         <div class="legend"></div>
@@ -11,7 +12,6 @@
         <div class="penHotel-ctl"></div>
         <!-- 日历 -->
         <div class="hotel-booking-calendar-container" ></div>
-
         <!-- 货币 -->
         <div class="hotel-booking-currency"></div>
         <!-- 最佳出价 -->
@@ -22,10 +22,13 @@
 </template>
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
+import  BookingCond from './BookingCond'
 
-@Component
+@Component({
+  components: { BookingCond }
+})
 export default class BookingHotel extends Vue {
-
+  queryCond: {}
 }
 </script>
 

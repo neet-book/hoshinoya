@@ -17,17 +17,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import {Component, Vue} from 'nuxt-property-decorator'
 import HotelMenu from '/components/hotel/HotelMenu/HotelMenu.vue'
 import HotelHeader from '/components/hotel/Head/HotelHeader.vue'
 import LargeSection from '/components/hotel/LargeSection/LargeSection.vue'
 import OutlineFirstSection from '/components/hotel/OutlineSections/OutlineFirstSection.vue'
-import { getHotelRateInfos, getHotelIntroduction } from '~/utils/network'
+import {getHotelIntroduction, getHotelRateInfos} from '~/utils/network'
 import OutlineSecondSection from "/components/hotel/OutlineSections/OutlineSecondSection.vue";
 import OutlineThirdSection from "/components/hotel/OutlineSections/OutlineThirdSections"
 import HotelBottom from "/components/hotel/HotelBottom/HotelBottom.vue";
 
 @Component({
+  layout: 'hotel',
   components: {
     HotelMenu,
     HotelHeader,
@@ -43,8 +44,7 @@ import HotelBottom from "/components/hotel/HotelBottom/HotelBottom.vue";
   },
   async asyncData(ctx) {
     const hotel = ctx.params.hotel_name
-    const data = await getHotelIntroduction(hotel)
-    return data
+    return await getHotelIntroduction(hotel)
   },
   mounted() {
     const that: any = this
