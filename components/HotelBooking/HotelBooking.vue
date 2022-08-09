@@ -4,7 +4,7 @@
       <div class="hotel-booking-container">
         <!-- 查询条件 -->
         <div class="hotel-booking-cond-container">
-          <booking-cond v-model="queryCond"></booking-cond>
+          <booking-cond v-on:tab-change="tab = $event"></booking-cond>
         </div>
         <!-- 日历符号说明 -->
         <div class="legend"></div>
@@ -29,6 +29,7 @@ import  BookingCond from './BookingCond'
 })
 export default class BookingHotel extends Vue {
   queryCond: {}
+  tab: string = this.$store.state.hotelNameEn
 }
 </script>
 
@@ -38,7 +39,7 @@ export default class BookingHotel extends Vue {
   height: 100vh;
   position: fixed;
 
-  z-index: 100;
+  z-index: 300;
 }
 
 .hotel-booking-bg {
@@ -49,6 +50,7 @@ export default class BookingHotel extends Vue {
 
 .hotel-booking-container {
   max-width: 950px;
-
+  padding-top: 50px;
+  margin: auto;
 }
 </style>

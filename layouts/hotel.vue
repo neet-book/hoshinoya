@@ -1,6 +1,7 @@
 <template>
   <div class="container" @scroll="onScroll">
     <logo-svg />
+    <hotel-booking></hotel-booking>
     <div class="booking-box-container" :class="{ show: !inTop }" @click="openCalendar">
       <booking-box></booking-box>
     </div>
@@ -16,9 +17,10 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import LogoSvg from '/components/LogoSvg.vue'
 import BookingBox from '/components/hotel/BookingBox'
 import HotelBookingBar from '/components/hotel/HotelBookingBar'
+import HotelBooking from '/components/HotelBooking/HotelBooking'
 
 @Component({
-  components: { LogoSvg, BookingBox, HotelBookingBar}
+  components: { HotelBooking, LogoSvg, BookingBox, HotelBookingBar,  }
 })
 export default class HotelLayout extends Vue {
   get inTop() {
