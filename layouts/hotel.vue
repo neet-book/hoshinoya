@@ -73,6 +73,7 @@ export default class HotelLayout extends Vue {
   bottom: 0;
   transform: translate3d(-50%, 100%, 0);
   transition: visibility 0s linear,transform 800ms cubic-bezier(.77,0,.175,1);
+  cursor: pointer;
 }
 
 .booking-bar-container.show {

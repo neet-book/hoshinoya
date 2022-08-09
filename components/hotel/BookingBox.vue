@@ -6,7 +6,6 @@
     >
       <div class="booking-button"
            @mouseenter.self="onMouseEnter"
-           @click.self="openBooking"
       >
         <div>
           <div class="side-caption" :class="{ display: !opened }">最佳价格保证</div>
@@ -34,10 +33,6 @@ export default class BookingBox extends Vue {
   onMouseEnter(event) {
     const box = this.$refs.actBox as Element
     if (box.clientWidth === 0 ) this.opened = true
-  }
-
-  openBooking() {
-    console.log('booking')
   }
 }
 </script>
@@ -147,7 +142,6 @@ export default class BookingBox extends Vue {
 
   opacity: 0;
   display: none;
-  cursor: pointer;
 }
 
 .display > .booking-bar-container {
