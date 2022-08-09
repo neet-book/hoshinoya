@@ -1,7 +1,13 @@
 <template>
   <div class="booking-box" >
-    <div class="booking-box-container" :class="{ display: opened }">
-      <div class="booking-button" @mouseenter.self="onMouseEnter" @mouseleave="opened = false">
+    <div class="booking-box-container"
+         :class="{ display: opened }"
+         @mouseleave="opened = false"
+    >
+      <div class="booking-button"
+           @mouseenter.self="onMouseEnter"
+           @click.self="openBooking"
+      >
         <div>
           <div class="side-caption" :class="{ display: !opened }">最佳价格保证</div>
           客房预订
@@ -29,16 +35,20 @@ export default class BookingBox extends Vue {
     const box = this.$refs.actBox as Element
     if (box.clientWidth === 0 ) this.opened = true
   }
+
+  openBooking() {
+    console.log('booking')
+  }
 }
 </script>
 
 <style scoped>
 .booking-box {
   background-color: #e6e6e6;
-  cursor: pointer;
 }
 
 .booking-box-container {
+  cursor: pointer;
   display: flex;
   border-right: 1px solid #000;
   box-shadow: 0 1px 0 0 rgb(4 0 0 / 15%);
@@ -119,6 +129,7 @@ export default class BookingBox extends Vue {
 }
 
 .booking-active-box {
+  cursor: pointer;
   width: 0;
   transition: width 500ms cubic-bezier(.77,0,.175,1);
 }
@@ -135,9 +146,12 @@ export default class BookingBox extends Vue {
   transition: opacity 300ms cubic-bezier(.25,.46,.45,.94);
 
   opacity: 0;
+  display: none;
+  cursor: pointer;
 }
 
 .display > .booking-bar-container {
   opacity: 1;
+  display: block;
 }
 </style>
