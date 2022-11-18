@@ -1,7 +1,7 @@
 <template>
   <div class="booking-cond">
     <div class="booking-hotel-tab">
-      <div class="title">空房情况</div>
+    <div class="title">空房情况</div>
       <ul class="hotel-tab" @click="onClick">
         <li class="tab-item" :class="{ chose: currentCity === 'all' }" data-hotel-name="all">
 
@@ -53,6 +53,7 @@
     <div class="cond-container">
       <cond-bar
           :condList="condList"
+          :class="{ lastChose: currentCity === 'guguan' }"
           @cond-change="onCondChange"></cond-bar>
     </div>
   </div>
@@ -66,7 +67,7 @@ import CondBar from './CondBar'
   
 })
 export default class BookingCond extends Vue {
-  currentCity: string = this.$store.state.hotelNameEn
+  currentCity: string = this.$route.params.hotel_name
   condList = []
   roomState = []
   onCondList(cond) {
@@ -123,6 +124,16 @@ export default class BookingCond extends Vue {
   background-color: #333;
 }
 
+li:first-child {
+  border-top-left-radius: 4px;
+}
+
+li:last-child {
+  border-top-right-radius: 4px;
+}
+
+
+/* 选中后样式 */
 .chose {
   background: white;
   border-left: solid 1px;
@@ -172,6 +183,7 @@ export default class BookingCond extends Vue {
 .chose > .table-item-bk::after,
 .chose > .table-item-bk::before,
 li:first-child.chose > .table-item-bk::before,
+li:first-child.tab-item > .table-item-bk::before,
 li:first-child.chose::after
 {
   content: '';
@@ -181,6 +193,13 @@ li:first-child.chose::after
   background-size: 100%, 100%;
   position: absolute;
   z-index: 9999;
+}
+
+/* 第一项未选择时底部 */
+li:first-child.tab-item > .table-item-bk::before {
+  background-image: -webkit-radial-gradient(0 0, circle,rgba(51,51,51,0) 3px,#4d4d4d 4px);
+  left: -4px;
+  bottom: 0;
 }
 
 .chose > .table-item-bk::after {
@@ -213,4 +232,16 @@ li:first-child.chose::after {
   bottom: 0;
 }
 
+li:first-child.chose,
+li:last-child.chose {
+  border-radius: 0;
+}
+
+.cond-container {
+  position: relative;
+}
+
+.lastChose {
+  border-top-right-radius: 0;
+}
 </style>

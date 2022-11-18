@@ -31,18 +31,18 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+
   ],
   /*
   ** Nuxt.js dev-modules
   */
-  buildModules: [
-  ],
+
   /*
   ** Nuxt.js modules
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    '@nuxtjs/axios
   ],
   /*
   ** Axios module configuration
@@ -53,13 +53,14 @@ module.exports = {
   /*
   ** Build configuration
   */
-  buildModules: ['@nuxt/typescript-build'],
+  buildModules: ['@nuxt/typescript-build', '@nuxt/postcss8'],
   build: {
     /*
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    }
+    },
+
   },
   telemetry: false,
   router: {
