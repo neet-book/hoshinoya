@@ -79,8 +79,6 @@
     </div>
     时，1位第1晚的房价
   </div>
-
-
 </template>
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
@@ -205,6 +203,7 @@ export default class CondBar extends Vue {
 
   letter-spacing: 1.5px;
   font-size: 15px;
+  vertical-align: baseline;
 
   border: solid 1px #ccc;
   border-radius: 2px;
@@ -216,6 +215,10 @@ export default class CondBar extends Vue {
   background-repeat: no-repeat;
   background-position: right 20px center;
   background-size: 8px 8px;
+}
+
+div:last-child.cond-trigger {
+  width: 250px;
 }
 
 .cond-trigger:hover {
@@ -233,14 +236,14 @@ export default class CondBar extends Vue {
   background-color: #333;
 }
 
-.cond-trigger > span {
+.cond-trigger > span:first-child {
   font-size: 24px;
 }
 
 .cond-trigger > .night-discount {
+  width: 70px;
   font-size: 13px;
-  margin-right: 70px;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 /* 悬浮选择框 */
