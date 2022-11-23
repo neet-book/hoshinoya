@@ -1,49 +1,53 @@
 <template>
   <div class="cond-bar">
     显示
-    <div class="cond-trigger" @click.self="showCustomerFloat = !showCustomerFloat">
-      <span>{{adult}}</span>位成人/<span>{{child + infant + baby}}</span>位儿童（1房间）<i class="cond-select-icon"></i>
+    <div class="cond-trigger" @click.self="showCustomerFloat = !showCustomerFloat" ref="customerFloat">
+      <span
+        @click.self="showCustomerFloat = !showCustomerFloat"
+      >{{condition?.adult}}</span>位成人/<span
+        @click.self="showCustomerFloat = !showCustomerFloat"
+      >{{condition?.child + condition?.infant + condition?.baby}}</span>位儿童（1房间）<i class="cond-select-icon"></i>
       <!-- 入住人数选择 -->
       <div class="cond-float-container" :class="{ visible: showCustomerFloat }">
         <div class="customer-cond-float">
           <form>
             <div class="cond-option">
               <label for="customer-adult">成人</label>
-              <select name="adult" id="customer-adult" v-model.number="adult">
+              <select name="adult" id="customer-adult"  @change="changeCondition('adult', Number($event.target.value))">
                 <option
-                    v-for="adultNum in range(peopleLimit.adultNumMin, peopleLimit.adultNumMax + 1)"
+                    v-for="adultNum in range(condLimit?.adultNumMin, condLimit?.adultNumMax + 1)"
                     :value="adultNum"
-                    :selected="adultNum === peopleLimit.adultNumDefault"
+                    :selected="adultNum === condLimit?.adultNumDefault"
                 >{{adultNum}}</option>
               </select>
             </div>
             <div class="cond-option">
               <label for="customer-child">11岁以下</label>
-              <select name="child" id="customer-child" v-model.number="child">
+              <select name="child" id="customer-child" @change="changeCondition('child', Number($event.target.value))">
                 <option
-                    v-for="childNum in range(peopleLimit.childNumMin, peopleLimit.childNumMax + 1)"
+                    v-for="childNum in range(condLimit?.childNumMin, condLimit?.childNumMax + 1)"
                     :value="childNum"
-                    :selected="childNum === peopleLimit.childNumDefault"
+                    :selected="childNum === condLimit?.childNumDefault"
                 >{{childNum}}</option>
               </select>
             </div>
             <div class="cond-option">
               <label for="customer-baby">6岁以下</label>
-              <select name="baby" id="customer-baby" v-model.number="baby">
+              <select name="baby" id="customer-baby" @change="changeCondition('baby', Number($event.target.value))">
                 <option
-                    v-for="babyNum in range(peopleLimit.babyNumMin, peopleLimit.babyNumMax + 1)"
+                    v-for="babyNum in range(condLimit?.babyNumMin, condLimit?.babyNumMax + 1)"
                     :value="babyNum"
-                    :selected="babyNum === peopleLimit.babyNumDefault"
+                    :selected="babyNum === condLimit?.babyNumDefault"
                 >{{babyNum}}</option>
               </select>
             </div>
             <div class="cond-option">
               <label for="customer-infant">3岁以下</label>
-              <select name="infant" id="customer-infant" v-model.number="infant">
+              <select name="infant" id="customer-infant"  @change="changeCondition('infant', Number($event.target.value))">
                 <option
-                    v-for="infantNum in range(peopleLimit.infantNumMin, peopleLimit.infantNumMax + 1)"
+                    v-for="infantNum in range(condLimit?.infantNumMin, condLimit?.infantNumMax + 1)"
                     :value="infantNum"
-                    :selected="infantNum === peopleLimit.infantNumDefault"
+                    :selected="infantNum === condLimit?.infantNumDefault"
                 >{{infantNum}}</option>
               </select>
             </div>
@@ -60,8 +64,17 @@
         </div>
       </div>
     </div>
-    <div class="cond-trigger" @click.self="showNightFloat = !showNightFloat">
-      入住<span>{{stayNight}}</span>晚<span v-if="stayNight > hotelNightMax">以上</span> <span class="night-discount">{{off}}</span><i class="cond-select-icon"></i>
+    <div class="cond-trigger" @click.self="showNightFloat = !showNightFloat" ref="nightFloat">
+      入住<span
+        @click.self="showNightFloat = !showNightFloat"
+      >{{condition?.stayNight}}</span>晚<span
+        v-if="condition?.stayNight > condLimit?.hotelNightMax"
+        @click.self="showNightFloat = !showNightFloat"
+      >以上</span>
+      <span
+        class="night-discount"
+        @click.self="showNightFloat = !showNightFloat"
+      >{{off}}</span><i class="cond-select-icon"></i>
       <!-- 入住夜晚选择 -->
       <div class="cond-float-container" :class="{ visible: showNightFloat }">
         <div class="night-cond-float">
@@ -69,7 +82,7 @@
             <li
                 class="cond-night-select-item"
                 v-for="d in discount"
-                @click="stayNight = d.night , showNightFloat = false"
+                @click="changeCondition('stayNight', d.night), showNightFloat = false"
             >
               入住{{d.night}}晚<span class="night-discount">{{d.off}}</span>
             </li>
@@ -81,92 +94,96 @@
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue} from 'nuxt-property-decorator'
+import {Component, Vue, Prop } from 'nuxt-property-decorator'
 import BookingPlan from "./BookingPlan/BookingPlan.vue";
 
+export interface Condition {
+  adult: number
+  child: number
+  baby: number
+  infant: number
+  stayNight: number
+}
+
+export interface CondLimit {
+  infantNumMax: number
+  infantNumDefault: number
+  adultNumMin: number
+  babyNumDefault: number
+  babyNumMin: number
+  childNumMin: number
+  hotelNightDefault: number
+  adultNumMax: number
+  infantNumMin: number
+  hotelNightMax: number
+  hotelNightMin: number
+  babyNumMax: number
+  adultNumDefault: number
+  childNumDefault: number
+  childNumMax: number
+}
+
+export interface Discount {
+  night: number
+  off: string
+}
 
 @Component({
-  components: {BookingPlan}
+  components: {BookingPlan},
+  mounted() {
+    console.log(this.discount)
+    document.body.addEventListener('click', this.onDocumentClick)
+  },
+  unmounted()  {
+    document.body.removeEventListener('click', this.onDocumentClick)
+  },
 })
 export default class CondBar extends Vue {
   showCustomerFloat = false
   showNightFloat = false
-  adult = 1
-  child = 0
-  baby = 0
-  infant = 0
-  stayNight = 1
-  peopleLimit = {
-    // 成人数量限制
-    adultNumDefault: 2,
-    adultNumMax: 4,
-    adultNumMin: 1,
-    // 幼儿数量限制 0-3岁
-    infantNumDefault: 0,
-    infantNumMax: 4,
-    infantNumMin: 0,
-    // 婴儿数量限制 3-6岁
-    babyNumDefault: 0,
-    babyNumMax: 4,
-    babyNumMin: 0,
-    // 儿童数量限制 6岁以下
-    childNumDefault: 0,
-    childNumMin: 0,
-    childNumMax: 4
 
-  }
+  @Prop({ default: {} })
+  condition: Condition
+  @Prop({ default: {} })
+  condLimit: CondLimit
+  @Prop({ default: {} })
+  discount: Discount[]
 
-  hotelNightDefault = 2
-  hotelNightMin = 0
-  hotelNightMax = 7
-  discount = [
-    {
-      night: 1,
-      off: '0%off'
-    },
-    {
-      night: 2,
-      off: '25%off'
-    },
-    {
-      night: 3,
-      off: '25%off'
-    },
-    {
-      night: 4,
-      off: '25%off'
-    },
-    {
-      night: 5,
-      off: '25%off'
-    },
-    {
-      night: 6,
-      off: '25-26%off'
-    },
-    {
-      night: 7,
-      off: '25-26%off'
-    },
-    {
-      night: 8,
-      off: '25-26%off'
-    }
-  ]
+
   get off() {
     for (let d of this.discount) {
-      if (d.night === this.stayNight) {
+      if (d.night === this.condition?.stayNight) {
         return d.off
       }
     }
     return '0%off'
   }
+
   range(min: number, max: number): number[] {
     const list = []
     for (let n = min; n < max; n++)  {
       list.push(n)
     }
     return list
+  }
+
+  changeCondition(key: string, value: any) {
+    const copy = Object.assign({}, this.condition)
+    copy[key] = value
+    this.$emit('change', copy)
+  }
+
+  onDocumentClick(event: Event) {
+    const customerFloat = this.$refs.customerFloat as HTMLElement
+    const nightFloat = this.$refs.nightFloat as HTMLElement
+    if (!customerFloat?.contains(event.target as HTMLElement) && this.showCustomerFloat) {
+      if (!customerFloat) return
+      this.showCustomerFloat = false
+    }
+    if (!nightFloat?.contains(event.target as HTMLElement) && this.showNightFloat) {
+      if (!nightFloat) return;
+      this.showNightFloat = false
+    }
   }
 
 }
@@ -241,7 +258,7 @@ div:last-child.cond-trigger {
 }
 
 .cond-trigger > .night-discount {
-  width: 70px;
+  width: 80px;
   font-size: 13px;
   margin-left: 5px;
 }

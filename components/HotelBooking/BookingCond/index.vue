@@ -4,12 +4,10 @@
     <div class="title">空房情况</div>
       <ul class="hotel-tab" @click="onClick">
         <li class="tab-item" :class="{ chose: currentCity === 'all' }" data-hotel-name="all">
-
           ALL
           <div class="table-item-bk"></div
           ></li>
         <li class="tab-item" :class="{ chose: currentCity === 'karuizawa' }" data-hotel-name="karuizawa">
-
           轻井泽
           <div class="table-item-bk"></div
           ></li>
@@ -24,7 +22,6 @@
           <div class="table-item-bk"></div>
         </li>
         <li class="tab-item" :class="{ chose: currentCity === 'taketomi_island' }" data-hotel-name="taketomi_island">
-
           竹富岛
           <div class="table-item-bk"></div
           ></li>
@@ -52,21 +49,90 @@
     </div>
     <div class="cond-container">
       <cond-bar
-          :condList="condList"
-          :class="{ lastChose: currentCity === 'guguan' }"
-          @cond-change="onCondChange"></cond-bar>
+        :condLimit="condLimit"
+        :condition="condition"
+        :discount="discount"
+        @change="onCondChange($event)"
+        :class="{ lastChose: currentCity === 'guguan' }"
+      ></cond-bar>
     </div>
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue} from 'nuxt-property-decorator'
-import CondBar from './CondBar'
+import { Component, Vue } from 'nuxt-property-decorator'
+import CondBar, { Condition, CondLimit, Discount } from './CondBar'
 
 @Component({
   components: { CondBar }
   
 })
 export default class BookingCond extends Vue {
+  condition: Condition = {
+    adult: 1,
+    child: 0,
+    infant: 0,
+    baby: 0,
+    stayNight: 2
+  }
+
+  discount: Discount[] = [
+    {
+      night: 1,
+      off: '0%off'
+    },
+    {
+      night: 2,
+      off: '25%off'
+    },
+    {
+      night: 3,
+      off: '25%off'
+    },
+    {
+      night: 4,
+      off: '25%off'
+    },
+    {
+      night: 5,
+      off: '25%off'
+    },
+    {
+      night: 6,
+      off: '25-26%off'
+    },
+    {
+      night: 7,
+      off: '25-26%off'
+    },
+    {
+      night: 8,
+      off: '25-26%off'
+    }
+  ]
+
+  condLimit: CondLimit = {
+    // 成人数量限制
+    adultNumDefault: 2,
+    adultNumMax: 4,
+    adultNumMin: 1,
+    // 幼儿数量限制 0-3岁
+    infantNumDefault: 0,
+    infantNumMax: 4,
+    infantNumMin: 0,
+    // 婴儿数量限制 3-6岁
+    babyNumDefault: 0,
+    babyNumMax: 4,
+    babyNumMin: 0,
+    // 儿童数量限制 6岁以下
+    childNumDefault: 0,
+    childNumMin: 0,
+    childNumMax: 4,
+    // 时间
+    hotelNightDefault: 2,
+    hotelNightMin: 0,
+    hotelNightMax: 7
+  }
+
   currentCity: string = this.$route.params.hotel_name
   condList = []
   roomState = []
@@ -78,9 +144,10 @@ export default class BookingCond extends Vue {
     this.currentCity = event.target.getAttribute('data-hotel-name')
   }
   onCondChange(cond) {
+    this.condition = cond
     this.$emit('cond-change', {
       city: this.currentCity,
-      condition: cond
+      condition: this.condition
     })
   }
 }
@@ -91,6 +158,7 @@ export default class BookingCond extends Vue {
   display: flex;
   justify-content: right;
   position: relative;
+  user-select: none;
 }
 
 .title {
@@ -241,7 +309,7 @@ li:last-child.chose {
   position: relative;
 }
 
-.lastChose {
+li:last-child.chose {
   border-top-right-radius: 0;
 }
 </style>

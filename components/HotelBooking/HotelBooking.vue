@@ -4,7 +4,7 @@
       <div class="hotel-booking-container">
         <!-- 查询条件 -->
         <div class="hotel-booking-cond-container">
-          <booking-cond v-on:tab-change="tab = $event"></booking-cond>
+          <booking-cond ></booking-cond>
         </div>
         <!-- 日历符号说明 -->
         <div class="legend"></div>
@@ -24,11 +24,20 @@
 import {Component, Vue} from 'nuxt-property-decorator'
 import  BookingCond from './BookingCond'
 
+export interface HotelCondition {
+  adult: number
+  child: number
+  infant: number
+  stayNight: number,
+  hotel: string
+}
+
 @Component({
   components: { BookingCond }
 })
 export default class BookingHotel extends Vue {
-  queryCond: {}
+  condition: {
+  }
   tab: string = this.$store.state.hotelNameEn
 }
 </script>
