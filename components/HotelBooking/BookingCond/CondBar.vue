@@ -13,8 +13,9 @@
           <form>
             <div class="cond-option">
               <label for="customer-adult">成人</label>
-              <select name="adult" id="customer-adult"  @change="changeCondition('adult', Number($event.target.value))">
+              <select class="booking-select" name="adult" id="customer-adult"  @change="changeCondition('adult', Number($event.target.value))">
                 <option
+                    class="booking-select-option"
                     v-for="adultNum in range(condLimit?.adultNumMin, condLimit?.adultNumMax + 1)"
                     :value="adultNum"
                     :selected="adultNum === condLimit?.adultNumDefault"
@@ -23,8 +24,9 @@
             </div>
             <div class="cond-option">
               <label for="customer-child">11岁以下</label>
-              <select name="child" id="customer-child" @change="changeCondition('child', Number($event.target.value))">
+              <select class="booking-select" name="child" id="customer-child" @change="changeCondition('child', Number($event.target.value))">
                 <option
+                    class="booking-select-option"
                     v-for="childNum in range(condLimit?.childNumMin, condLimit?.childNumMax + 1)"
                     :value="childNum"
                     :selected="childNum === condLimit?.childNumDefault"
@@ -33,8 +35,9 @@
             </div>
             <div class="cond-option">
               <label for="customer-baby">6岁以下</label>
-              <select name="baby" id="customer-baby" @change="changeCondition('baby', Number($event.target.value))">
+              <select class="booking-select" name="baby" id="customer-baby" @change="changeCondition('baby', Number($event.target.value))">
                 <option
+                    class="booking-select-option"
                     v-for="babyNum in range(condLimit?.babyNumMin, condLimit?.babyNumMax + 1)"
                     :value="babyNum"
                     :selected="babyNum === condLimit?.babyNumDefault"
@@ -43,8 +46,9 @@
             </div>
             <div class="cond-option">
               <label for="customer-infant">3岁以下</label>
-              <select name="infant" id="customer-infant"  @change="changeCondition('infant', Number($event.target.value))">
+              <select class="booking-select" name="infant" id="customer-infant"  @change="changeCondition('infant', Number($event.target.value))">
                 <option
+                    class="booking-select-option"
                     v-for="infantNum in range(condLimit?.infantNumMin, condLimit?.infantNumMax + 1)"
                     :value="infantNum"
                     :selected="infantNum === condLimit?.infantNumDefault"
@@ -131,7 +135,6 @@ export interface Discount {
 @Component({
   components: {BookingPlan},
   mounted() {
-    console.log(this.discount)
     document.body.addEventListener('click', this.onDocumentClick)
   },
   unmounted()  {
@@ -196,13 +199,12 @@ export default class CondBar extends Vue {
   height: 110px;
   border: 1px solid;
   border-radius: 4px;
-  position: absolute;
+  position: relative;
   top: -1px;
 
   font-size: 18px;
   /*line-height: 110px;*/
   padding-left: 30px;
-  font-family: "Helvetica Neue LT W01_55 Roman", hsn-zhcn-sans-demilight, hsn-zhtw-sans-demilight, sans-serif;
   display: flex;
   align-items: center;
 
@@ -310,7 +312,6 @@ div:last-child.cond-trigger {
   align-items: center;
 
   font-size: 0;
-  font-family: "Helvetica Neue LT W01_55 Roman", hsn-zhcn-sans-demilight, hsn-zhtw-sans-demilight, sans-serif;
   line-height: 0;
   padding-top: 8px;
 }
@@ -320,24 +321,11 @@ div:last-child.cond-trigger {
 }
 
 .cond-option > select {
-
   width: 80px;
   height: 30px;
   padding-left: 10px;
-  cursor: pointer;
-  border-color: #ccc;
-  border-radius: 2px;
+
   font-size: 16px;
-
-  background-color: #f2f2f2;
-  background-image: url("~/assets/svg/select.svg");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 6px 6px;
-}
-
-.cond-option > select:hover {
-  background-color: #e6e6e6;
 }
 
 .cond-close-btn {

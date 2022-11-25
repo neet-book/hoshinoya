@@ -6,10 +6,11 @@
         <div class="hotel-booking-cond-container">
           <booking-cond ></booking-cond>
         </div>
-        <!-- 日历符号说明 -->
-        <div class="legend"></div>
+
         <!-- 旅店入住日期选择控制 -->
-        <div class="calendar-ctl"></div>
+        <div class="calendar-ctl">
+          <calendar-control></calendar-control>
+        </div>
         <!-- 日历 -->
         <div class="hotel-booking-calendar-container" ></div>
         <!-- 货币 -->
@@ -23,6 +24,7 @@
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
 import  BookingCond from './BookingCond'
+import CalendarControl from "./CalendarControl.vue";
 
 export interface HotelCondition {
   adult: number
@@ -33,7 +35,7 @@ export interface HotelCondition {
 }
 
 @Component({
-  components: { BookingCond }
+  components: { CalendarControl, BookingCond }
 })
 export default class BookingHotel extends Vue {
   condition: {
@@ -48,6 +50,8 @@ export default class BookingHotel extends Vue {
   height: 100vh;
   position: fixed;
 
+  font-family: "Helvetica Neue LT W01_55 Roman", hsn-zhcn-sans-demilight, hsn-zhtw-sans-demilight, sans-serif;
+
   z-index: 300;
 }
 
@@ -61,5 +65,9 @@ export default class BookingHotel extends Vue {
   max-width: 950px;
   padding-top: 50px;
   margin: auto;
+}
+
+.calendar-ctl {
+  margin-top: 30px;
 }
 </style>

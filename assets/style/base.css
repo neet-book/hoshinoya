@@ -1,4 +1,3 @@
-
 body {
     font-family: "Helvetica Neue LT W01_55 Roman", hsn-zhcn-sans-demilight, hsn-zhtw-sans-demilight, sans-serif;;
     -webkit-font-smoothing: antialiased;
@@ -18,4 +17,25 @@ ul {
 select {
     outline: none;
     appearance: none;
+    border: none;
+}
+
+.booking-select {
+    cursor: pointer;
+    border: 1px #ccc solid;
+    border-radius: 2px;
+
+    background-color: #f2f2f2;
+    background-image: url("~/assets/svg/select.svg");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 6px 6px;
+}
+
+.booking-select:hover {
+    background-color: #e6e6e6;
+}
+
+.booking-select-option {
+    background: white;
 }
