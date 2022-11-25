@@ -9,7 +9,7 @@
         <!-- 日历符号说明 -->
         <div class="legend"></div>
         <!-- 旅店入住日期选择控制 -->
-        <div class="penHotel-ctl"></div>
+        <div class="calendar-ctl"></div>
         <!-- 日历 -->
         <div class="hotel-booking-calendar-container" ></div>
         <!-- 货币 -->
