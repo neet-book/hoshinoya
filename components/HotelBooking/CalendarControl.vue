@@ -9,8 +9,8 @@
     </div>
     <div class="calendar-ctl-container">
       <div class="ctl-plan-month">
-        <select class="booking-select" >
-          <option class="booking-select-option" value="none" selected>选择入住日期</option>
+        <select class="booking-select">
+          <option class="booking-select-option" value="none" disabled>选择入住日期</option>
           <option
             class="booking-select-option"
             v-for="item in dateIterator()"
@@ -105,12 +105,53 @@ export default class CalendarControl extends Vue {
 background-image: url("~/assets/svg/legend/closed.svg");
 }
 
+.ctl-plan-month {
+  position: relative;
+  background-color: #f2f2f2;
+  background-image: url("~/assets/svg/select.svg");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 6px 6px;
+}
+
+.ctl-plan-month::before,
+.ctl-plan-month > select {
+  font-size: .8em;
+  padding-left: 17px;
+}
+
+.ctl-plan-month::before {
+  content: '选择入住日期';
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  line-height: 30px;
+}
+
 .ctl-plan-month > select {
   height: 30px;
   width: 150px;
   padding-left: 17px;
   font-size: 16px;
+  position: relative;
+  background: transparent;
+  color: transparent;
 }
+
+.ctl-plan-month > select option {
+  color: black;
+}
+
+/*.ctl-plan-month  {*/
+/*  content: '选择入住日期';*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*}*/
 
 .plan-nav {
   display: flex;
@@ -151,7 +192,9 @@ background-image: url("~/assets/svg/legend/closed.svg");
 
 .prev-month:hover,
 .next-month:hover,
-.ctl-plan-month > select:hover {
+.ctl-plan-month:hover {
   background-color: #e6e6e6;
 }
+
+
 </style>

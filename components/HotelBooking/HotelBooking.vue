@@ -6,10 +6,9 @@
         <div class="hotel-booking-cond-container">
           <booking-cond ></booking-cond>
         </div>
-
         <!-- 旅店入住日期选择控制 -->
         <div class="calendar-ctl">
-          <calendar-control></calendar-control>
+          <calendar-control @change="onMonthChange" @next="nextMonth" @prev="prevMonth"></calendar-control>
         </div>
         <!-- 日历 -->
         <div class="hotel-booking-calendar-container" ></div>
@@ -41,6 +40,15 @@ export default class BookingHotel extends Vue {
   condition: {
   }
   tab: string = this.$store.state.hotelNameEn
+  onMonthChange() {
+
+  }
+  nextMonth() {
+
+  }
+  prevMonth() {
+
+  }
 }
 </script>
 
