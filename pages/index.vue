@@ -35,7 +35,7 @@
         <div class="footer-nav">
           <div class="footer-nav-container">
             <nuxt-link to='/about'><span>关于我们</span></nuxt-link>
-            <div class="footer-nav-booking"><div class="calendar"></div>客房预订</div>
+            <div class="footer-nav-booking"><div class="calender"></div>客房预订</div>
           </div>
         </div>
         <div class="footer-links">
@@ -207,7 +207,7 @@ export default class Index extends Vue {
   margin-right: 16px;
 }
 
-.footer-nav-booking, .calendar {
+.footer-nav-booking, .calender {
   vertical-align: top;
 }
 
@@ -227,7 +227,7 @@ export default class Index extends Vue {
   background-position: center center;
 }
 
-.calendar {
+.calender {
   display: inline-block;
   width: 13px;
   height: 100%;

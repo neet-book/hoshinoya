@@ -11,7 +11,11 @@
           <calendar-control @change="onMonthChange" @next="nextMonth" @prev="prevMonth"></calendar-control>
         </div>
         <!-- 日历 -->
-        <div class="hotel-booking-calendar-container" ></div>
+        <div class="hotel-booking-calender-container" >
+          <div class="hotel-booking-calender-inner">
+            <calendar :date="'2022/11/1'"></calendar>
+          </div>
+        </div>
         <!-- 货币 -->
         <div class="hotel-booking-currency"></div>
         <!-- 最佳出价 -->
@@ -24,6 +28,7 @@
 import {Component, Vue} from 'nuxt-property-decorator'
 import  BookingCond from './BookingCond'
 import CalendarControl from "./CalendarControl.vue";
+import Calendar from "./Calender/Calender.vue"
 
 export interface HotelCondition {
   adult: number
@@ -34,12 +39,13 @@ export interface HotelCondition {
 }
 
 @Component({
-  components: { CalendarControl, BookingCond }
+  components: { CalendarControl, BookingCond, Calendar }
 })
 export default class BookingHotel extends Vue {
   condition: {
   }
   tab: string = this.$store.state.hotelNameEn
+  currentDate = { year: new Date().getFullYear(), month: new Date().getMonth() + 1}
   onMonthChange() {
 
   }

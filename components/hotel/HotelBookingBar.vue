@@ -4,14 +4,14 @@
       <div class="booking-bar-bestrate" v-if="box" >最佳价格保证</div>
       <div class="booking-date">
         <div>入住日</div>
-        <div class="calendar"></div><div>{{ currentDate }}</div>
+        <div class="calender"></div><div>{{ currentDate }}</div>
       </div>
       <div class="booking-button">客房预订</div>
       <div class="booking-bar-bestrate" v-if="!box">最佳价格保证</div>
     </div>
 
     <div class="booking-bar-container min-900px">
-        <div class="calendar"></div>客房预订
+        <div class="calender"></div>客房预订
     </div>
   </div>
 </template>
@@ -102,11 +102,11 @@ export default class HotelBookingBar extends Vue {
   letter-spacing: .5px;
 }
 
-.booking-date > .calendar {
+.booking-date > .calender {
   margin-left: 10px;
 }
 
-.calendar {
+.calender {
   display: inline-block;
   width: 13px;
   height: 100%;
