@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 const router = new Router()
-const HotelRateInfo = require('../dbs/models/HotelRateInfo')
-const HotelIntroduction = require('../dbs/models/Hotelntroduction')
+const HotelRateInfo = require('../dbs/mongo/models/HotelRateInfo')
+const HotelIntroduction = require('../dbs/mongo/models/Hotelntroduction')
 
 router.prefix('/hotel')
 

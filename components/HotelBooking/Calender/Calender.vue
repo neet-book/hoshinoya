@@ -11,9 +11,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="calender-row" v-for="rowN in 5" :key="rowN">
-            <td v-for="cellN in 7" :key="cellN">
-              <calender-cell :vacancy="getVacancyItem(rowN, cellN)"></calender-cell>
+          <tr class="calender-row" v-for="row in calenderItems">
+            <td v-for="column in row">
+              <calender-cell :vacancy="column"></calender-cell>
             </td>
           </tr>
         </tbody>
@@ -41,27 +41,41 @@ export interface VacancyState {
 })
 export default class Calender extends Vue {
   @Prop() date: string
+
   get calenderDate(): Date  {
     return new Date(this.date)
   }
-  // @Prop({default () { return [] } })
-  vacancyList: VacancyState[] = [
-    { date: '2022/11/28', vacancy: 30, closeDay: true, holiday: false, price: 20 },
-    { date: '2022/11/2', vacancy: 1, closeDay: false, holiday: false, price: 20 },
-    { date: '2022/11/3', vacancy: 0, closeDay: false, holiday: false, price: 20 },
-    { date: '2022/11/4', vacancy: 30, closeDay: true, holiday: false, price: 20 },
-    { date: '2022/11/5', vacancy: 30, closeDay: false, holiday: false, price: 20 },
-  ]
+
+  @Prop({default () { return [] } })
+  vacancies: VacancyState[]
   get offset(): number {
-    if (this.vacancyList[0]) {
-      return new Date(this.vacancyList[0].date).getDay()
+    if (this.vacancies[0]) {
+      return new Date(this.vacancies[0].date).getDay()
     }
     return 0
   }
 
-  getVacancyItem(row:number, column: number){
-    const index = (row - 1) * 7 + (column - 1) - this.offset
-    return this.vacancyList[index]
+  get calenderItems() {
+    if (this.vacancies.length) {
+      const offset = new Date(this.vacancies[0].date).getDay()
+      const table = []
+      // 日历最大行数6
+      for (let row = 0; row < 6; row++ ) {
+        let vacancies: VacancyState[] = []
+        for (let column = 0; column < 7; column++) {
+          const index = row * 7 + column - this.offset
+          vacancies.push(this.vacancies[index])
+        }
+        if (!vacancies.every(value => value === undefined)) {
+          table.push(vacancies)
+        } else {
+
+          return table
+        }
+      }
+    }
+
+    return []
   }
 }
 </script>

@@ -59,8 +59,7 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    },
-
+    }
   },
   telemetry: false,
   router: {

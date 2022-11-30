@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  dbs: {
+  mongodbs: {
     get host() {
       return '127.0.0.1'
     },
@@ -19,6 +19,20 @@ module.exports = {
     },
     get password() {
       return '123456'
+    }
+  },
+  mysqldbs: {
+    get host() {
+      return 'localhost'
+    },
+    get user() {
+      return 'tester'
+    },
+    get password() {
+      return 'test123456'
+    },
+    get dbName() {
+      return 'hoshinoya'
     }
   },
   log: {

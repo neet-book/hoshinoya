@@ -13,12 +13,14 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.3.6",
+    "@types/mysql": "^2.15.21",
     "cross-env": "^5.2.0",
     "dayjs": "^1.11.0",
     "koa": "^2.6.2",
     "koa-log4": "^2.3.2",
     "koa-router": "^10.0.0",
     "mongoose": "^5.12.14",
+    "mysql": "^2.18.1",
     "nuxt": "^2.0.0",
     "nuxt-typed-vuex": "^0.2.0",
     "vuex-module-decorators": "^1.0.1"
