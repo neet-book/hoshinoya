@@ -3,11 +3,12 @@ const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const { databaseLogger, accessLogger } = require('./api/logging')
 const mongoose = require('mongoose')
-const SQLDB = require('./api/dbs/mysql/index.js')
+const SQLDB = require('./api/dbs/mysqldb')
 const { mongodbs, mysqldbs } = require('./config')
 
 const hotelRouter = require('./api/hotel')
 const homeRouter = require('./api/home')
+const bookingRouter = require('./api/booking')
 
 const app = new Koa()
 
@@ -66,6 +67,7 @@ async function start () {
   app.use(accessLogger())
   app.use(hotelRouter.routes()).use(hotelRouter.allowedMethods())
   app.use(homeRouter.routes()).use(homeRouter.allowedMethods())
+  app.use(bookingRouter.routes()).use(homeRouter.allowedMethods())
   
   app.use((ctx) => {
     ctx.status = 200

@@ -31,12 +31,21 @@ const config = {
             pattern: '.yyy-MM-dd',
             alwaysIncludePattern: true,
             filename: path.join(logConfig.logPath, 'database.log')
+        },
+        api: {
+            type: 'dateFile',
+            encoding: 'utf-8',
+            daysToKeep: 9,
+            pattern: '.yyyy-MM-dd',
+            alwaysIncludePattern: true,
+            filename: path.join(logConfig.logPath, 'api.log')
         }
     },
     categories: {
         default: { appenders: ['app'], level: 'debug' },
         access: { appenders: ['access'], level: 'debug' },
-        database: { appenders: ['database'], level: 'debug' }
+        database: { appenders: ['database'], level: 'debug' },
+        api: { appenders: ['api'], level: 'debug' }
     }
 }
 
@@ -44,9 +53,11 @@ log4js.configure(config)
 const accessLogger = () => log4js.koaLogger(log4js.getLogger('access'))
 const appLoger = log4js.getLogger('app')
 const databaseLogger = log4js.getLogger('database')
+const apiLogger = log4js.getLogger('api')
 
 module.exports = {
     appLoger,
     accessLogger,
-    databaseLogger
+    databaseLogger,
+    apiLogger
 }

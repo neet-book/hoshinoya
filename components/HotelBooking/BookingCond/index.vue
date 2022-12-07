@@ -52,7 +52,7 @@
         :condLimit="condLimit"
         :condition="condition"
         :discount="discount"
-        @change="onCondChange($event)"
+        @change="onCondChange"
         :class="{ lastChose: currentCity === 'guguan' }"
       ></cond-bar>
     </div>
@@ -64,7 +64,6 @@ import CondBar, { Condition, CondLimit, Discount } from './CondBar'
 
 @Component({
   components: { CondBar }
-  
 })
 export default class BookingCond extends Vue {
   condition: Condition = {
@@ -134,11 +133,6 @@ export default class BookingCond extends Vue {
   }
 
   currentCity: string = this.$route.params.hotel_name
-  condList = []
-  roomState = []
-  onCondList(cond) {
-
-  }
 
   onClick(event) {
     this.currentCity = event.target.getAttribute('data-hotel-name')

@@ -41,7 +41,14 @@ export async function getHotelIntroduction(hotel: string): Promise<Hotel.HotelIn
   }
 }
 
-export async function getCalenderVacancies(hotel: string, date: string) {
+interface Customer {
+  adult: number
+  infant: number
+  baby: number
+  child: number
+}
+
+export async function getCalenderVacancies(hotel: string, date: string, stayNight, customers: customer) {
   const { data: { code, data, msg } } = await hotelInstance.get('/booking/vacancies', {
     params: { date }
   })

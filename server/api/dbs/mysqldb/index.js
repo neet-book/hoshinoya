@@ -1,5 +1,4 @@
 const mysql = require('mysql')
-const {models} = require("mongoose");
 
 let instance = null
 
@@ -13,7 +12,7 @@ let instance = null
  * @param {string} database
  */
 
-module.exports = class SQLDB {
+class SQLDB {
   connection
   config
 
@@ -56,7 +55,13 @@ module.exports = class SQLDB {
     if (!this.connection) {
       return Promise.reject('Error: 数据库未连接')
     } else {
-      const sql = `SELECT ${fields.join(',')} FROM ${table} WHERE ${where}`
+      let sql
+      if (where) {
+        sql = `SELECT ${fields.join(',')} FROM ${table} WHERE ${where}`
+      } else {
+        sql = `SELECT ${fields.join(',')} FROM ${table}`
+      }
+      console.log(sql)
       return new Promise((resolve, reject) => {
         this.connection.query(sql, (err, result , fields) => {
           err ? reject(err) : resolve([result, fields])
@@ -75,14 +80,12 @@ module.exports = class SQLDB {
     if (this.connection) {
       let keys = Object.keys(data).join(', ')
       let placeholders = ''.padStart(Object.values(data).length * 2, '?,')
-      console.log(placeholders)
       placeholders = placeholders.slice(0, placeholders.length - 1)
 
       const sql = `INSERT INTO ${table}(${keys}) VALUES(${placeholders})`
-      console.log(sql)
       return new Promise((resolve, reject) => {
         this.connection.query(sql, Object.values(data), (err, result) => {
-            err ? reject(err) : resolve(result)
+            err ? reject([err, sql]) : resolve(result)
         })
       })
     }
@@ -130,4 +133,11 @@ module.exports = class SQLDB {
 
     return Promise.reject('数据库未连接')
   }
+
+  end() {
+    this.connection.end()
+    this.connection = null
+  }
 }
+
+module.exports = SQLDB

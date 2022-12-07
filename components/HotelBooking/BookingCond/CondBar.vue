@@ -132,6 +132,10 @@ export interface Discount {
   off: string
 }
 
+/**
+ * 入住人数，天数条件筛选组件
+ * @member condition [Prop] 赛选条件
+ */
 @Component({
   components: {BookingPlan},
   mounted() {

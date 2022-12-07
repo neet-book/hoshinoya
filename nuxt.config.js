@@ -1,8 +1,10 @@
+const path = require('path')
 
 module.exports = {
   // mode: 'universal',
   /*
   ** Headers of the page
+  *
   */
   head: {
     title: process.env.npm_package_name || '',
@@ -19,6 +21,11 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
+
+  /*
+  ** root path
+   */
+  srcDir: './',
   /*
   ** Global CSS
   */
@@ -64,6 +71,8 @@ module.exports = {
   telemetry: false,
   router: {
     middleware: 'router-redirect'
+  },
+  alias: {
+    api: path.resolve(__dirname, 'server/api')
   }
-  
 }
