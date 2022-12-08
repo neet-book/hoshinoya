@@ -8,7 +8,7 @@
         @click.self="showCustomerFloat = !showCustomerFloat"
       >{{condition?.child + condition?.infant + condition?.baby}}</span>位儿童（1房间）<i class="cond-select-icon"></i>
       <!-- 入住人数选择 -->
-      <div class="cond-float-container" :class="{ visible: showCustomerFloat }">
+      <dialog class="cond-float-container" :class="{ visible: showCustomerFloat }">
         <div class="customer-cond-float">
           <form>
             <div class="cond-option">
@@ -66,7 +66,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </dialog>
     </div>
     <div class="cond-trigger" @click.self="showNightFloat = !showNightFloat" ref="nightFloat">
       入住<span
@@ -99,7 +99,6 @@
 </template>
 <script lang="ts">
 import {Component, Vue, Prop } from 'nuxt-property-decorator'
-import BookingPlan from "./BookingPlan/BookingPlan.vue";
 
 export interface Condition {
   adult: number
@@ -107,6 +106,7 @@ export interface Condition {
   baby: number
   infant: number
   stayNight: number
+  hotel?: string
 }
 
 export interface CondLimit {
@@ -134,10 +134,12 @@ export interface Discount {
 
 /**
  * 入住人数，天数条件筛选组件
- * @member condition [Prop] 赛选条件
+ * @property condition  赛选条件
+ * @property condLimit [prop] 筛选条件限制
+ * @property discount [prop] 优惠
+ * @event change 筛选条件发生改变
  */
 @Component({
-  components: {BookingPlan},
   mounted() {
     document.body.addEventListener('click', this.onDocumentClick)
   },
@@ -149,8 +151,14 @@ export default class CondBar extends Vue {
   showCustomerFloat = false
   showNightFloat = false
 
-  @Prop({ default: {} })
-  condition: Condition
+  condition: Condition = {
+    adult: this.condLimit?.adultNumDefault || 2,
+    child: this.condLimit?.childNumDefault || 0,
+    infant: this.condLimit?.infantNumDefault || 0,
+    baby: this.condLimit?.babyNumDefault || 0,
+    stayNight: this.condLimit?.hotelNightDefault || 2
+  }
+
   @Prop({ default: {} })
   condLimit: CondLimit
   @Prop({ default: {} })
@@ -174,12 +182,21 @@ export default class CondBar extends Vue {
     return list
   }
 
+  /**
+   * 筛选条件改变事件
+   * @param key 改变的条件
+   * @param value 值
+   */
   changeCondition(key: string, value: any) {
     const copy = Object.assign({}, this.condition)
     copy[key] = value
     this.$emit('change', copy)
   }
 
+  /**
+   * 处理点击悬浮框外关闭悬浮框
+   * @param event
+   */
   onDocumentClick(event: Event) {
     const customerFloat = this.$refs.customerFloat as HTMLElement
     const nightFloat = this.$refs.nightFloat as HTMLElement

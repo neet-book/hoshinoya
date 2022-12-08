@@ -3,44 +3,44 @@
     <div class="booking-hotel-tab">
     <div class="title">空房情况</div>
       <ul class="hotel-tab" @click="onClick">
-        <li class="tab-item" :class="{ chose: currentCity === 'all' }" data-hotel-name="all">
+        <li class="tab-item" :class="{ chose: currentHotel === 'all' }" data-hotel-name="all">
           ALL
           <div class="table-item-bk"></div
           ></li>
-        <li class="tab-item" :class="{ chose: currentCity === 'karuizawa' }" data-hotel-name="karuizawa">
+        <li class="tab-item" :class="{ chose: currentHotel === 'karuizawa' }" data-hotel-name="karuizawa">
           轻井泽
           <div class="table-item-bk"></div
           ></li>
-        <li class="tab-item" :class="{ chose: currentCity === 'kyoto' }" data-hotel-name="kyoto"
+        <li class="tab-item" :class="{ chose: currentHotel === 'kyoto' }" data-hotel-name="kyoto"
         >
           京都
           <div class="table-item-bk"></div>
         </li>
-        <li class="tab-item" :class="{ chose: currentCity === 'fuji' }" data-hotel-name="fuji"
+        <li class="tab-item" :class="{ chose: currentHotel === 'fuji' }" data-hotel-name="fuji"
         >
           富士
           <div class="table-item-bk"></div>
         </li>
-        <li class="tab-item" :class="{ chose: currentCity === 'taketomi_island' }" data-hotel-name="taketomi_island">
+        <li class="tab-item" :class="{ chose: currentHotel === 'taketomi_island' }" data-hotel-name="taketomi_island">
           竹富岛
           <div class="table-item-bk"></div
           ></li>
-        <li class="tab-item" :class="{ chose: currentCity === 'okinawa' }" data-hotel-name="okinawa"
+        <li class="tab-item" :class="{ chose: currentHotel === 'okinawa' }" data-hotel-name="okinawa"
         >
           冲绳
           <div class="table-item-bk"></div>
         </li>
-        <li class="tab-item" :class="{ chose: currentCity === 'tokyo' }" data-hotel-name="tokyo"
+        <li class="tab-item" :class="{ chose: currentHotel === 'tokyo' }" data-hotel-name="tokyo"
         >
           东京
           <div class="table-item-bk"></div>
         </li>
-        <li class="tab-item" :class="{ chose: currentCity === 'bali' }" data-hotel-name="bali">
+        <li class="tab-item" :class="{ chose: currentHotel === 'bali' }" data-hotel-name="bali">
 
           巴厘岛
           <div class="table-item-bk"></div
           ></li>
-        <li class="tab-item table-item-last" :class="{ chose: currentCity === 'guguan' }" data-hotel-name="guguan"
+        <li class="tab-item table-item-last" :class="{ chose: currentHotel === 'guguan' }" data-hotel-name="guguan"
         >
           谷关
           <div class="table-item-bk"></div>
@@ -50,98 +50,52 @@
     <div class="cond-container">
       <cond-bar
         :condLimit="condLimit"
-        :condition="condition"
         :discount="discount"
         @change="onCondChange"
-        :class="{ lastChose: currentCity === 'guguan' }"
+        :class="{ lastChose: currentHotel === 'guguan' }"
       ></cond-bar>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import CondBar, { Condition, CondLimit, Discount } from './CondBar'
+import {Component, Prop, Vue} from 'nuxt-property-decorator'
+import CondBar,{ Condition, CondLimit, Discount }  from './CondBar'
+// export { Condition, CondLimit, Discount }
 
+/**
+ * 酒店预定条件赛选组件
+ * @property discount [prop]优惠
+ * @property condLimit [prop]入住人数，时间限制
+ * @property currentHotel 当前选择的酒店
+ * @event cond-change 赛选条件改变
+ */
 @Component({
   components: { CondBar }
 })
 export default class BookingCond extends Vue {
-  condition: Condition = {
-    adult: 1,
-    child: 0,
-    infant: 0,
-    baby: 0,
-    stayNight: 2
-  }
 
-  discount: Discount[] = [
-    {
-      night: 1,
-      off: '0%off'
-    },
-    {
-      night: 2,
-      off: '25%off'
-    },
-    {
-      night: 3,
-      off: '25%off'
-    },
-    {
-      night: 4,
-      off: '25%off'
-    },
-    {
-      night: 5,
-      off: '25%off'
-    },
-    {
-      night: 6,
-      off: '25-26%off'
-    },
-    {
-      night: 7,
-      off: '25-26%off'
-    },
-    {
-      night: 8,
-      off: '25-26%off'
-    }
-  ]
+  @Prop({ default() { return [] } })
+  discount: Discount[]
+  @Prop
+  condLimit: CondLimit
 
-  condLimit: CondLimit = {
-    // 成人数量限制
-    adultNumDefault: 2,
-    adultNumMax: 4,
-    adultNumMin: 1,
-    // 幼儿数量限制 0-3岁
-    infantNumDefault: 0,
-    infantNumMax: 4,
-    infantNumMin: 0,
-    // 婴儿数量限制 3-6岁
-    babyNumDefault: 0,
-    babyNumMax: 4,
-    babyNumMin: 0,
-    // 儿童数量限制 6岁以下
-    childNumDefault: 0,
-    childNumMin: 0,
-    childNumMax: 4,
-    // 时间
-    hotelNightDefault: 2,
-    hotelNightMin: 0,
-    hotelNightMax: 7
-  }
-
-  currentCity: string = this.$route.params.hotel_name
-
+  currentHotel: string = this.$route.params.hotel_name
+  condition: Condition | undefined
   onClick(event) {
-    this.currentCity = event.target.getAttribute('data-hotel-name')
-  }
-  onCondChange(cond) {
-    this.condition = cond
+    this.currentHotel = event.target.getAttribute('data-hotel-name')
+
     this.$emit('cond-change', {
-      city: this.currentCity,
+      hotel: this.currentHotel,
       condition: this.condition
+    })
+  }
+
+  onCondChange(cond: Condition) {
+    this.condition = cond
+
+    this.$emit('cond-change', {
+      hotel: this.currentHotel,
+      condition: cond
     })
   }
 }

@@ -48,9 +48,56 @@ interface Customer {
   child: number
 }
 
-export async function getCalenderVacancies(hotel: string, date: string, stayNight, customers: customer) {
+export async function getCalenderVacancies(hotel: string, date: string, stayNight: number, customers: Customer) {
   const { data: { code, data, msg } } = await hotelInstance.get('/booking/vacancies', {
     params: { date }
+  })
+
+  if (code === 1) {
+    return data
+  } else {
+    throw new Error('getCalenderVacancies Error:' + msg )
+  }
+}
+
+export interface HotelDetail {
+  hotelId: string | number
+  address: string
+  hotelName: string
+  hotelNameZh: string
+  checkIn: string
+  checkOut: string
+  hotelEmail: string
+  maxStayNight: number
+  oneNight: boolean
+  oneNightMessage: string
+  maxRoomCount: string
+  phoneNumber: string
+  searchCondition: SearchCondition
+  searchDescriptionTitle: string
+  searchDescriptionContent: string
+}
+
+export interface SearchCondition {
+  babyNumMax: number
+  babyNumMin: number
+  infantNumMax: number
+  infantNumMin: number
+  childNumMax: number
+  childNumMin: number
+  adultNumMax: number
+  adultNumMin: number
+  adultNumDefault: number
+  babyNumDefault: number
+  infantNumDefault: number
+  childNumDefault: number
+  hotelNightDefault: number
+  hotelNightMax: number
+}
+
+export async function getHotelDetails(hotel: string): Promise<HotelDetail> {
+  const { data: { code, data, msg}} = await hotelInstance.get('/hotel/details', {
+    params: { hotelName: hotel }
   })
 
   if (code === 1) {

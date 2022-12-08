@@ -1,7 +1,18 @@
 const Router = require('koa-router')
 const router = new Router()
+const SQLDB = require('../dbs/mysqldb')
+const { mysqldbs: SQL_DB_CONFIG } = require('../../config')
 const HotelRateInfo = require('../dbs/mongo/models/HotelRateInfo')
 const HotelIntroduction = require('../dbs/mongo/models/Hotelntroduction')
+
+const mysqlDb = new SQLDB({
+    host: SQL_DB_CONFIG.host,
+    username: SQL_DB_CONFIG.user,
+    password: SQL_DB_CONFIG.password,
+    database: SQL_DB_CONFIG.dbName
+})
+
+if (mysqlDb.connection === null) mysqlDb.connect()
 
 router.prefix('/hotel')
 
@@ -39,6 +50,14 @@ router.get('/introduction/:hotel', async (ctx) => {
         }
     }
 })
+
+router.get('/details', async (ctx) => {
+    const hotel = ctx.params.query?.hotelName
+    if (hotel) {
+        const hotelDetail = await mysqlDb.select('hotels', '*', `hotel_name="${hotel}"`)
+    }
+})
+
 
 module.exports = router
 
