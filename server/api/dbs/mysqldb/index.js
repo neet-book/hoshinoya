@@ -47,7 +47,7 @@ class SQLDB {
   /**
    * 查询
    * @param {string} table 表名
-   * @param {string[]} fields 字段,
+   * @param {string[] | string} fields 字段,
    * @param {string} where where子句
    * @returns {Promise<unknown>}
    */
@@ -56,15 +56,19 @@ class SQLDB {
       return Promise.reject('Error: 数据库未连接')
     } else {
       let sql
-      if (where) {
-        sql = `SELECT ${fields.join(',')} FROM ${table} WHERE ${where}`
-      } else {
-        sql = `SELECT ${fields.join(',')} FROM ${table}`
+
+      if ( typeof fields === 'string') {
+        sql = `SELECT ${fields} FROM ${table}`
+      } else if (Array.isArray(fields)) {
+        sql = `SELECT ${fields.join(', ')}`
       }
-      console.log(sql)
+      if (where) {
+        sql = sql + ` WHERE ${where}`
+      }
+
       return new Promise((resolve, reject) => {
         this.connection.query(sql, (err, result , fields) => {
-          err ? reject(err) : resolve([result, fields])
+          err ? reject([err, sql]) : resolve([result, fields])
         })
       })
     }
@@ -103,11 +107,11 @@ class SQLDB {
     if (this.connection) {
       const values = Object.values(data)
       let placeholders = Object.keys(data).join(' = ?,') + ' = ?'
-      const sql = `UPDATE ${table} SET ${placeholders} WHERE ${where}`
-
+      let sql = `UPDATE ${table} SET ${placeholders}`
+      if (where) sql += ` WHERE ${where}`
       return new Promise((resolve, reject) => {
         this.connection.query(sql, values, (err, result) => {
-          err ? reject(err) : resolve(result)
+          err ? reject([err, sql]) : resolve(result)
         })
       })
     }
@@ -123,8 +127,8 @@ class SQLDB {
   async delete(table, where) {
     if (this.connection) {
       return  new Promise((resolve, reject) => {
-        console.log(`DELETE FROM ${table} WHERE ${where}`)
-        const sql = `DELETE FROM ${table} WHERE ${where}`
+        let sql = `DELETE FROM ${table}`
+        sql = ` WHERE ${where}`
         this.connection.query(sql, (err , result) => {
           err ? reject([err, sql]) : resolve(result)
         })
