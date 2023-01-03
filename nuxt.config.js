@@ -38,7 +38,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-
+    { src: 'plugins/message-box.js' , mode: 'client' }
   ],
   /*
   ** Nuxt.js dev-modules

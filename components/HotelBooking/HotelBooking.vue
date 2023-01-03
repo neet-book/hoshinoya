@@ -6,7 +6,7 @@
         <div class="hotel-booking-cond-container">
           <booking-cond
             :discount="discount"
-            :condLimit="conditionLimit"
+            :limit="conditionLimit"
             @cond-change="onConditionChange"
           ></booking-cond>
         </div>
@@ -17,7 +17,7 @@
         <!-- 日历 -->
         <div class="hotel-booking-calender-container" >
           <div class="hotel-booking-calender-inner">
-            <calendar :date="'2022/11/1'" :vacancies="vacancyStates"></calendar>
+            <calendar :date="'2023/01/03'" :vacancies="getVacancy('2023/01/03')"></calendar>
           </div>
         </div>
         <!-- 货币 -->
@@ -26,118 +26,84 @@
         <div class="bes-trait"></div>
       </div>
     </div>
+
   </div>
 </template>
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
-import  BookingCond, { Discount, CondLimit, Condition } from './BookingCond'
+import  BookingCond, { Discount, CondLimit, HotelSearchCondition } from './BookingCond'
 import CalendarControl from "./CalendarControl.vue";
-import Calendar from "./Calender/Calender.vue"
-import { getCalenderVacancies } from "~/utils/network"
+import Calendar, {VacancyState} from "./Calender/Calender.vue"
+import MessageBox from '/components/common/MessageBox.vue'
+import { getCalenderVacancies, getHotelDetails, HotelDetail } from "~/utils/network"
 
-export interface HotelCondition {
-  adult: number
-  child: number
-  infant: number
-  stayNight: number,
-  hotel: string
+
+function createVacancyKey (date, stayNight, customer) {
+  return [date, stayNight, customer.adult, customer.child, customer.infant, customer.baby].join('+')
 }
 
 @Component({
-  components: { CalendarControl, BookingCond, Calendar },
+  components: { CalendarControl, BookingCond, Calendar, MessageBox },
   async fetch() {
-    const hotel = this.$store.state.hotelNameEn
-    const detail = await getHotelDetail(hotel)
+    const hotel = this.$route.params.hotel_name
+    const detail: HotelDetail | null = await getHotelDetails(hotel)
+      .catch(err => {
+        console.error(err)
+        return null
+      })
 
-    const date = new Date()
-    const vacancies = await getCalenderVacancies(
-        hotel,
-        `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-        2,
-        {}
-    )
+    if (detail !== null) {
+      this.details.set(hotel, detail)
+      this.conditionLimit = detail.searchCondition
+      this.discount = detail.discount
+      const date = new Date()
+      const searchDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+      this.condition = {
+        adult: detail.searchCondition.adultNumDefault,
+        child: detail.searchCondition.childNumDefault,
+        infant: detail.searchCondition.infantNumDefault,
+        baby: detail.searchCondition.babyNumDefault,
+        stayNight: detail.searchCondition.hotelNightDefault
+      }
+      const vacancies = await getCalenderVacancies(
+          detail.hotelId,
+          searchDate,
+          this.condition
+      )
+        .catch(e => {
+          console.error(e)
+          return []
+        })
+
+      if (vacancies) {
+        const vacancyKey = createVacancyKey(
+      `${date.getFullYear()}-${date.getMonth() + 1}`,
+          this.condition.stayNight,
+      {
+          adult: this.condition.adult,
+          child: this.condition.child,
+          baby: this.condition.baby,
+          infant: this.condition.infant
+        })
+
+        this.vacancies.set(vacancyKey, vacancies)
+      }
+    }
   }
 })
 export default class BookingHotel extends Vue {
-  details
-  condition: Condition = {
-  }
+  details = new Map<string, HotelDetail>()
+  condition: HotelSearchCondition = null
   tab: string = this.$store.state.hotelNameEn
   currentDate = { year: new Date().getFullYear(), month: new Date().getMonth() + 1}
   vacancies = new Map
+  discount: Discount[] = []
+  conditionLimit: CondLimit = null
 
-  discount: Discount = [
-    {
-      night: 1,
-      off: '0%off'
-    },
-    {
-      night: 2,
-      off: '25%off'
-    },
-    {
-      night: 3,
-      off: '25%off'
-    },
-    {
-      night: 4,
-      off: '25%off'
-    },
-    {
-      night: 5,
-      off: '25%off'
-    },
-    {
-      night: 6,
-      off: '25-26%off'
-    },
-    {
-      night: 7,
-      off: '25-26%off'
-    },
-    {
-      night: 8,
-      off: '25-26%off'
-    }
-  ]
 
-  conditionLimit: CondLimit = {
-    // 成人数量限制
-    adultNumDefault: 2,
-    adultNumMax: 4,
-    adultNumMin: 1,
-    // 幼儿数量限制 0-3岁
-    infantNumDefault: 0,
-    infantNumMax: 4,
-    infantNumMin: 0,
-    // 婴儿数量限制 3-6岁
-    babyNumDefault: 0,
-    babyNumMax: 4,
-    babyNumMin: 0,
-    // 儿童数量限制 6岁以下
-    childNumDefault: 0,
-    childNumMin: 0,
-    childNumMax: 4,
-    // 时间
-    hotelNightDefault: 2,
-    hotelNightMin: 0,
-    hotelNightMax: 7
-  }
-
-  vacancyStates =  [
-    { date: '2022/11/28', vacancy: 30, closeDay: true, holiday: false, price: 20 },
-    { date: '2022/11/2', vacancy: 1, closeDay: false, holiday: false, price: 20 },
-    { date: '2022/11/3', vacancy: 0, closeDay: false, holiday: false, price: 20 },
-    { date: '2022/11/4', vacancy: 30, closeDay: true, holiday: false, price: 20 },
-    { date: '2022/11/5', vacancy: 30, closeDay: false, holiday: false, price: 20 },
-  ]
-
-  get condLimit() {
-
-  }
-
-  onConditionChange(condition: Condition) {
-    this.condition = condition
+  onConditionChange(condition) {
+    this.condition = Object.assign({}, condition.condition)
+    this.$message.confirm(condition.hotel)
   }
 
   onMonthChange() {
@@ -148,6 +114,22 @@ export default class BookingHotel extends Vue {
   }
   prevMonth() {
 
+  }
+
+  getVacancy(dateStr: string) {
+    if (this.condition) {
+      const date = new Date(dateStr)
+      const key = createVacancyKey(
+          `${date.getFullYear()}-${date.getMonth() + 1}`,
+          this.condition.stayNight,
+          {
+            adult: this.condition.adult,
+            child: this.condition.child,
+            baby: this.condition.baby,
+            infant: this.condition.infant
+          })
+      return this.vacancies.get(key)
+    }
   }
 }
 </script>

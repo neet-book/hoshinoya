@@ -3,7 +3,7 @@
     <div class="swiper-container">
       <!-- 图片1 -->
       <div class="swiper-item" :class="{ visible: this.no === 0, next: this.nextItem === 0 }">
-        <div class="image-body" :style="{ backgroundImage: `url(${images[0].image.big})` }"></div>
+        <div class="image-body" :style="{ backgroundImage: `url(${images[0]?.image.big})` }"></div>
       </div>
       <!-- 图片2 -->
       <div class="swiper-item" :class="{ visible: this.no === 1, next: this.nextItem === 1 }">
@@ -11,7 +11,7 @@
       </div>
       <!-- 图片3 -->
       <div class="swiper-item" :class="{ visible: this.no === 2, next: this.nextItem === 2 }">
-        <div class="image-body" :style="{ backgroundImage: `url(${images[8].image.big})` }"></div>
+        <div class="image-body" :style="{ backgroundImage: `url(${images[8]?.image.big})` }"></div>
       </div>
       <!-- 图片4 -->
       <div class="swiper-item" :class="{ visible: this.no === 3, next: this.nextItem === 3 }">

@@ -33,9 +33,9 @@ function getLastDay(year, month) {
 
 /**
  * 查询旅馆房间最低价格
- * @param hotelName
+ * @param hotelId
  */
-async function searchHotelBaseCharge(hotelName) {
+async function searchHotelBaseCharge(hotelId) {
   const sql = `
     SELECT Min(unit_charge) AS base_charge
     FROM plans
@@ -45,7 +45,7 @@ async function searchHotelBaseCharge(hotelName) {
       WHERE hotel_id = (
         SELECT hotels.hotel_id
         FROM hotels
-        WHERE hotel_name = "${hotelName}"
+        WHERE hotel_id = "${hotelId}"
       ) 
     )`
 
@@ -56,16 +56,27 @@ async function searchHotelBaseCharge(hotelName) {
   })
 }
 
+
+
 router.get('/vacancies', async (ctx) => {
   apiLogger.info(`
    api: /booking/vacancies
    url: ${ctx.request.url} 
   `)
   if (ctx.query) {
-    const { searchDateStart, searchDateEnd, hotelName } = ctx.query
+    const { searchDateStart, hotelId , stayNight, adult, baby, infant, child } = ctx.query
+    const startDate = new Date(searchDateStart),
+      year = startDate.getFullYear(),
+      month = startDate.getMonth() + 1
+    const searchDateEnd = `${year}-${month}-${getLastDay(year, month)}`
+    let customers = 0
+    customers += Number(adult)
+    customers += Number(baby)
+    customers += Number(infant)
+    customers += Number(child)
 
     let sql = `
-     CALL room_vacancies(DATE("${searchDateStart}"), DATE("${searchDateEnd}"), "${hotelName}", @vacancies); 
+     CALL room_vacancies(DATE("${searchDateStart}"), DATE("${searchDateEnd}"), "${hotelId}", ${customers}, @v); 
     `
     const vacancies = await new Promise((resolve, reject) => {
       db.connection.query(sql, (err, result) => {
@@ -92,31 +103,18 @@ router.get('/vacancies', async (ctx) => {
         `)
       })
 
-    const price = await searchHotelBaseCharge(hotelName)
-      .catch(err => {
-        ctx.body = {
-          code: 0,
-          data: null,
-          msg: err.sqlMessage || err.message
-        }
-        apiLogger.error(`
-          api: /booking/vacancies,
-          params: ${JSON.stringify(ctx.params)},
-          err: ${err.message || err.sqlMessage},
-          sql: ${sql} 
-        `)
-      })
-
-    if (vacancies && price) {
-      const base_charge = price.base_charge
-      vacancies.forEach(i => i.price = base_charge)
+    if (vacancies) {
       ctx.body = {
         code: 1,
         data: vacancies,
         msg: 'ok'
       }
+      apiLogger.info(`
+        api: /booking/vacancies
+        url: ${ctx.request.url} 
+        body: ${JSON.stringify(vacancies)}   
+      `)
     }
-
 
   } else {
     ctx.body = {
@@ -124,6 +122,11 @@ router.get('/vacancies', async (ctx) => {
       data: null,
       msg: 'No Query.'
     }
+    apiLogger.error(`
+      api: /booking/vacancies,
+      params: ${JSON.stringify(ctx.params)},
+      err: No 
+    `)
   }
 })
 

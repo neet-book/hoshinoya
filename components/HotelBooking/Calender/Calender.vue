@@ -46,19 +46,25 @@ export default class Calender extends Vue {
     return new Date(this.date)
   }
 
-  @Prop({default () { return [] } })
+  @Prop()
   vacancies: VacancyState[]
+
+  /**
+   * vacancies数组中的元素对应在日历中的位置的偏移量
+   * 偏移量 = 第一个元素的星期 + (第一个元素的日 - 1）
+   */
   get offset(): number {
-    if (this.vacancies[0]) {
-      return new Date(this.vacancies[0].date).getDay()
+    if (this.vacancies?.length > 0) {
+      const firstDate = new Date(this.vacancies[0].date)
+      return firstDate.getDay() + (firstDate.getDate() - 1)
     }
     return 0
   }
 
   get calenderItems() {
-    if (this.vacancies.length) {
+    const table = []
+    if (this.vacancies?.length > 0) {
       const offset = new Date(this.vacancies[0].date).getDay()
-      const table = []
       // 日历最大行数6
       for (let row = 0; row < 6; row++ ) {
         let vacancies: VacancyState[] = []
@@ -69,13 +75,14 @@ export default class Calender extends Vue {
         if (!vacancies.every(value => value === undefined)) {
           table.push(vacancies)
         } else {
-
+          console.log(table)
           return table
         }
       }
     }
-
-    return []
+    // 如果未传入vacancies或为空, 则返回35天的空日历
+    table.length = 5
+    return table.fill(7, 0, 6)
   }
 }
 </script>
@@ -95,6 +102,7 @@ export default class Calender extends Vue {
 }
 
 .calender-date {
+  width: 100%;
   color: #666;
   font-size: 15px;
   margin-bottom: 18px;
@@ -103,6 +111,7 @@ export default class Calender extends Vue {
 }
 
 .calender-date span {
+  display: inline-block;
   color: black;
   font-size: 24px;
   margin-left: 3px;

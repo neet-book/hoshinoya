@@ -49,7 +49,7 @@
     </div>
     <div class="cond-container">
       <cond-bar
-        :condLimit="condLimit"
+        :limit="limit"
         :discount="discount"
         @change="onCondChange"
         :class="{ lastChose: currentHotel === 'guguan' }"
@@ -65,19 +65,28 @@ import CondBar,{ Condition, CondLimit, Discount }  from './CondBar'
 /**
  * 酒店预定条件赛选组件
  * @property discount [prop]优惠
- * @property condLimit [prop]入住人数，时间限制
+ * @property limit [prop]入住人数，时间限制
  * @property currentHotel 当前选择的酒店
  * @event cond-change 赛选条件改变
  */
 @Component({
-  components: { CondBar }
+  components: { CondBar },
+  mounted() {
+    this.condition =  {
+      adult: this.limit?.adultNumDefault || 0,
+      child: this.limit?.childNumDefault || 0,
+      baby: this.limit?.babyNumDefault || 0,
+      infant: this.limit?.infantNumDefault || 0,
+      stayNight: this.limit?.hotelNightDefault || 0
+    }
+  }
 })
 export default class BookingCond extends Vue {
 
   @Prop({ default() { return [] } })
   discount: Discount[]
-  @Prop
-  condLimit: CondLimit
+  @Prop({ default() { return {} } })
+  limit: CondLimit
 
   currentHotel: string = this.$route.params.hotel_name
   condition: Condition | undefined

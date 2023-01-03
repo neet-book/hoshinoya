@@ -1,4 +1,5 @@
 import axios from "axios"
+import { toLowerCamelCase } from "./tools";
 
 const common = axios.create({ baseURL: 'http://localhost:3000' })
 const hotelInstance = axios.create({ baseURL: 'http://localhost:3000/hotel'})
@@ -41,16 +42,34 @@ export async function getHotelIntroduction(hotel: string): Promise<Hotel.HotelIn
   }
 }
 
-interface Customer {
+export interface Customer {
   adult: number
   infant: number
   baby: number
   child: number
 }
 
-export async function getCalenderVacancies(hotel: string, date: string, stayNight: number, customers: Customer) {
-  const { data: { code, data, msg } } = await hotelInstance.get('/booking/vacancies', {
-    params: { date }
+export interface HotelBookingSearchCondition {
+  date: string
+  adult: number
+  child: number
+  infant: number
+  baby: number
+  stayNight: number,
+  hotel: string
+}
+
+export async function getCalenderVacancies(hotelId: string | number, searchDate: string, condition: HotelBookingSearchCondition) {
+  const { data: { code, data, msg } } = await common.get('/booking/vacancies', {
+    params: {
+      hotelId,
+      searchDateStart: searchDate,
+      stayNight: condition.stayNight,
+      adult: condition.adult,
+      child: condition.child,
+      infant: condition.infant,
+      baby: condition.baby
+    }
   })
 
   if (code === 1) {
@@ -73,6 +92,12 @@ export interface HotelDetail {
   oneNightMessage: string
   maxRoomCount: string
   phoneNumber: string
+  discount: {
+    night: number
+    off: string
+    minOff: number
+    maxOff: number
+  }
   searchCondition: SearchCondition
   searchDescriptionTitle: string
   searchDescriptionContent: string
@@ -96,13 +121,18 @@ export interface SearchCondition {
 }
 
 export async function getHotelDetails(hotel: string): Promise<HotelDetail> {
-  const { data: { code, data, msg}} = await hotelInstance.get('/hotel/details', {
+  const { data: { code, data, msg}} = await hotelInstance.get('/details', {
     params: { hotelName: hotel }
   })
 
   if (code === 1) {
-    return data
+    const detail = {}
+    for (let key in data) {
+      // @ts-ignore
+      detail[toLowerCamelCase(key)] = data[key]
+    }
+    return detail as HotelDetail
   } else {
-    throw new Error('getCalenderVacancies Error:' + msg )
+    throw new Error('getHotelDetails Error:' + msg )
   }
 }

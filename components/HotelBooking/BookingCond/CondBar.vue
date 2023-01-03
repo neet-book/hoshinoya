@@ -16,9 +16,9 @@
               <select class="booking-select" name="adult" id="customer-adult"  @change="changeCondition('adult', Number($event.target.value))">
                 <option
                     class="booking-select-option"
-                    v-for="adultNum in range(condLimit?.adultNumMin, condLimit?.adultNumMax + 1)"
+                    v-for="adultNum in range(limit?.adultNumMin, limit?.adultNumMax + 1)"
                     :value="adultNum"
-                    :selected="adultNum === condLimit?.adultNumDefault"
+                    :selected="adultNum === limit?.adultNumDefault"
                 >{{adultNum}}</option>
               </select>
             </div>
@@ -27,9 +27,9 @@
               <select class="booking-select" name="child" id="customer-child" @change="changeCondition('child', Number($event.target.value))">
                 <option
                     class="booking-select-option"
-                    v-for="childNum in range(condLimit?.childNumMin, condLimit?.childNumMax + 1)"
+                    v-for="childNum in range(limit?.childNumMin, limit?.childNumMax + 1)"
                     :value="childNum"
-                    :selected="childNum === condLimit?.childNumDefault"
+                    :selected="childNum === limit?.childNumDefault"
                 >{{childNum}}</option>
               </select>
             </div>
@@ -38,9 +38,9 @@
               <select class="booking-select" name="baby" id="customer-baby" @change="changeCondition('baby', Number($event.target.value))">
                 <option
                     class="booking-select-option"
-                    v-for="babyNum in range(condLimit?.babyNumMin, condLimit?.babyNumMax + 1)"
+                    v-for="babyNum in range(limit?.babyNumMin, limit?.babyNumMax + 1)"
                     :value="babyNum"
-                    :selected="babyNum === condLimit?.babyNumDefault"
+                    :selected="babyNum === limit?.babyNumDefault"
                 >{{babyNum}}</option>
               </select>
             </div>
@@ -49,9 +49,9 @@
               <select class="booking-select" name="infant" id="customer-infant"  @change="changeCondition('infant', Number($event.target.value))">
                 <option
                     class="booking-select-option"
-                    v-for="infantNum in range(condLimit?.infantNumMin, condLimit?.infantNumMax + 1)"
+                    v-for="infantNum in range(limit?.infantNumMin, limit?.infantNumMax + 1)"
                     :value="infantNum"
-                    :selected="infantNum === condLimit?.infantNumDefault"
+                    :selected="infantNum === limit?.infantNumDefault"
                 >{{infantNum}}</option>
               </select>
             </div>
@@ -72,7 +72,7 @@
       入住<span
         @click.self="showNightFloat = !showNightFloat"
       >{{condition?.stayNight}}</span>晚<span
-        v-if="condition?.stayNight > condLimit?.hotelNightMax"
+        v-if="condition?.stayNight > limit?.hotelNightMax"
         @click.self="showNightFloat = !showNightFloat"
       >以上</span>
       <span
@@ -152,16 +152,16 @@ export default class CondBar extends Vue {
   showNightFloat = false
 
   condition: Condition = {
-    adult: this.condLimit?.adultNumDefault || 2,
-    child: this.condLimit?.childNumDefault || 0,
-    infant: this.condLimit?.infantNumDefault || 0,
-    baby: this.condLimit?.babyNumDefault || 0,
-    stayNight: this.condLimit?.hotelNightDefault || 2
+    adult: this.limit?.adultNumDefault || 2,
+    child: this.limit?.childNumDefault || 0,
+    infant: this.limit?.infantNumDefault || 0,
+    baby: this.limit?.babyNumDefault || 0,
+    stayNight: this.limit?.hotelNightDefault || 2
   }
 
-  @Prop({ default: {} })
-  condLimit: CondLimit
-  @Prop({ default: {} })
+  @Prop({ default() { return {} } })
+  limit: CondLimit
+  @Prop({ default() { return {} } })
   discount: Discount[]
 
 

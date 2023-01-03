@@ -2,27 +2,27 @@
   <div class="grid-picture-group">
     <grid-picture class="group-grid-picture" :visible="visible">
       <template v-slot:cell1>
-        <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[0].image.normal})` }"></div>
+        <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[0]?.image.normal})` }"></div>
       </template>
       <template v-slot:cell2>
-        <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[1].image.normal})` }"></div>
+        <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[1]?.image.normal})` }"></div>
       </template>
       <template v-slot:cell3>
-        <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[2].image.normal})` }"></div>
+        <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[2]?.image.normal})` }"></div>
       </template>
       <template v-slot:cell4>
         <grid-picture :visible="visible">
           <template v-slot:cell1>
-            <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[3].image.normal})` }"></div>
+            <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[3]?.image.normal})` }"></div>
           </template>
           <template v-slot:cell2>
-            <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[4].image.normal})` }"></div>
+            <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[4]?.image.normal})` }"></div>
           </template>
           <template v-slot:cell3>
-            <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[5].image.normal})` }"></div>
+            <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[5]?.image.normal})` }"></div>
           </template>
           <template v-slot:cell4>
-            <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[6].image.normal})` }"></div>
+            <div class="cell-picture" :class="{ visible }" :style="{ backgroundImage: `url(${images[6]?.image.normal})` }"></div>
           </template>
         </grid-picture>
       </template>

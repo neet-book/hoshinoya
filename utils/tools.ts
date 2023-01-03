@@ -75,3 +75,21 @@ export function randomInt(min: number, max?: number) {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
 }
+
+/**
+ * 下划线命名转换成小驼峰命名
+ * @param name
+ */
+export function toLowerCamelCase(name: string) {
+  const words = name.split('_')
+  if (words.length <= 1) return name
+
+  return words[0] + words.slice(1).map(word => {
+    return word[0].toUpperCase() + word.slice(1)
+  }).join()
+}
+
+export function toUnderScoreCase(name: string) {
+  const words = name.split(/(?=[A-Z])/g)
+  return words.map(word => word.toLowerCase()).join('_')
+}

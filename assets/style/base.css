@@ -39,3 +39,61 @@ select {
 .booking-select-option {
     background: white;
 }
+
+
+.message-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+
+    background: rgb(0, 0, 0, 0.2);
+    z-index: 999;
+    visibility: hidden;
+
+    transition: all .3s ease;
+}
+
+.message-box.visible {
+    visibility: visible;
+}
+
+.message-box dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+
+    border: none;
+    border-radius: 5px;
+    width: 560px;
+
+    background: white;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: 'hsn-zhcn-sans-light', 'sans-serif';
+    letter-spacing: 2.4px;
+}
+
+.message-box-container {
+    padding: 15px;
+}
+
+.msg-btn {
+    display: block;
+    border: none;
+    border-radius: 4px;
+    height: 45px;
+    width: 100%;
+
+    margin-top: 1em;
+    color: white;
+    background: #666;
+
+    cursor: pointer;
+}
+
+.msg-btn:hover {
+    background: #333;
+}

@@ -209,9 +209,9 @@ async function updateHotelInfo(hotel_name, hotel) {
         headers: header,
         params: hotelParams
     })
-
+      .catch(e => console.log(e))
     connection.update('hotels', {
-        search_condition: JSON.stringify({
+        search_condition: JSON.stringify( {
             infantNumMax: hotelData.infantNumMax,
             infantNumDefault: hotelData.infantNumDefault,
             adultNumMin: hotelData.adultNumMin,
@@ -219,7 +219,7 @@ async function updateHotelInfo(hotel_name, hotel) {
             babyNumMin: hotelData.babyNumMin,
             childNumMin: hotelData.childNumMin,
             hotelNightDefault: hotelData.hotelNightDefault,
-            adultNumMax: hotelData.adultNumMin,
+            adultNumMax: hotelData.adultNumMax,
             infantNumMin: hotelData.infantNumMin,
             hotelNightMax: hotelData.hotelNightMax,
             hotelNightMin: hotelData.hotelNightMin,
@@ -227,9 +227,9 @@ async function updateHotelInfo(hotel_name, hotel) {
             adultNumDefault: hotelData.adultNumDefault,
             childNumDefault: hotelData.childNumDefault,
             childNumMax: hotelData.childNumMax
-        }),
-        one_night: hotelData.oneNightLimit
+        })
     }, `hotel_name="${hotel_name}"`)
+      .catch(e => console.log('更新失败', e))
 }
 
 async function run() {

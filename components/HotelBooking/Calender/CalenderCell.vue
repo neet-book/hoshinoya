@@ -1,6 +1,6 @@
 <template>
   <div class="calender-cell">
-    <div class="calender-cell-container" v-if="vacancy !== undefined"
+    <div class="calender-cell-container" v-if="isVacancy"
       :class="{ available, closed, few, full, active }"
     >
       <div class="cell-inner">
@@ -20,6 +20,10 @@ import {VacancyState} from "./Calender.vue";
 @Component()
 export default class CalenderCell extends Vue {
   @Prop() vacancy: VacancyState | undefined
+
+  get isVacancy() {
+    return this.vacancy !== undefined && typeof this.vacancy !== 'number'
+  }
 
   get date() {
     if (this.vacancy) {
@@ -74,9 +78,9 @@ export default class CalenderCell extends Vue {
   }
 
   get price(): string {
-    const a = this.vacancy?.price.toFixed(2).toString().split('.')
-    a[0] = a[0].replace(/(?!^)(?=(\d{3})+$)/g, ',')
-    return a.join('.')
+    if (this.isVacancy) {
+      return this.vacancy.price.toString().replace(/(?!^)(?=(\d{3})+$)/g, ',')
+    }
   }
 }
 </script>

@@ -10,7 +10,7 @@ const config = {
             pattern: '.yyyy-MM-dd',
             daysToKeep: 19,
             alwaysIncludePattern: true, 
-            filename: path.join(logConfig.logPath, 'access.log')
+            filename: path.join(logConfig.logPath, 'access--')
         },
         app: {
             // 日志输出类型 file: 输出为普通文件，console: 输出至控制台, dateFile: 按时间输出至不同文件 
@@ -20,9 +20,9 @@ const config = {
             compress: false,
             // 删除大于指定天数的日志文件
             daysToKeep: 9,
-            pattern: '.yyyy-mm-dd',
+            pattern: '.yyyy-MM-dd',
             alwaysIncludePattern: true, 
-            filename: path.join(logConfig.logPath, 'app.log')
+            filename: path.join(logConfig.logPath, 'app--')
         },
         database: {
             type: 'dateFile',
@@ -30,7 +30,7 @@ const config = {
             daysToKeep: 9,
             pattern: '.yyy-MM-dd',
             alwaysIncludePattern: true,
-            filename: path.join(logConfig.logPath, 'database.log')
+            filename: path.join(logConfig.logPath, 'database--')
         },
         api: {
             type: 'dateFile',
@@ -38,7 +38,7 @@ const config = {
             daysToKeep: 9,
             pattern: '.yyyy-MM-dd',
             alwaysIncludePattern: true,
-            filename: path.join(logConfig.logPath, 'api.log')
+            filename: path.join(logConfig.logPath, 'api--')
         }
     },
     categories: {
