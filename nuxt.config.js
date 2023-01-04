@@ -1,8 +1,10 @@
+const path = require('path')
 
 module.exports = {
   // mode: 'universal',
   /*
   ** Headers of the page
+  *
   */
   head: {
     title: process.env.npm_package_name || '',
@@ -19,6 +21,11 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
+
+  /*
+  ** root path
+   */
+  srcDir: './',
   /*
   ** Global CSS
   */
@@ -31,18 +38,18 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: 'plugins/message-box.js' , mode: 'client' }
   ],
   /*
   ** Nuxt.js dev-modules
   */
-  buildModules: [
-  ],
+
   /*
   ** Nuxt.js modules
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
   /*
   ** Axios module configuration
@@ -53,7 +60,7 @@ module.exports = {
   /*
   ** Build configuration
   */
-  buildModules: ['@nuxt/typescript-build'],
+  buildModules: ['@nuxt/typescript-build', '@nuxt/postcss8'],
   build: {
     /*
     ** You can extend webpack config here
@@ -64,6 +71,8 @@ module.exports = {
   telemetry: false,
   router: {
     middleware: 'router-redirect'
+  },
+  alias: {
+    api: path.resolve(__dirname, 'server/api')
   }
-  
 }

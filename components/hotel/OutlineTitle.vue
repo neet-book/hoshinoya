@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 @Component
-export default class  extends Vue {
+export default class OutlineTitle extends Vue {
   @Prop(String) title: string | undefined
   @Prop({ type: Boolean, default: true }) show: boolean | undefined
   get hotelNameEn(): string {

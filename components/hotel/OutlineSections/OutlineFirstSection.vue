@@ -1,7 +1,6 @@
 <template>
   <div class="outline-first-section" >
-    <outline-title class="outline-title" :title="content.title" :show="showTitle" ref="firstTitle"></outline-title>
-    <transition-text :content="content.title" :show="showTitle"></transition-text>
+    <outline-title class="outline-title" :title="content.title" :show="showTitle" ref="title"></outline-title>
     <carousel :items="content.carouselItems"></carousel>
     <div class="disc-text">
       {{ content.disc }}
@@ -27,9 +26,10 @@ export default class OutlineFirstSection extends Vue {
   get showTitle(): boolean {
     if (!this.isShowed) {
       const distance = this.$store.state.distance
-      const firstTitle = this.$refs.firstTitle as Vue
-      if (firstTitle) {
-        this.isShowed = distance + window.innerHeight > firstTitle.$el.offsetTop
+      const title = this.$refs.title as Vue
+      if (title) {
+        const el = title.$el as Element
+        this.isShowed = distance + window.innerHeight > el.offsetTop
       }
     }
     return this.isShowed

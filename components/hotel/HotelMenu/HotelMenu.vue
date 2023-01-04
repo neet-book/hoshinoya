@@ -89,7 +89,7 @@ export default class HotelMenu extends Vue {
   width: 110px;
   height: 100vh;
   top: 0;
-  right: 0;
+  right: 17px;
   position: fixed;
   font-family: BauerBodoni;
   writing-mode: vertical-rl;

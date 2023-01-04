@@ -16,19 +16,16 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "/*"
-      ],
-      "@/*": [
-        "/*"
-      ]
+      "~/*": ["/*"],
+      "@/*": ["/*"],
     },
     "types": [
       "@types/node",
       "@nuxt/types",
+      "/types/*.d.ts"
     ]
   },
-  "include": ["./types/*.d.ts", "*.ts"],
+  "include": ["*.ts", "*.vue"],
   "exclude": [
     "node_modules"
   ]

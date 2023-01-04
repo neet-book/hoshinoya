@@ -44,6 +44,10 @@ export default class HotelBookingMenu extends Vue {
   background-color: #e6e6e6;
   overflow: hidden;
   z-index: 999;
+
+  /* 让文字居中 */
+  font-size: 110px;
+  line-height: 100%;
 }
 
 .menu-bar.visible {
@@ -70,22 +74,23 @@ export default class HotelBookingMenu extends Vue {
 }
 
 .site-name-en {
-  width: 110px;
-  height: 100vh;
-  position: fixed;
+  width: 100%;
+  height: 100%;
+  position: absolute;
   top: 0;
   z-index: 10;
   
   user-select: none;
 
-  font-family: "Bauer Bodoni Pro_1 W01 Roman";
+  font-family: "Bauer Bodoni Pro_1 W01 Roman", serif;
   color: black;
   font-size: 11px;
-  line-height: 110px;
   letter-spacing: 1.8px;
   word-break: break-all;
   text-align: center;
   writing-mode: vertical-rl;
+  line-height: inherit;
+  vertical-align: middle;
 
   opacity: 0;
   transition: opacity 900ms cubic-bezier(.445,.05,.55,.95) 200ms;
@@ -131,9 +136,7 @@ export default class HotelBookingMenu extends Vue {
 .menu-bar-icon-close {
   width: 100%;
   height: 100%;
-  background: url('~assets/svg/close.svg');
-  background-repeat: no-repeat;
-  background-position: center center;
+  background: url('~assets/svg/close.svg') no-repeat center center;
   background-size: contain;
   transform: scale(0, 0); 
   transition: transform 100ms cubic-bezier(.165,.84,.44,1);
@@ -149,6 +152,10 @@ export default class HotelBookingMenu extends Vue {
   .site-name-ene
   {
     width: 60px;
+  }
+
+  .menu-bar {
+    font-size: 60px;
   }
 
   .menu-bar-icon {

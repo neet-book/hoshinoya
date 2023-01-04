@@ -8,11 +8,11 @@
           :key="itemInfo.title"
           :info="itemInfo"
           :style="{ width: itemWidth + 'px', height: areaHeight + 'px', transform: 'translate3d(' + (positions[index] ? positions[index].position : 0 ) + 'px, 0, 0)' }"
-          :class="{ hidden : positions[index] ? positions[index].hidden: false, transition }"
+          :class="{ hidden : positions[index] ? positions[index].hidden : false, transition }"
         />
       </div>
       <div class="carousel-nav">
-        <carousel-nav :num="center_index" :count="items.length" @toLift="toLeft" @toRight="toRight"></carousel-nav>
+        <carousel-nav :num="centerIndex" :count="items.length"></carousel-nav>
       </div>
       <div id="carousel-prev" @click="toLeft"></div>
       <div id="carousel-next" @click="toRight"></div>
@@ -92,7 +92,7 @@ enum DIRECTION { left = 1, right = -1}
       }
 
       // 页面中心显示的是元素第2项
-      this.center_index = positions[2].no
+      this.centerIndex = positions[2].no
 
       this.timer = setTimeout(this.carouseler, this.delay)
     }
@@ -106,8 +106,6 @@ enum DIRECTION { left = 1, right = -1}
       } else {
         this.stop()
       }
-
-      console.log('visibility')
     }
 
     this.onResize = () => {
@@ -132,6 +130,11 @@ enum DIRECTION { left = 1, right = -1}
 
     this.initialCarouseler()
     this.start()
+
+    setTimeout(() => {
+      // 当元素都移动指定位置后开启过度效果
+      this.transition = true
+    }, 0)
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onResize)
@@ -147,10 +150,10 @@ export default class Carousel extends Vue
   itemWidth: number = 0
   timer: number | NodeJS.Timeout | undefined
   delay: number = 3000
-  center_index: number = 0
+  centerIndex: number = 0
   positions: [] =[]
   moveSize: number = 0
-  transition: boolean = true
+  transition: boolean = false
 
   initialCarouseler: () => void
   carouseler: (direction: DIRECTION) => void

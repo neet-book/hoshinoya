@@ -3,10 +3,12 @@ const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const { databaseLogger, accessLogger } = require('./api/logging')
 const mongoose = require('mongoose')
-const { dbs } = require('./config')
+const SQLDB = require('./api/dbs/mysqldb')
+const { mongodbs, mysqldbs } = require('./config')
 
 const hotelRouter = require('./api/hotel')
 const homeRouter = require('./api/home')
+const bookingRouter = require('./api/booking')
 
 const app = new Koa()
 
@@ -24,21 +26,34 @@ async function start () {
     port = process.env.PORT || 3000
   } = nuxt.options.server
 
-  mongoose.connect(dbs.uri, {
-    user: dbs.username,
-    pass: dbs.password,
+  mongoose.connect(mongodbs.uri, {
+    // user: dbs.username,
+    // pass: dbs.password,
     bufferCommands: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
   }).then(() => {
-    console.log('数据库链接成功')
-    databaseLogger.info(`[${dbs.dbName}] connect successed`)
+    // console.log('数据库链接成功')
+    databaseLogger.info(`MongoDB [${mongodbs.dbName}]: connect success.`)
   }).catch(err => {
-    console.log('数据库链接失败')
-    databaseLogger.error(`[${dbs.dbName}] ${err}`)
+    // console.log('数据库链接失败')
+    databaseLogger.error(`MongoDB [${mongodbs.dbName}]: ${err}`)
   })
-  
 
+  const mysql = new SQLDB({
+    user: mysqldbs.user,
+    password: mysqldbs.password,
+    database: mysqldbs.dbName,
+    host: mysqldbs.host
+  })
+
+  mysql.connect()
+    .then(() => {
+      databaseLogger.info(`MySQL: [${mysqldbs.dbName}]: connect success.`)
+    })
+    .catch((err) => {
+      databaseLogger.error(`MySQL: [${mysqldbs.dbName}]: ${err}`)
+    })
   await nuxt.ready()
 
   // Build in development
@@ -52,6 +67,7 @@ async function start () {
   app.use(accessLogger())
   app.use(hotelRouter.routes()).use(hotelRouter.allowedMethods())
   app.use(homeRouter.routes()).use(homeRouter.allowedMethods())
+  app.use(bookingRouter.routes()).use(homeRouter.allowedMethods())
   
   app.use((ctx) => {
     ctx.status = 200

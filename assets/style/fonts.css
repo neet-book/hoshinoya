@@ -1,3 +1,7 @@
+@font-face {
+    font-family: "hsn-zhcn-sans-light";
+    src: url('~static/fonts/NotoSansCJKsc-Light.woff2');
+}
 
 @font-face {
     font-family: "hsn-zhcn-sans-demilight";

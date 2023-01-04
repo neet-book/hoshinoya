@@ -55,7 +55,7 @@ declare namespace Hotel {
 
   interface OutlineThirdSection {
     title: string
-    carrouselItems: [
+    carouselItems: [
       {
         title: string,
         image: ImageUrl

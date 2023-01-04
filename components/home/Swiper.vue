@@ -4,7 +4,7 @@
     <ul>
       <li 
         class="slider"
-        :class="{ activited: slider.hotelID == activity}"
+        :class="{ activity: slider.hotelID === activity}"
         v-for="slider in sliderList" 
         :key="slider.hotelNameEn"
       >
@@ -20,10 +20,10 @@
       >
         <li
           v-for="slider in sliderList" :key="slider.hotelID"
-          :class="{ activited: slider.hotelID == activity }"
+          :class="{ activity: slider.hotelID === activity }"
         >HOSHINOYA {{ slider.hotelNameEn }}</li>
       </ul>
-      <div class="controler">
+      <div class="controller">
         <div class="prev-btn" @click="toPrev">prev</div>
         <ul>
           <li
@@ -70,9 +70,7 @@ export interface SliderImage {
   },
   mounted(): void {
     const that: any = this
-    // setTimeout(() => {
-      that.timer = that.changeSlider(1)
-    // }, that.interval)
+    that.start()
   },
   filters: {
     numFilter(n: number): string {
@@ -100,6 +98,12 @@ export default class Swiper extends Vue {
   get currentHotel(): string {
     const currentSlid =  (this.sliderList as SliderImage [])[this.activity]
     return currentSlid.hotelNameEn
+  }
+
+  start() {
+    if (this.timer !== null) {
+      this.changeSlider(1)
+    }
   }
 
   changeSlider(toN: number): void {
@@ -152,7 +156,7 @@ export default class Swiper extends Vue {
 .swiper > ul,
 .slider-img，
 .current-hotel,
-.controler > ul,
+.controller > ul,
 .prev-btn, .next-btn
 {
   position: relative;
@@ -194,7 +198,7 @@ export default class Swiper extends Vue {
   transition-delay: 900ms;
 }
 
-.activited > .slider-img > .img-body {
+.activity > .slider-img > .img-body {
   transform: scale(1.1);
 } 
 
@@ -227,10 +231,10 @@ export default class Swiper extends Vue {
   opacity: 0;
   transition: opacity 500ms;
 
-  font-family: "Helvetica Neue LT W01_55 Roman";
+  font-family: "Helvetica Neue LT W01_55 Roman",serif;
 }
 
-.current-hotel > .activited {
+.current-hotel > .activity {
   transition: opacity 1500ms cubic-bezier(.445,.05,.55,.95);
 }
 
@@ -238,12 +242,12 @@ export default class Swiper extends Vue {
   margin: 0 3px
 }
 
-.controler {
+.controller {
   height: 13px;
   overflow: hidden;
 }
 
-.controler > ul {
+.controller > ul {
   width: 13px;
   height: 13px;
   font-size: inherit;
@@ -303,7 +307,7 @@ export default class Swiper extends Vue {
   text-align: left;
 }
 
-.activited {
+.activity {
   opacity: 1 !important;
 }
 
